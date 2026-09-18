@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mock Test - Visual Dashboard & Excel Export</title>
+<style>
+  :root{font-family:Arial,sans-serif;color:#1f2937;background:#1e1e1e} /* Dark mode to match image */
+  body{margin:0; padding-bottom:50px}
+  main{max-width:900px;margin:40px auto;padding:0 20px}
+  header, section{background:#2d2d2d; color:#e0e0e0; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.3); padding:25px; margin-bottom:20px}
+  h1, h2{color:#6ba2d0; margin-top:0}
+  h3{color:#aab9c9; margin-bottom:10px; font-size:16px}
+  .student-info{display:flex; gap:15px; flex-wrap:wrap; margin-top:15px}
+  .info-field{display:flex; flex-direction:column; gap:5px; flex:1; min-width:150px}
+  .info-field input{padding:8px; border:1px solid #555; background:#1e1e1e; color:#fff; border-radius:5px}
+  .q{margin:10px 0 15px; line-height:1.6}
+  .q input[type="text"]{padding:5px; border:1px solid #555; background:#1e1e1e; color:#fff; border-radius:4px; width:100px}
+  .ok{background:#0b4220 !important; border-color:#29974e !important; color:#81c995 !important}
+  .bad{background:#5c1a1a !important; border-color:#ce3c3c !important; color:#f28b82 !important}
+  button{background:#0d6fa8; color:#fff; border:none; border-radius:6px; padding:15px 20px; font-size:16px; font-weight:bold; cursor:pointer; width:100%; margin-bottom:20px}
+  button:hover{background:#0b5c8c}
+
+  #dashboard-container { display: none; margin-top: 40px; overflow-x: auto; }
+  .visual-table { width: 100%; border-collapse: collapse; background: #222; color: #eee; font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border-radius: 8px; overflow: hidden; }
+  .visual-table th { background: #333; padding: 12px; text-align: left; font-weight: bold; border-right: 1px solid #444; border-bottom: 2px solid #444; }
+  .visual-table td { padding: 15px 12px; border-right: 1px solid #333; border-bottom: 1px solid #333; vertical-align: top; }
+  .eval-mastered { color: #81c995; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+  .eval-struggling { color: #f2c94c; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+  .eval-needs-help { color: #eb5757; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>Student Profile & Test</h1>
+  <p>Fill out your details and complete the grammar sections.</p>
+  
+  <div class="student-info">
+    <div class="info-field">
+      <label>First Name</label>
+      <input type="text" id="fname" placeholder="e.g. John">
+    </div>
+    <div class="info-field">
+      <label>Last Name</label>
+      <input type="text" id="lname" placeholder="e.g. Doe">
+    </div>
+    <div class="info-field">
+      <label>Class / Level</label>
+      <input type="text" id="classLevel" placeholder="e.g. Beginner 1">
+    </div>
+  </div>
+</header>
+
+<section id="grammarA">
+  <h2>Grammar A (verb be: I and you)</h2>
+  <div class="q">1. Hello. I <input type="text" data-answer="am|'m"> Maria.</div>
+  <div class="q">2. How <input type="text" data-answer="are"> you?</div>
+  <div class="q">3. You <input type="text" data-answer="are|'re"> in my class.</div>
+</section>
+
+<section id="grammarB">
+  <h2>Grammar B (verb be: he, she, it)</h2>
+  <div class="q">1. Where is Jack from? He <input type="text" data-answer="is|'s"> from the USA.</div>
+  <div class="q">2. She <input type="text" data-answer="is|'s"> a teacher.</div>
+  <div class="q">3. It <input type="text" data-answer="is|'s"> a good book.</div>
+</section>
+
+<section id="grammarC">
+  <h2>Grammar C (verb be: we, you, they & negatives)</h2>
+  <div class="q">1. We <input type="text" data-answer="are|'re"> from Spain.</div>
+  <div class="q">2. They <input type="text" data-answer="are not|aren't"> English. They are Scottish.</div>
+  <div class="q">3. I <input type="text" data-answer="am not|'m not"> a student.</div>
+  <div class="q">4. He <input type="text" data-answer="is not|isn't"> on holiday.</div>
+</section>
+
+<button id="checkAndExport">Teacher: Grade Test & Show Visual Dashboard</button>
+
+<div id="dashboard-container">
+  <h2 style="color:#fff;">Class Progress Tracker</h2>
+  <p style="color:#aaa;">This table has also been downloaded as a formatted Excel file.</p>
+  <div id="table-wrapper"></div>
+</div>
+
+</main>
+
+<script>
+function getEval(score, total) {
+  const percent = (score / total) * 100;
+  if (percent >= 85) return { text: "Mastered", icon: "✅", cls: "eval-mastered", hex: "#27ae60" };
+  if (percent >= 60) return { text: "Struggling", icon: "⚠️", cls: "eval-struggling", hex: "#f39c12" };
+  return { text: "Needs Help", icon: "❌", cls: "eval-needs-help", hex: "#c0392b" };
+}
+
+document.querySelector('#checkAndExport').addEventListener('click', () => {
+  // 1. Gather Student Info
+  const fname = document.getElementById('fname').value.trim() || "John";
+  const lname = document.getElementById('lname').value.trim() || "Doe";
+  const fullName = `${fname} ${lname}`;
+
+  // 2. Grade the Sections
+  const sections = ['grammarA', 'grammarB', 'grammarC'];
+  const results = {};
+  let totalScore = 0;
+  let totalQuestions = 0;
+  const norm = x => x.trim().toLowerCase();
+  
+  sections.forEach(secId => {
+    let secScore = 0;
+    let secTotal = 0;
+    document.querySelectorAll(`#${secId} input[type="text"]`).forEach(input => {
+      secTotal++;
+      totalQuestions++;
+      const accepted = input.dataset.answer.split('|').map(norm);
+      const isCorrect = accepted.includes(norm(input.value));
+      input.classList.toggle('ok', isCorrect);
+      input.classList.toggle('bad', !isCorrect);
+      if (isCorrect) { secScore++; totalScore++; }
+    });
+    results[secId] = getEval(secScore, secTotal);
+  });
+  
+  // Target Intervention logic
+  let interventions = [];
+  if (results.grammarA.text !== "Mastered") interventions.push("verb 'to be' (I/you)");
+  if (results.grammarB.text !== "Mastered") interventions.push("verb 'to be' (he/she/it)");
+  if (results.grammarC.text !== "Mastered") interventions.push("negatives and plurals");
+  let actionText = interventions.length > 0 
+    ? "Needs to review " + interventions.join(", ") 
+    : "No intervention needed. Excellent work!";
+
+  // 3. Build HTML Table
+  const tableHTML = `
+    <table class="visual-table" border="1" style="border-collapse: collapse; width: 100%; font-family: Arial, sans-serif; background-color: #222; color: #eee; text-align: left;">
+      <thead>
+        <tr style="background-color: #333; color: #fff;">
+          <th style="padding: 10px;">Student Name</th>
+          <th style="padding: 10px;">Gr: To Be (I & you)</th>
+          <th style="padding: 10px;">Gr: To Be (he/she/it)</th>
+          <th style="padding: 10px;">Gr: To Be (we/you/they)</th>
+          <th style="padding: 10px;">Target Intervention</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 10px; font-weight: bold;">${fullName}</td>
+          <td style="padding: 10px; color: ${results.grammarA.hex}; font-weight: bold;">${results.grammarA.icon} ${results.grammarA.text}</td>
+          <td style="padding: 10px; color: ${results.grammarB.hex}; font-weight: bold;">${results.grammarB.icon} ${results.grammarB.text}</td>
+          <td style="padding: 10px; color: ${results.grammarC.hex}; font-weight: bold;">${results.grammarC.icon} ${results.grammarC.text}</td>
+          <td style="padding: 10px;">${actionText}</td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+
+  // Display on screen
+  document.getElementById('table-wrapper').innerHTML = tableHTML;
+  document.getElementById('dashboard-container').style.display = 'block';
+
+  // 4. Export as beautiful Excel (.xls) file
+  const excelContent = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta charset="utf-8"></head>
+    <body>
+      ${tableHTML}
+    </body>
+    </html>
+  `;
+  
+  const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", `${fname}_${lname}_Visual_Tracker.xls`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>
