@@ -468,7 +468,7 @@ document.getElementById('btn-check-writing').onclick = () => {
   if (a.words < 8){
     msg.style.display = 'block';
     msg.style.background = '#fef3c7'; msg.style.color = '#92400e';
-    msg.textContent = 'Please write complete sentences for the questions first (aim for at least 30-50 words total). ✍️';
+    msg.textContent = 'Please write complete sentences for the questions first (aim for at least 40 words total). ✍️';
     box.style.display = 'none'; total.style.display = 'none';
     return;
   }
@@ -477,7 +477,7 @@ document.getElementById('btn-check-writing').onclick = () => {
   const add = (state, title, detail, scored) => rows.push({state, title, detail, scored: scored !== false});
 
   const lenOk = a.words >= 40;
-  add(lenOk ? "ok" : "wa", `Total Length — <b>${a.words}</b> words`, lenOk ? "Good length for A1 test writing." : "Aim for at least 30-50 words across all questions.");
+  add(lenOk ? "ok" : "wa", `Total Length — <b>${a.words}</b> words`, lenOk ? "Good length for Elementary test writing." : "Aim for at least 40 words across all questions.");
 
   const sOk = a.sentences >= 4;
   add(sOk ? "ok" : "wa", `Sentences — <b>${a.sentences}</b>`, sOk ? "Good sentence count." : "Try to write full sentences for each question.");

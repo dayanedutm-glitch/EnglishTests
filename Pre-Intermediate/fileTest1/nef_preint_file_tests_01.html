@@ -76,7 +76,7 @@
 <p><strong>Write about these things (100–150 words):</strong></p>
 <ul style="margin:6px 0 12px 20px; line-height:1.7;"><li>your personal details</li><li>your job / studies</li><li>your interests</li></ul>
 <p><em>My name’s … I’m … years old and I’m from … .</em></p>
-<textarea class="writing-inp" style="min-height:240px" placeholder="Write your email here (75-100 words)..."></textarea>
+<textarea class="writing-inp" style="min-height:240px" placeholder="Write your email here (100–150 words)..."></textarea>
 
 <div class="writing-summary">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -440,7 +440,7 @@ document.getElementById('btn-check-writing').onclick = () => {
   if (a.words < 30){
     msg.style.display = 'block';
     msg.style.background = '#fef3c7'; msg.style.color = '#92400e';
-    msg.textContent = 'Please write complete sentences for the questions first (aim for at least 30-50 words total). ✍️';
+    msg.textContent = 'Please write complete sentences for the questions first (aim for at least 100 words total). ✍️';
     box.style.display = 'none'; total.style.display = 'none';
     return;
   }
@@ -449,7 +449,7 @@ document.getElementById('btn-check-writing').onclick = () => {
   const add = (state, title, detail, scored) => rows.push({state, title, detail, scored: scored !== false});
 
   const lenOk = a.words >= 100;
-  add(lenOk ? "ok" : "wa", `Total Length — <b>${a.words}</b> words`, lenOk ? "Good length for A1 test writing." : "Aim for at least 30-50 words across all questions.");
+  add(lenOk ? "ok" : "wa", `Total Length — <b>${a.words}</b> words`, lenOk ? "Good length for Pre-Intermediate test writing." : "Aim for at least 100 words across all questions.");
 
   const sOk = a.sentences >= 6;
   add(sOk ? "ok" : "wa", `Sentences — <b>${a.sentences}</b>`, sOk ? "Good sentence count." : "Try to write full sentences for each question.");
