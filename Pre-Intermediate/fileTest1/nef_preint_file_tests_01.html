@@ -755,7 +755,7 @@ endEx(s.grammar, 6);
 
 /* --- VOCABULARY --- */
 title(s.vocabulary,'4. Complete the sentences with a verb from the list.');
-s.vocabulary.insertAdjacentHTML('beforeend', '<strong>Verbs:</strong> write &nbsp;•&nbsp; copy &nbsp;•&nbsp; answer &nbsp;•&nbsp; work &nbsp;•&nbsp; look &nbsp;•&nbsp; speak &nbsp;•&nbsp; turn &nbsp;•&nbsp; cover &nbsp;•&nbsp; cross');
+s.vocabulary.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Verbs:</strong> <span class="phrase-click" data-val="write" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">write</span> &bull; <span class="phrase-click" data-val="copy" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">copy</span> &bull; <span class="phrase-click" data-val="answer" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">answer</span> &bull; <span class="phrase-click" data-val="work" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">work</span> &bull; <span class="phrase-click" data-val="look" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">look</span> &bull; <span class="phrase-click" data-val="speak" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">speak</span> &bull; <span class="phrase-click" data-val="turn" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">turn</span> &bull; <span class="phrase-click" data-val="cover" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">cover</span> &bull; <span class="phrase-click" data-val="cross" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">cross</span></div>');
 example(s.vocabulary,'<u>Look</u> at the board.');
 [
 ['___ down the words.','Write'],
@@ -793,7 +793,7 @@ endEx(s.vocabulary, 6);
 
 /* --- PRONUNCIATION --- */
 title(s.pronunciation,'7. Match the words with the same sound.');
-s.pronunciation.insertAdjacentHTML('beforeend', '<strong>Words:</strong> laughs &nbsp;•&nbsp; head &nbsp;•&nbsp; touch &nbsp;•&nbsp; lives &nbsp;•&nbsp; heart &nbsp;•&nbsp; hear');
+s.pronunciation.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="laughs" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">laughs</span> &bull; <span class="phrase-click" data-val="head" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">head</span> &bull; <span class="phrase-click" data-val="touch" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">touch</span> &bull; <span class="phrase-click" data-val="lives" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">lives</span> &bull; <span class="phrase-click" data-val="heart" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">heart</span> &bull; <span class="phrase-click" data-val="hear" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">hear</span></div>');
 example(s.pronunciation,'snake → <u>laughs</u>');
 [
 ['zebra: ___','lives'],
@@ -816,15 +816,15 @@ endEx(s.pronunciation, 5);
 
 /* --- READING --- */
 title(s.reading,'1. Read the article and tick (✓) A, B, or C.');
-example(s.reading,'Lisa is _____. → <u>C</u> single');
+example(s.reading,'Lisa is ___. → <u>C</u> single');
 [
-['In her job, Lisa has to _____.',['travel to other countries','write about politics','interview politicians abroad'],1],
-['Lisa met all her friends _____.',['at school','at work','a long time ago'],2],
-['Lisa goes out _____.',['every night','to quiet places','with her friends'],2],
-['Lisa doesn’t like _____.',['politics','love stories','Italian food'],1],
-['Lisa does exercise _____.',['every weekend','more than once a week','rarely'],1],
-['Lisa doesn’t often have _____.',['vegetables','red meat','tea'],1],
-['Lisa prefers _____ men.',['good-looking','hard-working','funny'],2]
+['In her job, Lisa has to ___.',['travel to other countries','write about politics','interview politicians abroad'],1],
+['Lisa met all her friends ___.',['at school','at work','a long time ago'],2],
+['Lisa goes out ___.',['every night','to quiet places','with her friends'],2],
+['Lisa doesn’t like ___.',['politics','love stories','Italian food'],1],
+['Lisa does exercise ___.',['every weekend','more than once a week','rarely'],1],
+['Lisa doesn’t often have ___.',['vegetables','red meat','tea'],1],
+['Lisa prefers ___ men.',['good-looking','hard-working','funny'],2]
 ].forEach(x=>choice(s.reading,...x));
 endEx(s.reading, 7);
 title(s.reading,'2. Read the article again. Are the sentences true (T) or false (F)?');
@@ -852,7 +852,7 @@ title(s.listening,'1. Listen to a description of a famous painting, the Bar at t
 ].forEach(x=>choice(s.listening,...x));
 endEx(s.listening, 5);
 title(s.listening,'2. Listen to five conversations. What day is it in each conversation? Match the conversations to the days (A–G).');
-s.listening.insertAdjacentHTML('beforeend', '<strong>A</strong> Monday &nbsp;&nbsp; <strong>B</strong> Tuesday &nbsp;&nbsp; <strong>C</strong> Wednesday &nbsp;&nbsp; <strong>D</strong> Thursday &nbsp;&nbsp; <strong>E</strong> Friday &nbsp;&nbsp; <strong>F</strong> Saturday &nbsp;&nbsp; <strong>G</strong> Sunday');
+s.listening.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>A</strong> Monday &nbsp;&nbsp; <strong>B</strong> Tuesday &nbsp;&nbsp; <strong>C</strong> Wednesday &nbsp;&nbsp; <strong>D</strong> Thursday &nbsp;&nbsp; <strong>E</strong> Friday &nbsp;&nbsp; <strong>F</strong> Saturday &nbsp;&nbsp; <strong>G</strong> Sunday</div>');
 [
 ['Conversation 1',['Monday (A)','Tuesday (B)','Wednesday (C)','Thursday (D)','Friday (E)','Saturday (F)','Sunday (G)'],1],
 ['Conversation 2',['Monday (A)','Tuesday (B)','Wednesday (C)','Thursday (D)','Friday (E)','Saturday (F)','Sunday (G)'],2],

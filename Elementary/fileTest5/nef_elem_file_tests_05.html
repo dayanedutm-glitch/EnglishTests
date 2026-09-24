@@ -821,7 +821,7 @@ endEx(s.vocabulary, 8);
 
 /* --- PRONUNCIATION --- */
 title(s.pronunciation,'7. Match the words with the same sound.');
-s.pronunciation.insertAdjacentHTML('beforeend', '<strong>Words:</strong> changed &nbsp;•&nbsp; checked &nbsp;•&nbsp; looked &nbsp;•&nbsp; showed &nbsp;•&nbsp; waited &nbsp;•&nbsp; wanted');
+s.pronunciation.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="changed" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">changed</span> &bull; <span class="phrase-click" data-val="checked" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">checked</span> &bull; <span class="phrase-click" data-val="looked" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">looked</span> &bull; <span class="phrase-click" data-val="showed" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">showed</span> &bull; <span class="phrase-click" data-val="waited" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">waited</span> &bull; <span class="phrase-click" data-val="wanted" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">wanted</span></div>');
 example(s.pronunciation,'arrived → <u>showed</u>');
 [
 ['1. landed: ___','wanted|waited'],
@@ -844,15 +844,15 @@ endEx(s.pronunciation, 5);
 
 /* --- READING --- */
 title(s.reading,'1. Read Maria’s diary. Tick (✓) A, B, or C.');
-example(s.reading,'Maria and her friend got to London in the _____. → <u>C</u> evening');
+example(s.reading,'Maria and her friend got to London in the ___. → <u>C</u> evening');
 [
-['They _____ to their hotel.',['walked','drove','travelled by bus'],2],
-['They ate _____.',['at the airport','at the hotel','in a café'],2],
-['Maria bought _____.',['a bag','some clothes','a picture'],1],
-['In the evening they _____.',['stayed at the hotel','ate in a pub','talked to some people'],2],
-['On Saturday morning, Maria ate _____.',['an English breakfast and fruit','toast and fruit','fruit'],0],
-['They had lunch _____.',['in London','on the train','at the station'],0],
-['When they arrived in Stratford-upon-Avon, they ____.',['went to Shakespeare’s house','went to bed','walked around the town'],1]
+['They ___ to their hotel.',['walked','drove','travelled by bus'],2],
+['They ate ___.',['at the airport','at the hotel','in a café'],2],
+['Maria bought ___.',['a bag','some clothes','a picture'],1],
+['In the evening they ___.',['stayed at the hotel','ate in a pub','talked to some people'],2],
+['On Saturday morning, Maria ate ___.',['an English breakfast and fruit','toast and fruit','fruit'],0],
+['They had lunch ___.',['in London','on the train','at the station'],0],
+['When they arrived in Stratford-upon-Avon, they ___.',['went to Shakespeare’s house','went to bed','walked around the town'],1]
 ].forEach(x=>choice(s.reading,...x));
 endEx(s.reading, 7);
 title(s.reading,'2. Read the diary again. Are the sentences True (T) or False (F)?');
@@ -880,7 +880,7 @@ title(s.listening,'1. Listen to a police inspector interview a woman about a mur
 ].forEach(x=>choice(s.listening,...x));
 endEx(s.listening, 5);
 title(s.listening,'2. Listen to five conversations. Answer each question with the name of a country from the box.');
-s.listening.insertAdjacentHTML('beforeend', '<strong>Countries:</strong> America &nbsp;•&nbsp; Argentina &nbsp;•&nbsp; Australia &nbsp;•&nbsp; Cuba &nbsp;•&nbsp; England &nbsp;•&nbsp; Ireland &nbsp;•&nbsp; Jamaica &nbsp;•&nbsp; Morocco &nbsp;•&nbsp; France');
+s.listening.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Countries:</strong> <span class="phrase-click" data-val="America" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">America</span> &bull; <span class="phrase-click" data-val="Argentina" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Argentina</span> &bull; <span class="phrase-click" data-val="Australia" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Australia</span> &bull; <span class="phrase-click" data-val="Cuba" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Cuba</span> &bull; <span class="phrase-click" data-val="England" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">England</span> &bull; <span class="phrase-click" data-val="Ireland" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Ireland</span> &bull; <span class="phrase-click" data-val="Jamaica" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Jamaica</span> &bull; <span class="phrase-click" data-val="Morocco" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Morocco</span> &bull; <span class="phrase-click" data-val="France" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">France</span></div>');
 [
 ['Where was Louise’s dad born? ___','Australia'],
 ['Where did Nick’s girlfriend want to go for their winter holiday? ___','Jamaica'],

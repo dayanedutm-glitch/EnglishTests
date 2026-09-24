@@ -742,7 +742,7 @@ example(s.grammar,'I’m sorry. I can / <u>can’t</u> play football at the week
 ].forEach(x=>choice(s.grammar,...x));
 endEx(s.grammar, 6);
 title(s.grammar,'2. Complete Hannah’s email with the verbs in the box. Use the -ing form.');
-s.grammar.insertAdjacentHTML('beforeend', '<strong>Verbs:</strong> be &nbsp;•&nbsp; cook &nbsp;•&nbsp; eat &nbsp;•&nbsp; go &nbsp;•&nbsp; study &nbsp;•&nbsp; do &nbsp;•&nbsp; see');
+s.grammar.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Verbs:</strong> <span class="phrase-click" data-val="be" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">be</span> &bull; <span class="phrase-click" data-val="cook" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">cook</span> &bull; <span class="phrase-click" data-val="eat" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">eat</span> &bull; <span class="phrase-click" data-val="go" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">go</span> &bull; <span class="phrase-click" data-val="study" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">study</span> &bull; <span class="phrase-click" data-val="do" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">do</span> &bull; <span class="phrase-click" data-val="see" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">see</span></div>');
 example(s.grammar,'I like <u>being</u> a student.');
 [
 ['I like being a student, but I don’t like ___. I do two hours’ work every night.','studying'],
@@ -792,7 +792,7 @@ example(s.vocabulary,'<u>call</u> a taxi');
 ].forEach(x=>fill(s.vocabulary,...x));
 endEx(s.vocabulary, 5);
 title(s.vocabulary,'6. Complete the phrases with the correct verb.');
-s.vocabulary.insertAdjacentHTML('beforeend', '<strong>Verbs:</strong> give &nbsp;•&nbsp; wait &nbsp;•&nbsp; draw &nbsp;•&nbsp; find &nbsp;•&nbsp; hear &nbsp;•&nbsp; sing &nbsp;•&nbsp; use &nbsp;•&nbsp; play');
+s.vocabulary.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Verbs:</strong> <span class="phrase-click" data-val="give" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">give</span> &bull; <span class="phrase-click" data-val="wait" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">wait</span> &bull; <span class="phrase-click" data-val="draw" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">draw</span> &bull; <span class="phrase-click" data-val="find" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">find</span> &bull; <span class="phrase-click" data-val="hear" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">hear</span> &bull; <span class="phrase-click" data-val="sing" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">sing</span> &bull; <span class="phrase-click" data-val="use" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">use</span> &bull; <span class="phrase-click" data-val="play" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">play</span></div>');
 example(s.vocabulary,'<u>hear</u> a noise');
 [
 ['___ for a bus','wait'],
@@ -807,7 +807,7 @@ endEx(s.vocabulary, 7);
 
 /* --- PRONUNCIATION --- */
 title(s.pronunciation,'7. Match the words with the same sound.');
-s.pronunciation.insertAdjacentHTML('beforeend', '<strong>Words:</strong> think &nbsp;•&nbsp; kill &nbsp;•&nbsp; leave &nbsp;•&nbsp; live &nbsp;•&nbsp; meet &nbsp;•&nbsp; she');
+s.pronunciation.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="think" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">think</span> &bull; <span class="phrase-click" data-val="kill" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">kill</span> &bull; <span class="phrase-click" data-val="leave" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">leave</span> &bull; <span class="phrase-click" data-val="live" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">live</span> &bull; <span class="phrase-click" data-val="meet" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">meet</span> &bull; <span class="phrase-click" data-val="she" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">she</span></div>');
 example(s.pronunciation,'fish → <u>think</u>');
 [
 ['1. fish: ___','kill|live'],
@@ -847,17 +847,17 @@ endEx(s.reading, 10);
 title(s.reading,'2. Read the text again and write Sally, Tom, or Hannah.');
 example(s.reading,'<u>Tom</u> lives in America.');
 [
-['_____ speaks another language very well.',['Sally','Tom','Hannah'],0],
-['_____ uses a computer.',['Sally','Tom','Hannah'],1],
-['_____ works in the afternoon.',['Sally','Tom','Hannah'],2],
-['_____ is a student.',['Sally','Tom','Hannah'],1],
-['_____ can play one musical instrument.',['Sally','Tom','Hannah'],0]
+['___ speaks another language very well.',['Sally','Tom','Hannah'],0],
+['___ uses a computer.',['Sally','Tom','Hannah'],1],
+['___ works in the afternoon.',['Sally','Tom','Hannah'],2],
+['___ is a student.',['Sally','Tom','Hannah'],1],
+['___ can play one musical instrument.',['Sally','Tom','Hannah'],0]
 ].forEach(x=>choice(s.reading,...x));
 endEx(s.reading, 5);
 
 /* --- LISTENING --- */
 title(s.listening,'1. Listen to the interview. Tick (✓) A, B, or C.');
-s.listening.insertAdjacentHTML('beforeend', '<strong>A</strong> = not well &nbsp;&nbsp; <strong>B</strong> = quite well &nbsp;&nbsp; <strong>C</strong> = very well');
+s.listening.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>A</strong> = not well &nbsp;&nbsp; <strong>B</strong> = quite well &nbsp;&nbsp; <strong>C</strong> = very well</div>');
 [
 ['Sally can speak French.',['not well','quite well','very well'],2],
 ['Sally can play basketball.',['not well','quite well','very well'],0],

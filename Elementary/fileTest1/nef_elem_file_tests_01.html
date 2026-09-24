@@ -768,7 +768,7 @@ example(s.grammar,'We’re from Italy.');
 endEx(s.grammar, 8);
 title(s.grammar,'2. Complete the sentences with the correct word.');
 example(s.grammar,'I’m American. My family is from New York.');
-s.grammar.insertAdjacentHTML('beforeend', '<strong>Word bank:</strong> My / Your / Their &nbsp;•&nbsp; his / her / she &nbsp;•&nbsp; His / Her / Its &nbsp;•&nbsp; Their / Our / Your &nbsp;•&nbsp; His / Her / He &nbsp;•&nbsp; you / your / you’re');
+s.grammar.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Word bank:</strong> My / Your / Their &nbsp;•&nbsp; his / her / she &nbsp;•&nbsp; His / Her / Its &nbsp;•&nbsp; Their / Our / Your &nbsp;•&nbsp; His / Her / He &nbsp;•&nbsp; you / your / you’re</div>');
 [
 ['They’re students. ___ names are James and Marta.',['His','Her','Their'],2],
 ['Carlo’s Italian, but ___ mother is British.',['his','her','she'],0],
@@ -814,7 +814,7 @@ example(s.vocabulary,'Japan → Japan<u>ese</u>');
 ].forEach(x=>fill(s.vocabulary,...x));
 endEx(s.vocabulary, 6);
 title(s.vocabulary,'6. Complete the phrases with the correct verbs.');
-s.vocabulary.insertAdjacentHTML('beforeend', '<strong>Verbs:</strong> Listen &nbsp;•&nbsp; Sit &nbsp;•&nbsp; Go &nbsp;•&nbsp; Open &nbsp;•&nbsp; Look &nbsp;•&nbsp; speak &nbsp;•&nbsp; Close &nbsp;•&nbsp; Stand &nbsp;•&nbsp; Turn');
+s.vocabulary.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Verbs:</strong> <span class="phrase-click" data-val="Listen" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Listen</span> &bull; <span class="phrase-click" data-val="Sit" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Sit</span> &bull; <span class="phrase-click" data-val="Go" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Go</span> &bull; <span class="phrase-click" data-val="Open" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Open</span> &bull; <span class="phrase-click" data-val="Look" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Look</span> &bull; <span class="phrase-click" data-val="speak" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">speak</span> &bull; <span class="phrase-click" data-val="Close" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Close</span> &bull; <span class="phrase-click" data-val="Stand" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Stand</span> &bull; <span class="phrase-click" data-val="Turn" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Turn</span></div>');
 example(s.vocabulary,'<u>Open</u> your books.');
 [
 ['___ at the board.','Look'],
@@ -830,7 +830,7 @@ endEx(s.vocabulary, 8);
 
 /* --- PRONUNCIATION --- */
 title(s.pronunciation,'7. Match the words with the same sound.');
-s.pronunciation.insertAdjacentHTML('beforeend', '<strong>Words:</strong> this &nbsp;•&nbsp; you &nbsp;•&nbsp; no &nbsp;•&nbsp; name &nbsp;•&nbsp; here &nbsp;•&nbsp; how');
+s.pronunciation.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="this" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">this</span> &bull; <span class="phrase-click" data-val="you" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">you</span> &bull; <span class="phrase-click" data-val="no" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">no</span> &bull; <span class="phrase-click" data-val="name" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">name</span> &bull; <span class="phrase-click" data-val="here" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">here</span> &bull; <span class="phrase-click" data-val="how" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">how</span></div>');
 example(s.pronunciation,'fish → <u>this</u>');
 [
 ['train: ___','name'],

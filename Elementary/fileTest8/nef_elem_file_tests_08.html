@@ -741,7 +741,7 @@ example(s.grammar,'<u>Do</u> you like fish?');
 ].forEach(x=>fill(s.grammar,...x));
 endEx(s.grammar, 6);
 title(s.grammar,'3. Complete the sentences with the correct form of an adjective or an adverb from the box.');
-s.grammar.insertAdjacentHTML('beforeend', '<strong>Words:</strong> beautiful &nbsp;•&nbsp; careful &nbsp;•&nbsp; hard &nbsp;•&nbsp; healthy &nbsp;•&nbsp; perfect &nbsp;•&nbsp; safe &nbsp;•&nbsp; slow');
+s.grammar.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="beautiful" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">beautiful</span> &bull; <span class="phrase-click" data-val="careful" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">careful</span> &bull; <span class="phrase-click" data-val="hard" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">hard</span> &bull; <span class="phrase-click" data-val="healthy" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">healthy</span> &bull; <span class="phrase-click" data-val="perfect" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">perfect</span> &bull; <span class="phrase-click" data-val="safe" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">safe</span> &bull; <span class="phrase-click" data-val="slow" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">slow</span></div>');
 example(s.grammar,'I don’t understand you. Please speak <u>slowly</u>.');
 [
 ['He worked ___ and passed the exam.','hard'],
@@ -767,7 +767,7 @@ example(s.vocabulary,'He’s very <u>rich</u>. He has a lot of money. &nbsp;(ric
 ].forEach(x=>choice(s.vocabulary,...x));
 endEx(s.vocabulary, 7);
 title(s.vocabulary,'5. Match the words with the definitions.');
-s.vocabulary.insertAdjacentHTML('beforeend', '<strong>Words:</strong> altitude &nbsp;•&nbsp; breathe &nbsp;•&nbsp; cotton &nbsp;•&nbsp; freezer &nbsp;•&nbsp; hit &nbsp;•&nbsp; nose &nbsp;•&nbsp; roof');
+s.vocabulary.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="altitude" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">altitude</span> &bull; <span class="phrase-click" data-val="breathe" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">breathe</span> &bull; <span class="phrase-click" data-val="cotton" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">cotton</span> &bull; <span class="phrase-click" data-val="freezer" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">freezer</span> &bull; <span class="phrase-click" data-val="hit" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">hit</span> &bull; <span class="phrase-click" data-val="nose" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">nose</span> &bull; <span class="phrase-click" data-val="roof" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">roof</span></div>');
 example(s.vocabulary,'high place = <u>altitude</u>');
 [
 ['part of your face: ___','nose'],
@@ -793,7 +793,7 @@ endEx(s.vocabulary, 7);
 
 /* --- PRONUNCIATION --- */
 title(s.pronunciation,'7. Match the words with the same sound.');
-s.pronunciation.insertAdjacentHTML('beforeend', '<strong>Words:</strong> cloudy &nbsp;•&nbsp; friendly &nbsp;•&nbsp; high &nbsp;•&nbsp; meet &nbsp;•&nbsp; popular &nbsp;•&nbsp; worse');
+s.pronunciation.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="cloudy" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">cloudy</span> &bull; <span class="phrase-click" data-val="friendly" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">friendly</span> &bull; <span class="phrase-click" data-val="high" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">high</span> &bull; <span class="phrase-click" data-val="meet" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">meet</span> &bull; <span class="phrase-click" data-val="popular" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">popular</span> &bull; <span class="phrase-click" data-val="worse" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">worse</span></div>');
 example(s.pronunciation,'tea → <u>meet</u>');
 [
 ['slept: ___','friendly'],
@@ -842,7 +842,7 @@ endEx(s.reading, 5);
 
 /* --- LISTENING --- */
 title(s.listening,'1. Listen to a psychologist talking about people and adventurous sports. Write the letter (A–E) to match the sport to the type of person who likes each sport.');
-s.listening.insertAdjacentHTML('beforeend', '<strong>A</strong> young people &nbsp;&nbsp; <strong>B</strong> older people &nbsp;&nbsp; <strong>C</strong> aggressive people &nbsp;&nbsp; <strong>D</strong> friendly people &nbsp;&nbsp; <strong>E</strong> people who like to win');
+s.listening.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>A</strong> young people &nbsp;&nbsp; <strong>B</strong> older people &nbsp;&nbsp; <strong>C</strong> aggressive people &nbsp;&nbsp; <strong>D</strong> friendly people &nbsp;&nbsp; <strong>E</strong> people who like to win</div>');
 [
 ['sailing',['young people (A)','older people (B)','aggressive people (C)','friendly people (D)','people who like to win (E)'],1],
 ['skiing',['young people (A)','older people (B)','aggressive people (C)','friendly people (D)','people who like to win (E)'],3],

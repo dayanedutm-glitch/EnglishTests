@@ -780,7 +780,7 @@ endEx(s.grammar, 8);
 
 /* --- VOCABULARY --- */
 title(s.vocabulary,'4. Complete the phrase with the correct verb.');
-s.vocabulary.insertAdjacentHTML('beforeend', '<strong>Verbs:</strong> see &nbsp;•&nbsp; go &nbsp;•&nbsp; stay');
+s.vocabulary.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Verbs:</strong> <span class="phrase-click" data-val="see" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">see</span> &bull; <span class="phrase-click" data-val="go" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">go</span> &bull; <span class="phrase-click" data-val="stay" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">stay</span></div>');
 example(s.vocabulary,'<u>go</u> on a boat trip');
 [
 ['___ the sights','see'],
@@ -791,7 +791,7 @@ example(s.vocabulary,'<u>go</u> on a boat trip');
 ].forEach(x=>fill(s.vocabulary,...x));
 endEx(s.vocabulary, 5);
 title(s.vocabulary,'5. Write the words in the correct places.');
-s.vocabulary.insertAdjacentHTML('beforeend', '<strong>Words:</strong> apples &nbsp;•&nbsp; coffee &nbsp;•&nbsp; grapes &nbsp;•&nbsp; onions &nbsp;•&nbsp; mushrooms &nbsp;•&nbsp; pineapples &nbsp;•&nbsp; peas &nbsp;•&nbsp; tea &nbsp;•&nbsp; water &nbsp;&nbsp;|&nbsp;&nbsp; <em>Fruit: apples, … &nbsp; Vegetables: … &nbsp; Drinks: …</em>');
+s.vocabulary.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="apples" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">apples</span> &bull; <span class="phrase-click" data-val="coffee" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">coffee</span> &bull; <span class="phrase-click" data-val="grapes" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">grapes</span> &bull; <span class="phrase-click" data-val="onions" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">onions</span> &bull; <span class="phrase-click" data-val="mushrooms" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">mushrooms</span> &bull; <span class="phrase-click" data-val="pineapples" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">pineapples</span> &bull; <span class="phrase-click" data-val="peas" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">peas</span> &bull; <span class="phrase-click" data-val="tea" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">tea</span> &bull; <span class="phrase-click" data-val="water" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">water</span> &nbsp;&nbsp;|&nbsp;&nbsp; <em>Fruit: apples, … &nbsp; Vegetables: … &nbsp; Drinks: …</em></div>');
 [
 ['1. Fruit: ___','grapes'],
 ['2. Fruit: ___','pineapples'],
@@ -818,7 +818,7 @@ endEx(s.vocabulary, 7);
 
 /* --- PRONUNCIATION --- */
 title(s.pronunciation,'7. Match the words with the same sound.');
-s.pronunciation.insertAdjacentHTML('beforeend', '<strong>Words:</strong> bread &nbsp;•&nbsp; could &nbsp;•&nbsp; move &nbsp;•&nbsp; peas &nbsp;•&nbsp; steak &nbsp;•&nbsp; young');
+s.pronunciation.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="bread" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">bread</span> &bull; <span class="phrase-click" data-val="could" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">could</span> &bull; <span class="phrase-click" data-val="move" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">move</span> &bull; <span class="phrase-click" data-val="peas" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">peas</span> &bull; <span class="phrase-click" data-val="steak" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">steak</span> &bull; <span class="phrase-click" data-val="young" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">young</span></div>');
 example(s.pronunciation,'tea → <u>peas</u>');
 [
 ['health: ___','bread'],
@@ -841,14 +841,14 @@ endEx(s.pronunciation, 5);
 
 /* --- READING --- */
 title(s.reading,'1. Read the text and tick (✓) A, B, or C.');
-example(s.reading,'James started as _____. → <u>C</u> a dish washer');
+example(s.reading,'James started as ___. → <u>C</u> a dish washer');
 [
-['James started to learn how to cook _____.',['at college','at the restaurant','at home'],1],
-['When James became head chef, he changed the _____.',['restaurant’s name','kind of food','waiters'],1],
-['James finds ingredients in _____.',['other countries','different places in Britain','London'],2],
-['There is music _____.',['every day','twice a week','on Sundays'],1],
-['You can’t eat at Suzie’s _____.',['on Saturday afternoons','on Monday evenings','on Sunday mornings'],2],
-['Suzie’s doesn’t serve _____.',['meat','fast food','British food'],1]
+['James started to learn how to cook ___.',['at college','at the restaurant','at home'],1],
+['When James became head chef, he changed the ___.',['restaurant’s name','kind of food','waiters'],1],
+['James finds ingredients in ___.',['other countries','different places in Britain','London'],2],
+['There is music ___.',['every day','twice a week','on Sundays'],1],
+['You can’t eat at Suzie’s ___.',['on Saturday afternoons','on Monday evenings','on Sunday mornings'],2],
+['Suzie’s doesn’t serve ___.',['meat','fast food','British food'],1]
 ].forEach(x=>choice(s.reading,...x));
 endEx(s.reading, 6);
 title(s.reading,'2. Read the text again. Are the sentences True (T) or False (F)?');
@@ -869,11 +869,11 @@ endEx(s.reading, 9);
 /* --- LISTENING --- */
 title(s.listening,'1. Listen to a couple talk about their holiday. Tick (✓) A, B, or C.');
 [
-['Tim and Katy come from __________.',['London','Bristol','Manchester'],2],
-['Katy says the weather was __________.',['hot','sunny','cold'],1],
-['Tim thought Iceland was __________.',['interesting and cheap','interesting but expensive','cheap but cold'],1],
-['Katy prefers going to __________.',['different places','hot places','quiet places'],0],
-['On his next holiday, Tim wants to __________.',['go to the beach','go to the mountains','go sightseeing'],0]
+['Tim and Katy come from ___.',['London','Bristol','Manchester'],2],
+['Katy says the weather was ___.',['hot','sunny','cold'],1],
+['Tim thought Iceland was ___.',['interesting and cheap','interesting but expensive','cheap but cold'],1],
+['Katy prefers going to ___.',['different places','hot places','quiet places'],0],
+['On his next holiday, Tim wants to ___.',['go to the beach','go to the mountains','go sightseeing'],0]
 ].forEach(x=>choice(s.listening,...x));
 endEx(s.listening, 5);
 title(s.listening,'2. Listen to five conversations in a restaurant. Tick (✓) the correct answer.');

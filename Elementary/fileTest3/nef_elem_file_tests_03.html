@@ -766,7 +766,7 @@ endEx(s.grammar, 7);
 
 /* --- VOCABULARY --- */
 title(s.vocabulary,'4. Write the opposites.');
-s.vocabulary.insertAdjacentHTML('beforeend', '<strong>Words:</strong> cheap &nbsp;•&nbsp; dark &nbsp;•&nbsp; difficult &nbsp;•&nbsp; dry &nbsp;•&nbsp; full &nbsp;•&nbsp; low &nbsp;•&nbsp; safe &nbsp;•&nbsp; short &nbsp;•&nbsp; young');
+s.vocabulary.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="cheap" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">cheap</span> &bull; <span class="phrase-click" data-val="dark" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">dark</span> &bull; <span class="phrase-click" data-val="difficult" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">difficult</span> &bull; <span class="phrase-click" data-val="dry" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">dry</span> &bull; <span class="phrase-click" data-val="full" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">full</span> &bull; <span class="phrase-click" data-val="low" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">low</span> &bull; <span class="phrase-click" data-val="safe" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">safe</span> &bull; <span class="phrase-click" data-val="short" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">short</span> &bull; <span class="phrase-click" data-val="young" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">young</span></div>');
 example(s.vocabulary,'expensive → <u>cheap</u>');
 [
 ['empty → ___','full'],
@@ -804,7 +804,7 @@ endEx(s.vocabulary, 6);
 
 /* --- PRONUNCIATION --- */
 title(s.pronunciation,'7. Match the words with the same sound.');
-s.pronunciation.insertAdjacentHTML('beforeend', '<strong>Words:</strong> they &nbsp;•&nbsp; low &nbsp;•&nbsp; white &nbsp;•&nbsp; easy &nbsp;•&nbsp; third &nbsp;•&nbsp; job');
+s.pronunciation.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Words:</strong> <span class="phrase-click" data-val="they" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">they</span> &bull; <span class="phrase-click" data-val="low" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">low</span> &bull; <span class="phrase-click" data-val="white" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">white</span> &bull; <span class="phrase-click" data-val="easy" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">easy</span> &bull; <span class="phrase-click" data-val="third" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">third</span> &bull; <span class="phrase-click" data-val="job" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">job</span></div>');
 example(s.pronunciation,'clean → <u>easy</u>');
 [
 ['birthday: ___','third'],
@@ -827,28 +827,28 @@ endEx(s.pronunciation, 5);
 
 /* --- READING --- */
 title(s.reading,'1. Read the text and tick (✓) A, B, or C.');
-example(s.reading,'Jane gets up at _____. → <u>B</u> 6.30');
+example(s.reading,'Jane gets up at ___. → <u>B</u> 6.30');
 [
-['Jane has breakfast _____.',['at home','at school','on the bus'],0],
-['She _____ to work.',['cycles','runs','walks'],2],
-['She usually comes home by _____.',['bus','bike','car'],0],
-['She never _____.',['does exercise','eats meat','smokes'],2],
-['Tim _____ has breakfast.',['sometimes','never','hardly ever'],1],
-['Tim often has lunch _____.',['in a fast food restaurant','at home','at work'],2],
-['Tim often drinks _____ with his food.',['coffee','beer','wine'],2],
-['He _____ does exercise.',['often','sometimes','never'],1]
+['Jane has breakfast ___.',['at home','at school','on the bus'],0],
+['She ___ to work.',['cycles','runs','walks'],2],
+['She usually comes home by ___.',['bus','bike','car'],0],
+['She never ___.',['does exercise','eats meat','smokes'],2],
+['Tim ___ has breakfast.',['sometimes','never','hardly ever'],1],
+['Tim often has lunch ___.',['in a fast food restaurant','at home','at work'],2],
+['Tim often drinks ___ with his food.',['coffee','beer','wine'],2],
+['He ___ does exercise.',['often','sometimes','never'],1]
 ].forEach(x=>choice(s.reading,...x));
 endEx(s.reading, 8);
 title(s.reading,'2. Read the text again and write Jane or Tim.');
 example(s.reading,'<u>Tim</u> is a journalist.');
 [
-['_____ lives by the sea.',['Jane','Tim'],1],
-['_____ goes to bed late.',['Jane','Tim'],1],
-['_____ eats sandwiches for lunch.',['Jane','Tim'],0],
-['_____ goes out at night in the week.',['Jane','Tim'],1],
-['_____ has dinner at home.',['Jane','Tim'],0],
-['_____ has a healthy lifestyle.',['Jane','Tim'],0],
-['_____ smokes.',['Jane','Tim'],1]
+['___ lives by the sea.',['Jane','Tim'],1],
+['___ goes to bed late.',['Jane','Tim'],1],
+['___ eats sandwiches for lunch.',['Jane','Tim'],0],
+['___ goes out at night in the week.',['Jane','Tim'],1],
+['___ has dinner at home.',['Jane','Tim'],0],
+['___ has a healthy lifestyle.',['Jane','Tim'],0],
+['___ smokes.',['Jane','Tim'],1]
 ].forEach(x=>choice(s.reading,...x));
 endEx(s.reading, 7);
 
