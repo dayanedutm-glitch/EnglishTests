@@ -234,10 +234,7 @@
     </div>
   </div>
   <div id="ai-notice" style="display:none; padding:8px 12px; border-radius:6px; font-size:13px; margin-bottom:8px;"></div>
-  <details style="margin-top:8px; background:#fff; border:1px solid #d1d5db; border-radius:6px; padding:8px 12px; font-size:13px;">
-    <summary style="cursor:pointer; color:#0d568c; font-weight:bold;">Show the exact AI Prompt that gets generated</summary>
-    <textarea id="ai-prompt-preview" readonly style="width:100%; min-height:220px; font-family:monospace; font-size:12px; margin-top:8px; box-sizing:border-box;"></textarea>
-  </details>
+  <textarea id="ai-prompt-preview" readonly aria-hidden="true" tabindex="-1" style="position:absolute; left:-9999px; top:0; width:1px; height:1px; opacity:0; pointer-events:none;"></textarea>
   <span id="result"></span>
 </div>
 <div id="ai-result" style="margin-top:20px; padding:20px; border:1px solid #d1d5db; border-radius:8px; background:#f9fafb; font-family:Arial, sans-serif; display:none;"></div>
