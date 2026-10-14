@@ -20,9 +20,50 @@
 .actions button:hover:not(:disabled){transform:translateY(-1px)}
 @media print{button{display:none!important}}h3 { margin-top: 40px; padding-top: 25px; border-top: 2px dashed #cbd5e1; } section > h3:first-of-type, .reading h3, .manual h3 { margin-top: 0; padding-top: 0; border-top: none; }
 
-.tree-blank{width:100%;height:100%;box-sizing:border-box;border:0;border-bottom:1.5px solid #1f2937;background:transparent;text-align:center;font-family:Arial,sans-serif;font-size:19px;font-weight:bold;color:#0d568c;padding:0 2px}
-.tree-blank:focus{outline:2px solid #0d568c;outline-offset:1px;border-radius:3px}
-</style></head><body>
+/* Mobile responsive fixes for header badge & title */
+@media (max-width: 600px) {
+    header {
+        padding: 15px 12px 20px !important;
+    }
+    header > div:first-child {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 10px 12px !important;
+        gap: 10px !important;
+    }
+    header > div:first-child > div {
+        min-width: 100% !important;
+        flex: unset !important;
+    }
+    header > div:last-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+    header > div:last-child > div:first-child {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    header > div:last-child > div:first-child > div:first-child {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        font-size: 20px !important;
+        margin-right: -10px !important;
+    }
+    header > div:last-child > div:first-child > div:last-child {
+        font-size: 14px !important;
+        padding: 8px 12px 8px 18px !important;
+        word-break: break-word !important;
+    }
+    header > div:last-child > div:last-child {
+        margin-right: 0 !important;
+        align-items: flex-start !important;
+    }
+}
+
+</style><style>@media(max-width:600px){main{padding:0 10px}section{padding:16px}#speaking [style*="min-width"]{min-width:0!important;max-width:100%}.recorder-widget button{min-height:44px}.recorder-widget textarea{width:100%;box-sizing:border-box}}</style></head><body>
 <main>
 <header style="background: #e6e6e6; border-radius: 0; box-shadow: none; padding: 20px 30px 30px; margin-top: 0; margin-bottom: 22px;">
   <!-- Top area: Inputs inside a white box -->
@@ -70,24 +111,23 @@
 <section class="writing"><h2>Writing</h2><div class="manual">
 <h3>1. Answer the questions about a man in your family in complete sentences.</h3>
 <p>What's his name and where is he from?</p>
-<textarea class="writing-inp" placeholder="e.g. My brother's name is Mark and he is from London.">My father's name is Robert and he is from Chicago.</textarea>
+<textarea class="writing-inp" placeholder="Type your answer here"></textarea>
 <p>How old is he and is he married?</p>
-<textarea class="writing-inp" placeholder="e.g. He is 25 years old and he is married.">He is 55 years old and he is married.</textarea>
+<textarea class="writing-inp" placeholder="Type your answer here"></textarea>
 <p>Is he tall or short, good-looking or not good-looking?</p>
-<textarea class="writing-inp" placeholder="e.g. He is tall and good-looking.">He is tall and very good-looking.</textarea>
+<textarea class="writing-inp" placeholder="Type your answer here"></textarea>
 
 <h3>2. Answer the questions about a woman in your family in complete sentences.</h3>
 <p>What's her name and where is she from?</p>
-<textarea class="writing-inp" placeholder="e.g. My sister's name is Sarah and she is from Oxford.">My sister's name is Emily and she is from New York.</textarea>
+<textarea class="writing-inp" placeholder="Type your answer here"></textarea>
 <p>How old is she and is she married?</p>
-<textarea class="writing-inp" placeholder="e.g. She is 22 years old and she is not married.">She is 24 years old and she is not married.</textarea>
+<textarea class="writing-inp" placeholder="Type your answer here"></textarea>
 <p>Is she tall or short, beautiful or not beautiful?</p>
-<textarea class="writing-inp" placeholder="e.g. She is short and very beautiful.">She is short but she is beautiful.</textarea>
+<textarea class="writing-inp" placeholder="Type your answer here"></textarea>
 
 <div class="writing-summary">
   <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
     <div id="writing-counts" style="font-size:13px; color:#526273; font-weight:bold;">0 words · 0 sentences</div>
-    <button type="button" id="btn-check-writing" style="background:#0d6fa8; color:#fff; padding:6px 14px; font-size:13px; border-radius:6px;">✓ Check Writing Basics</button>
   </div>
   <div id="writing-msg" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; font-size:13px;"></div>
   <div id="writing-checks" style="display:none; margin-top:10px; display:grid; gap:6px;"></div>
@@ -96,7 +136,7 @@
 
 <p style="margin-top:12px;"><strong>Teacher marking:</strong> 10 marks (Task completion 4, Grammar 3, Vocabulary 3).</p>
 </div></section>
-<section id="listening"><h2>Listening</h2><div class="manual"><p><strong>Instructions:</strong> Allow students time to read the questions. Play each recording once, allow a short checking pause, then play it once more. Do not pause during a test attempt.</p></div></section>
+<section id="listening"><h2>Listening</h2><div class="manual"><p><strong>Instructions:</strong> Allow students time to read the questions. Play each recording once, allow a short checking pause, then play it once more. Do not pause during a test attempt.</p><h3>1. Lisa Smith at hotel reception</h3><audio class="audio" controls preload="metadata"><source src="file2Listening1.mp3" type="audio/mpeg">Your browser does not support audio playback. Open <a href="file2Listening1.mp3">Recording 1</a>.</audio><h3>2. Five conversations</h3><audio class="audio" controls preload="metadata"><source src="file2Listening2.mp3" type="audio/mpeg">Your browser does not support audio playback. Open <a href="file2Listening2.mp3">Recording 2</a>.</audio></div></section>
 <section><h2>Speaking</h2><div class="manual">
 
 <h3>1. Personal Information</h3>
@@ -189,50 +229,27 @@
 
 <hr style="border:0;border-top:1px dashed #d89b21;margin:35px 0">
 
-<h3>2. Family</h3>
-<p><strong>One exercise in two parts. In Part A you make the questions. In Part B you answer the questions.</strong></p>
-<h4 style="margin:30px 0 10px; padding:0; border:0; font-size:16px; color:#0d568c; font-family:Arial, sans-serif;">A. Question making about a family</h4>
-<p><strong>Look at the empty family tree. You do not know the names. Ask your teacher questions to find out who each person is, then record yourself asking the questions out loud.</strong></p>
-<div class="box-card"><strong>Names to use:</strong> <span class="phrase-click" data-val="Kate" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Kate</span> &bull; <span class="phrase-click" data-val="James" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">James</span> &bull; <span class="phrase-click" data-val="Jerry" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Jerry</span> &bull; <span class="phrase-click" data-val="Jenny" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Jenny</span> &bull; <span class="phrase-click" data-val="Anna" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Anna</span></div>
-<div class="example" style="background:#fff7df; padding:8px 12px; margin-bottom:15px; border-radius:4px; font-style:italic;"><strong>Example:</strong> Who / Jerry? &rarr; "Who is Jerry?"</div>
+<h3>2. Sally's Family</h3>
+<p><strong>Look at the completed family tree below. Use the prompts to record yourself asking AND answering the questions out loud:</strong></p>
+<div class="example" style="background:#fff7df; padding:8px 12px; margin-bottom:15px; border-radius:4px; font-style:italic;"><strong>Example:</strong> Who / Nicola? &rarr; "Who is Nicola? Nicola is Tom's wife."</div>
 
-<div id="family-tree">
-<svg width="100%" height="210" viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" style="max-width: 700px; display:block; margin: 20px 0;">
-  <foreignObject x="210" y="34" width="110" height="28">
-    <input type="text" class="tree-blank" data-family-answer="Jerry" placeholder="1" aria-label="Blank 1">
-  </foreignObject>
-  <text x="350" y="48" text-anchor="middle" font-size="21" font-family="Arial" fill="#1f2937">=</text>
-  <foreignObject x="380" y="34" width="110" height="28">
-    <input type="text" class="tree-blank" data-family-answer="Kate" placeholder="2" aria-label="Blank 2">
-  </foreignObject>
-  <path d="M 350 60 L 350 110" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <path d="M 100 110 L 600 110" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <path d="M 100 110 L 100 140" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <path d="M 350 110 L 350 140" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <path d="M 600 110 L 600 140" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <foreignObject x="45" y="158" width="110" height="28">
-    <input type="text" class="tree-blank" data-family-answer="James" placeholder="3" aria-label="Blank 3">
-  </foreignObject>
-  <foreignObject x="295" y="158" width="110" height="28">
-    <input type="text" class="tree-blank" data-family-answer="Anna" placeholder="4" aria-label="Blank 4">
-  </foreignObject>
-  <text x="570" y="172" text-anchor="end" font-size="21" font-family="Arial" fill="#1f2937" font-weight="bold">Paul =</text>
-  <foreignObject x="580" y="158" width="110" height="28">
-    <input type="text" class="tree-blank" data-family-answer="Jenny" placeholder="5" aria-label="Blank 5">
-  </foreignObject>
+<svg width="100%" height="150" viewBox="0 0 460 150" xmlns="http://www.w3.org/2000/svg" style="max-width: 460px; display:block; margin: 15px 0;">
+  <text x="230" y="35" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Tom = Nicola</text>
+  <path d="M 230 45 L 230 80" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <path d="M 90 80 L 370 80" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <path d="M 90 80 L 90 100" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <path d="M 230 80 L 230 100" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <path d="M 370 80 L 370 100" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <text x="90" y="120" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Sarah</text>
+  <text x="230" y="120" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Ben</text>
+  <text x="370" y="120" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937"><strong>Sally</strong> = Patrick</text>
 </svg>
-</div>
-<div style="display:flex; align-items:center; gap:12px; margin:-6px 0 22px; flex-wrap:wrap;">
-  <button type="button" id="check-family-tree" style="background:#0d6fa8; padding:7px 14px; font-size:13px;">&#10003; Check the tree</button>
-  <span id="family-tree-result" style="font-weight:bold; font-size:14px; color:#0d568c;"></span>
-  <span style="font-size:12px; color:#526273; font-style:italic;">Tip: click a name, or click a blank and then a name.</span>
-</div>
 
-<p style="color:#526273; font-family:Arial, sans-serif; margin-bottom:10px;"><strong>Record your questions:</strong></p>
+<p style="color:#526273; font-family:Arial, sans-serif; margin-bottom:10px;"><strong>Prompts:</strong></p>
 <div style="display:flex; flex-wrap:wrap; gap:15px;">
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Jerry?</strong></p>
-    <div class="recorder-widget" data-prompt="Ask the question: Who / Jerry?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Nicola?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Nicola?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -248,8 +265,8 @@
   </div>
 
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Kate?</strong></p>
-    <div class="recorder-widget" data-prompt="Ask the question: Who / Kate?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Ben?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Ben?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -265,8 +282,8 @@
   </div>
 
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / James?</strong></p>
-    <div class="recorder-widget" data-prompt="Ask the question: Who / James?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Sally / sister?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Sally / sister?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -282,8 +299,8 @@
   </div>
 
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Anna?</strong></p>
-    <div class="recorder-widget" data-prompt="Ask the question: Who / Anna?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Sally / father?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Sally / father?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -299,8 +316,8 @@
   </div>
 
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Jenny?</strong></p>
-    <div class="recorder-widget" data-prompt="Ask the question: Who / Jenny?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Patrick?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Patrick?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -318,29 +335,25 @@
 
 <hr style="border:0;border-top:1px dashed #d89b21;margin:35px 0">
 
-<h4 style="margin:30px 0 10px; padding:0; border:0; font-size:16px; color:#0d568c; font-family:Arial, sans-serif;">B. Answering questions about a family</h4>
-<p><strong>Look at the complete family tree below. Answer the questions about the family out loud, then record your answers.</strong></p>
-<div class="example" style="background:#fff7df; padding:8px 12px; margin-bottom:15px; border-radius:4px; font-style:italic;"><strong>Example:</strong> Who / Nicola? &rarr; "Who is Nicola? Nicola is Tom's wife."</div>
-
-<svg width="100%" height="210" viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" style="max-width: 700px; display:block; margin: 20px 0;">
-  <text x="265" y="48" text-anchor="middle" font-size="21" font-family="Arial" fill="#1f2937" >Tom</text>
-  <text x="350" y="48" text-anchor="middle" font-size="21" font-family="Arial" fill="#1f2937" >=</text>
-  <text x="435" y="48" text-anchor="middle" font-size="21" font-family="Arial" fill="#1f2937" >Nicola</text>
-  <path d="M 350 60 L 350 110" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <path d="M 100 110 L 600 110" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <path d="M 100 110 L 100 140" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <path d="M 350 110 L 350 140" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <path d="M 600 110 L 600 140" fill="none" stroke="#1f2937" stroke-width="1.5"/>
-  <text x="100" y="172" text-anchor="middle" font-size="21" font-family="Arial" fill="#1f2937" >Sarah</text>
-  <text x="350" y="172" text-anchor="middle" font-size="21" font-family="Arial" fill="#1f2937" >Ben</text>
-  <text x="600" y="172" text-anchor="middle" font-size="21" font-family="Arial" fill="#1f2937" ><tspan font-weight="bold">Sally</tspan> = Patrick</text>
+<h3>3. Paul's Family</h3>
+<p><strong>Look at the completed family tree below. Use the prompts to record yourself asking AND answering the questions out loud:</strong></p>
+<svg width="100%" height="150" viewBox="0 0 460 150" xmlns="http://www.w3.org/2000/svg" style="max-width: 460px; display:block; margin: 15px 0;">
+  <text x="230" y="35" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Jerry = Kate</text>
+  <path d="M 230 45 L 230 80" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <path d="M 90 80 L 370 80" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <path d="M 90 80 L 90 100" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <path d="M 230 80 L 230 100" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <path d="M 370 80 L 370 100" fill="none" stroke="#1f2937" stroke-width="1"/>
+  <text x="90" y="120" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">James</text>
+  <text x="230" y="120" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937">Anna</text>
+  <text x="370" y="120" text-anchor="middle" font-family="Arial" font-size="16" fill="#1f2937"><strong>Paul</strong> = Jenny</text>
 </svg>
 
-<p style="color:#526273; font-family:Arial, sans-serif; margin-bottom:10px;"><strong>Record your answers:</strong></p>
+<p style="color:#526273; font-family:Arial, sans-serif; margin-bottom:10px;"><strong>Prompts:</strong></p>
 <div style="display:flex; flex-wrap:wrap; gap:15px;">
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Nicola?</strong></p>
-    <div class="recorder-widget" data-prompt="Answer the question: Who / Nicola?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Jerry?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Jerry?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -356,8 +369,8 @@
   </div>
 
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Ben?</strong></p>
-    <div class="recorder-widget" data-prompt="Answer the question: Who / Ben?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Anna?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Anna?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -373,8 +386,8 @@
   </div>
 
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Sally / sister?</strong></p>
-    <div class="recorder-widget" data-prompt="Answer the question: Who / Sally / sister?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Paul / brother?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Paul / brother?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -390,8 +403,8 @@
   </div>
 
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Sally / father?</strong></p>
-    <div class="recorder-widget" data-prompt="Answer the question: Who / Sally / father?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Paul / mother?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Paul / mother?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -407,8 +420,8 @@
   </div>
 
   <div style="flex:1; min-width:260px; margin-bottom:15px;">
-    <p style="margin-bottom:5px;"><strong>Who / Patrick?</strong></p>
-    <div class="recorder-widget" data-prompt="Answer the question: Who / Patrick?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
+    <p style="margin-bottom:5px;"><strong>Who / Jenny?</strong></p>
+    <div class="recorder-widget" data-prompt="Who / Jenny?" style="padding:12px; background:#f9fafb; border:1px solid #d1d5db; border-radius:8px;">
       <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
         <button type="button" class="btn-record" style="padding:6px 12px; font-size:14px;">&#127908; Record</button>
         <button type="button" class="btn-stop" style="background:#526273; padding:6px 12px; font-size:14px;" disabled>&#9209; Stop</button>
@@ -442,139 +455,66 @@
     </div>
   </div>
   <div id="ai-notice" style="display:none; padding:8px 12px; border-radius:6px; font-size:13px; margin-bottom:8px;"></div>
-  <textarea id="ai-prompt-preview" readonly aria-hidden="true" tabindex="-1" style="position:absolute; left:-9999px; top:0; width:1px; height:1px; opacity:0; pointer-events:none;"></textarea>
   <span id="result"></span>
 </div>
 <div id="ai-result" style="margin-top:20px; padding:20px; border:1px solid #d1d5db; border-radius:8px; background:#f9fafb; font-family:Arial, sans-serif; display:none;"></div>
 </main><script>
 
 
-const s={grammar:document.querySelector('#grammar'),vocabulary:document.querySelector('#vocabulary'),pronunciation:document.querySelector('#pronunciation'),practical:document.querySelector('#practical'),reading:document.querySelector('#reading'),listening:document.querySelector('#listening')};let id=0, exId=0;const norm=x=>x.trim().toLowerCase().replace(/[.?!,]/g,'').replace(/\s+/g,' ');const title=(t,x)=>{ exId++; t.insertAdjacentHTML('beforeend',`<h3>${x}</h3>`); };const endEx=(t,pts)=>t.insertAdjacentHTML('beforeend',`<div style="display:flex; justify-content:flex-end; margin:10px 0 25px;"><div id="score-box-${exId}" style="border: 1px solid #333; width: 25px; height: 25px; background: #fff; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #29974e; font-family: Arial, sans-serif;"></div><div style="border: 1px solid #333; background: #999; color: #fff; font-weight: bold; font-family: Arial, sans-serif; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center; margin-left: -1px; font-size: 14px;">${pts}</div></div>`);function fill(t,p,a){id++;t.insertAdjacentHTML('beforeend',`<div class="q">${p.replace('___',`<input type="text" data-answer="${a}" data-ex="${exId}">`)}</div>`)}function choice(t,p,o,c){id++;t.insertAdjacentHTML('beforeend',`<div class="q">${p}<div class="answers">${o.map((x,i)=>`<label><input type="radio" name="q${id}" data-ex="${exId}" ${i===c?'data-correct="true"':''}> ${String.fromCharCode(65+i)}. ${x}</label>`).join('')}</div></div>`)}const example=(t,html)=>t.insertAdjacentHTML('beforeend',`<div class="example" style="background:#fff7df; padding:8px 12px; margin-bottom:15px; border-radius:4px; font-style:italic;"><strong>Example:</strong> ${html}</div>`);function syllable(t,syls,c){id++;const html=syls.map((s,i)=>`<span class="syl" data-ex="${exId}" data-name="q${id}" data-idx="${i}" style="cursor:pointer; padding:3px 2px; font-size:16px;">${s}</span>`).join('&middot;');t.insertAdjacentHTML('beforeend',`<div class="q syl-q" data-correct="${c}" style="padding:4px;">${html}</div>`);}
+const s={grammar:document.querySelector('#grammar'),vocabulary:document.querySelector('#vocabulary'),pronunciation:document.querySelector('#pronunciation'),practical:document.querySelector('#practical'),reading:document.querySelector('#reading'),listening:document.querySelector('#listening')};let id=0, exId=0;const norm=x=>x.trim();const title=(t,x)=>{ exId++; t.insertAdjacentHTML('beforeend',`<h3>${x}</h3>`); };const endEx=(t,pts)=>t.insertAdjacentHTML('beforeend',`<div style="display:flex; justify-content:flex-end; margin:10px 0 25px;"><div id="score-box-${exId}" style="border: 1px solid #333; width: 25px; height: 25px; background: #fff; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #29974e; font-family: Arial, sans-serif;"></div><div style="border: 1px solid #333; background: #999; color: #fff; font-weight: bold; font-family: Arial, sans-serif; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center; margin-left: -1px; font-size: 14px;">${pts}</div></div>`);function fill(t,p,a){id++;t.insertAdjacentHTML('beforeend',`<div class="q">${p.replace('___',`<input type="text" data-answer="${a}" data-ex="${exId}">`)}</div>`)}function choice(t,p,o,c){id++;t.insertAdjacentHTML('beforeend',`<div class="q">${p}<div class="answers">${o.map((x,i)=>`<label><input type="radio" name="q${id}" data-ex="${exId}" ${i===c?'data-correct="true"':''}> ${String.fromCharCode(65+i)}. ${x}</label>`).join('')}</div></div>`)}const example=(t,html)=>t.insertAdjacentHTML('beforeend',`<div class="example" style="background:#fff7df; padding:8px 12px; margin-bottom:15px; border-radius:4px; font-style:italic;"><strong>Example:</strong> ${html}</div>`);function syllable(t,syls,c){id++;const html=syls.map((s,i)=>`<span class="syl" data-ex="${exId}" data-name="q${id}" data-idx="${i}" style="cursor:pointer; padding:3px 2px; font-size:16px;">${s}</span>`).join('&middot;');t.insertAdjacentHTML('beforeend',`<div class="q syl-q" data-correct="${c}" style="padding:4px;">${html}</div>`);}
 document.addEventListener('click', e => { if(e.target.classList.contains('syl')){ const p=e.target.closest('.syl-q'); p.querySelectorAll('.syl').forEach(s=>{s.style.textDecoration='none'; s.style.fontWeight='normal'; s.classList.remove('selected');}); e.target.style.textDecoration='underline'; e.target.style.fontWeight='bold'; e.target.classList.add('selected'); }});
 
 window.studentRecordings = {};
 window.studentTranscripts = {};
 window.studentAudioUrls = {};
-let _rId = 1;
+const recordControllers = [];
+let examWords = {record:'Record',stop:'Stop',clear_recording:'Clear recording',record_cleared:'Recording cleared',recorded:'Recorded',recording:'Recording…',microphone_error:'Microphone is unavailable'};
 const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-document.querySelectorAll('.recorder-widget').forEach(widget => {
-  const btnRecord = widget.querySelector('.btn-record');
-  const btnStop = widget.querySelector('.btn-stop');
-  const btnDownload = widget.querySelector('.btn-download');
-  const audioPlayback = widget.querySelector('.audio-playback');
-  const transcriptText = widget.querySelector('.transcript-text');
-  const sttStatus = widget.querySelector('.stt-status');
-  const promptText = widget.dataset.prompt || ("Question " + _rId);
-  const recId = "Speaking_" + _rId++;
-
-  let mediaRecorder;
-  let audioChunks = [];
-  let recognition = null;
-  let manualEdit = false;
-
-  transcriptText.addEventListener('input', () => {
-    manualEdit = true;
-    window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-    updateAiPreview();
-  });
-
-  btnRecord.onclick = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
-
-      mediaRecorder.ondataavailable = e => {
-        if(e.data.size > 0) audioChunks.push(e.data);
-      };
-
-      mediaRecorder.onstop = () => {
-        const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'; const audioBlob = new Blob(audioChunks, { type: mimeType });
-        window.studentRecordings[recId] = audioBlob;
-        const audioUrl = URL.createObjectURL(audioBlob);
-        window.studentAudioUrls[recId] = audioUrl;
-        audioPlayback.src = audioUrl;
-        audioPlayback.style.display = 'block';
-
-        if(btnDownload){
-          btnDownload.style.display = 'inline-block';
-          btnDownload.onclick = () => {
-            const a = document.createElement('a');
-            a.href = audioUrl;
-            a.download = `${recId}.webm`;
-            a.click();
-          };
-        }
-
-        stream.getTracks().forEach(track => track.stop());
-      };
-
-      // Set up Speech-to-Text
-      if (SpeechRec) {
-        try {
-          recognition = new SpeechRec();
-          recognition.continuous = true;
-          recognition.interimResults = true;
-          recognition.lang = 'en-US';
-
-          let initialText = manualEdit ? transcriptText.value + ' ' : '';
-          recognition.onresult = event => {
-            let interim = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-              interim += event.results[i][0].transcript;
-            }
-            transcriptText.value = (initialText + interim).trim();
-            window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-            updateAiPreview();
-          };
-
-          recognition.onerror = e => {
-            console.warn('SpeechRecognition error:', e.error);
-            sttStatus.textContent = 'STT notice: ' + e.error;
-          };
-
-          recognition.start();
-          sttStatus.textContent = '🎙️ Recording & Transcribing...';
-          sttStatus.style.color = '#dc2626';
-        } catch(sttErr) {
-          console.warn('Could not start SpeechRecognition:', sttErr);
-          sttStatus.textContent = '🎙️ Recording audio...';
-        }
-      } else {
-        sttStatus.textContent = '🎙️ Recording (Web Speech API not supported in this browser)';
-      }
-
-      mediaRecorder.start();
-      btnRecord.disabled = true;
-      btnRecord.innerHTML = '&#9209; Recording...';
-      btnRecord.style.background = '#ce3c3c';
-      btnStop.disabled = false;
-      btnStop.style.background = '#0d6fa8';
-    } catch(err) {
-      alert('Microphone access denied or error: ' + err.message);
-    }
-  };
-
-  btnStop.onclick = () => {
-    if(mediaRecorder && mediaRecorder.state !== 'inactive') {
-      mediaRecorder.stop();
-      if (recognition) {
-        try { recognition.stop(); } catch(e){}
-      }
-      btnRecord.disabled = false;
-      btnRecord.innerHTML = '&#127908; Re-record';
-      btnRecord.style.background = '#0d6fa8';
-      btnStop.disabled = true;
-      btnStop.style.background = '#526273';
-      sttStatus.textContent = '✅ Recorded & Transcribed';
-      sttStatus.style.color = '#16a34a';
-
-      window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-      updateAiPreview();
-    }
-  };
+window.setExamLanguage = words => {examWords=Object.assign(examWords,words);recordControllers.forEach(r=>r.labels());};
+window.restoreExamRecording = (id,blob) => {const r=recordControllers.find(r=>r.id===id);if(r)r.restore(blob);};
+window.stopExamRecordings = () => Promise.all(recordControllers.map(r=>r.stop()));
+document.querySelectorAll('.recorder-widget').forEach((widget,index) => {
+ const recId='Speaking_'+(index+1),promptText=widget.dataset.prompt||('Question '+(index+1));
+ const btnRecord=widget.querySelector('.btn-record'),btnStop=widget.querySelector('.btn-stop'),btnDownload=widget.querySelector('.btn-download');
+ const audio=widget.querySelector('.audio-playback'),transcript=widget.querySelector('.transcript-text'),status=widget.querySelector('.stt-status');
+ const clear=document.createElement('button');clear.type='button';clear.className='btn-clear-recording';clear.style.cssText='padding:6px 12px;font-size:14px;background:#b91c1c;min-height:44px';btnRecord.insertAdjacentElement('afterend',clear);
+ let recorder=null,recognition=null,stream=null,chunks=[],generation=0,pendingStop=null,resolveStop=null;
+ function labels(){btnRecord.textContent=examWords.record;btnStop.textContent=examWords.stop;clear.textContent=examWords.clear_recording;}
+ function changed(blob){document.dispatchEvent(new CustomEvent('exam-recording-change',{detail:{id:recId,blob:blob||null}}));}
+ function release(){audio.pause();audio.removeAttribute('src');audio.load();audio.style.display='none';if(window.studentAudioUrls[recId])URL.revokeObjectURL(window.studentAudioUrls[recId]);delete window.studentAudioUrls[recId];delete window.studentRecordings[recId];if(btnDownload){btnDownload.style.display='none';btnDownload.onclick=null;}}
+ function show(blob){release();window.studentRecordings[recId]=blob;const url=URL.createObjectURL(blob);window.studentAudioUrls[recId]=url;audio.src=url;audio.style.display='block';if(btnDownload){btnDownload.style.display='inline-block';btnDownload.onclick=()=>{const a=document.createElement('a');a.href=url;a.download=recId+(blob.type.includes('mp4')?'.m4a':'.webm');a.click();};}}
+ function stop(){if(recognition){try{recognition.stop();}catch(e){}}if(recorder&&recorder.state!=='inactive'){recorder.stop();return pendingStop||Promise.resolve();}return pendingStop||Promise.resolve();}
+ transcript.addEventListener('input',()=>{window.studentTranscripts[recId]={prompt:promptText,text:transcript.value};updateAiPreview();});
+ clear.onclick=()=>{
+  generation++;if(recognition){recognition.onresult=null;try{recognition.abort();}catch(e){}}
+  if(recorder&&recorder.state!=='inactive')recorder.stop();if(stream)stream.getTracks().forEach(t=>t.stop());
+  chunks=[];release();delete window.studentTranscripts[recId];transcript.value='';transcript.dispatchEvent(new Event('input',{bubbles:true}));delete window.studentTranscripts[recId];
+  btnRecord.disabled=false;btnStop.disabled=true;status.textContent=examWords.record_cleared;labels();changed(null);updateAiPreview();
+ };
+ btnRecord.onclick=async()=>{
+  const current=++generation;btnRecord.disabled=true;
+  try{
+   const incoming=await navigator.mediaDevices.getUserMedia({audio:true});
+   if(current!==generation){incoming.getTracks().forEach(t=>t.stop());return;}
+   stream=incoming;const mime=['audio/webm;codecs=opus','audio/mp4','audio/webm'].find(t=>MediaRecorder.isTypeSupported(t));recorder=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
+   const activeRecorder=recorder,clipChunks=[];let finish;
+   pendingStop=new Promise(resolve=>{finish=resolve;});
+   activeRecorder.ondataavailable=e=>{if(current===generation&&e.data.size)clipChunks.push(e.data);};
+   activeRecorder.onstop=()=>{
+    incoming.getTracks().forEach(t=>t.stop());
+    if(current===generation){const blob=new Blob(clipChunks,{type:activeRecorder.mimeType||mime||'audio/webm'});show(blob);changed(blob);status.textContent=examWords.recorded;btnRecord.disabled=false;btnStop.disabled=true;labels();}
+    finish();if(recorder===activeRecorder)pendingStop=null;
+   };
+   if(SpeechRec){try{recognition=new SpeechRec();recognition.continuous=true;recognition.interimResults=true;recognition.lang='en-US';
+    const initial=transcript.value?transcript.value+' ':'';
+    recognition.onresult=e=>{if(current!==generation)return;let text='';for(let i=0;i<e.results.length;i++)text+=e.results[i][0].transcript+' ';transcript.value=(initial+text).trim();transcript.dispatchEvent(new Event('input',{bubbles:true}));};recognition.onerror=()=>{};recognition.start();
+   }catch(e){}}
+   recorder.start();btnStop.disabled=false;status.textContent=examWords.recording;
+  }catch(e){if(stream)stream.getTracks().forEach(t=>t.stop());btnRecord.disabled=false;btnStop.disabled=true;status.textContent=examWords.microphone_error;}
+ };
+ btnStop.onclick=stop;labels();recordControllers.push({id:recId,labels,stop,restore:show});
 });
+
 
 /* ================= Writing analysis & client checks ================= */
 const SPELL = [
@@ -645,6 +585,7 @@ function updateWritingCounts(){
   if (wc) {
     wc.textContent = `${a.words} words · ${a.sentences} sentences (${a.inputs.filter(Boolean).length}/6 answered)`;
   }
+  renderWritingBasics();
 }
 
 document.querySelectorAll('.writing-inp').forEach(inp => {
@@ -654,7 +595,7 @@ document.querySelectorAll('.writing-inp').forEach(inp => {
   });
 });
 
-document.getElementById('btn-check-writing').onclick = () => {
+function renderWritingBasics(){
   const a = analyzeWriting();
   const msg = document.getElementById('writing-msg');
   const box = document.getElementById('writing-checks');
@@ -718,12 +659,16 @@ document.getElementById('btn-check-writing').onclick = () => {
 
   box.style.display = 'grid';
   total.style.display = 'flex';
-  total.innerHTML = `<span>Basic Writing Checks</span><span>${passed} / ${scoredRows.length} passed</span>`;
+  total.innerHTML = `<div style="display:flex; flex-direction:column; gap:5px;">
+    <span style="font-weight:700; color:#0d568c;">Writing Basics Result</span>
+    <span>Correct: <b>${passed} / ${scoredRows.length}</b></span>
+    <span>Max Score: <b>${scoredRows.length}</b></span>
+  </div>`;
   msg.style.display = 'block';
   msg.style.background = passed >= scoredRows.length - 1 ? '#dcfce7' : '#fef3c7';
   msg.style.color = passed >= scoredRows.length - 1 ? '#166534' : '#92400e';
   msg.textContent = passed >= scoredRows.length - 1 ? 'Writing looks solid! Ready for AI Teacher grading. ✅' : 'Review the items below, make corrections, and re-check. 🙂';
-};
+}
 
 /* ================= Combined AI Prompt Builder ================= */
 let AI_LANG = 'en';
@@ -970,12 +915,12 @@ endEx(s.grammar, 7);
 /* --- VOCABULARY (20 marks) --- */
 title(s.vocabulary,'3. Write the words.');
 example(s.vocabulary,'a <u>mobile phone</u>');
-s.vocabulary.insertAdjacentHTML('beforeend', '<style>.vocab-img { height: 120px; border-radius: 6px; display: block; margin-bottom: 8px; border: 1px solid #d1d5db; object-fit: cover; }</style>');
-[['<img src="file:///C:/Users/Videographer/.gemini/antigravity/brain/102364aa-26e7-4463-abcc-1a6cc6a18cee/watch_image_1789591943606.jpg" class="vocab-img"> a w___','atch|watch|a watch'],
- ['<img src="file:///C:/Users/Videographer/.gemini/antigravity/brain/102364aa-26e7-4463-abcc-1a6cc6a18cee/glasses_image_1789591958606.jpg" class="vocab-img"> g___','lasses|glasses'],
- ['<img src="file:///C:/Users/Videographer/.gemini/antigravity/brain/102364aa-26e7-4463-abcc-1a6cc6a18cee/keys_image_1789591980204.jpg" class="vocab-img"> k___','eys|keys'],
- ['<img src="file:///C:/Users/Videographer/.gemini/antigravity/brain/102364aa-26e7-4463-abcc-1a6cc6a18cee/credit_card_image_1789592008803.jpg" class="vocab-img"> a c___','redit card|credit card|a credit card'],
- ['<img src="file:///C:/Users/Videographer/.gemini/antigravity/brain/102364aa-26e7-4463-abcc-1a6cc6a18cee/bag_image_1789592055604.jpg" class="vocab-img"> a b___','ag|bag|a bag']].forEach(x=>fill(s.vocabulary,...x));
+s.vocabulary.insertAdjacentHTML('beforeend', '<style>.vocab-img { height: 120px; border-radius: 6px; display: block; margin-bottom: 8px; border: 1px solid #d1d5db; object-fit: contain; max-width:100%; }</style>');
+[['<img src="vocabulary-watch.svg" alt="Vocabulary picture 1" class="vocab-img"> a w___','atch|watch|a watch'],
+ ['<img src="vocabulary-glasses.svg" alt="Vocabulary picture 2" class="vocab-img"> g___','lasses|glasses'],
+ ['<img src="vocabulary-keys.svg" alt="Vocabulary picture 3" class="vocab-img"> k___','eys|keys'],
+ ['<img src="vocabulary-credit-card.svg" alt="Vocabulary picture 4" class="vocab-img"> a c___','redit card|credit card|a credit card'],
+ ['<img src="vocabulary-bag.svg" alt="Vocabulary picture 5" class="vocab-img"> a b___','ag|bag|a bag']].forEach(x=>fill(s.vocabulary,...x));
 endEx(s.vocabulary, 5);
 
 title(s.vocabulary,'4. Look at the family tree and complete the description of Tom\'s family with the words in the box.');
@@ -1084,7 +1029,6 @@ endEx(s.reading, 8);
 
 /* --- LISTENING (10 marks) --- */
 title(s.listening,'1. Listen to Lisa Smith talking to hotel reception about a bag. Tick (&check;) the 5 objects that are in her bag.');
-  s.listening.insertAdjacentHTML('beforeend', '<h3>1. Lisa Smith at hotel reception</h3><audio class="audio" controls preload="metadata"><source src="file2Listening1.mp3" type="audio/mpeg">Your browser does not support audio playback.</audio>');
 example(s.listening,'A mobile phone &nbsp; <u>&#10003;</u>');
 const bagItems=[
   {t:'keys',ok:false},
@@ -1107,7 +1051,6 @@ document.querySelectorAll('#list_chk_group input[type="checkbox"]').forEach(c =>
 endEx(s.listening, 5);
 
 title(s.listening,'2. Listen to five conversations and answer the questions. Choose A, B, or C.');
-  s.listening.insertAdjacentHTML('beforeend', '<h3>2. Five conversations</h3><audio class="audio" controls preload="metadata"><source src="file2Listening2.mp3" type="audio/mpeg">Your browser does not support audio playback.</audio>');
 example(s.listening,'1. Who is Adam?<br>A Anna\'s boyfriend<br>B <u>Anna\'s brother</u><br>C Anna\'s friend');
 [['1. Who is Adam?',['Anna\'s boyfriend','Anna\'s brother','Anna\'s friend'],1],
  ['2. Who are in Andy\'s photo?',['His wife, son and daughter','His son and two daughters','His wife and two sons'],0],
@@ -1118,11 +1061,6 @@ endEx(s.listening, 5);
 
 /* --- CHECK ANSWERS SCRIPT --- */
 document.querySelector('#check').onclick=()=>{
-  const password=window.prompt('Enter the teacher password to check answers:');
-  if(password!=='123'){
-    if(password!==null)window.alert('Incorrect password.');
-    return;
-  }
   let score=0,total=0;
   let exScores = {};
   
@@ -1149,27 +1087,29 @@ document.querySelector('#check').onclick=()=>{
     if(ok) { score++; exScores[ex]++; }
   });
   
-  // Checkbox items (Listening 1: 5 correct items to find)
-  bagItems.forEach((item,i)=>{
-    const chk=document.querySelector(`#chk_${i}`);
-    const ex = chk.dataset.ex;
-    if(!exScores[ex]) exScores[ex] = 0;
-    const lbl=document.querySelector(`#lbl_chk_${i}`);
-    lbl.classList.remove('ok','bad');
-    if(item.ok){
-      total++;
-      if(chk.checked){
-        lbl.classList.add('ok');
-        score++; exScores[ex]++;
+  // Checkbox items (Listening 1: 5 correct items to find, if present)
+  if (typeof bagItems !== 'undefined' && Array.isArray(bagItems)) {
+    bagItems.forEach((item,i)=>{
+      const chk=document.querySelector(`#chk_${i}`);
+      const ex = chk.dataset.ex;
+      if(!exScores[ex]) exScores[ex] = 0;
+      const lbl=document.querySelector(`#lbl_chk_${i}`);
+      lbl.classList.remove('ok','bad');
+      if(item.ok){
+        total++;
+        if(chk.checked){
+          lbl.classList.add('ok');
+          score++; exScores[ex]++;
+        } else {
+          lbl.classList.add('bad');
+        }
       } else {
-        lbl.classList.add('bad');
+        if(chk.checked){
+          lbl.classList.add('bad');
+        }
       }
-    } else {
-      if(chk.checked){
-        lbl.classList.add('bad');
-      }
-    }
-  });
+    });
+  }
 
   // Syllables
   document.querySelectorAll('.syl-q').forEach(q => {
@@ -1213,7 +1153,7 @@ document.addEventListener('focusin', e => {
 function getInputsForBank(card) {
   let inputs = [];
   let curr = card.nextElementSibling;
-  while (curr && !['H4', 'H3', 'H2', 'H1'].includes(curr.tagName)) {
+  while (curr && !['H3', 'H2', 'H1'].includes(curr.tagName)) {
     inputs.push(...curr.querySelectorAll('input[type="text"]'));
     if (curr.tagName === 'INPUT' && curr.type === 'text') inputs.push(curr);
     curr = curr.nextElementSibling;
@@ -1266,20 +1206,4 @@ document.addEventListener('mousedown', e => {
   }
 });
 
-
-/* ---- Speaking 2A: check the five family-tree names ---- */
-document.querySelector('#check-family-tree').onclick = () => {
-  const wrap = document.querySelector('#family-tree');
-  const out = document.querySelector('#family-tree-result');
-  let ok = 0, n = 0;
-  wrap.querySelectorAll('input.tree-blank').forEach(inp => {
-    n++;
-    const good = norm(inp.value) === norm(inp.dataset.familyAnswer || '');
-    inp.classList.toggle('ok', good);
-    inp.classList.toggle('bad', !good);
-    if (good) ok++;
-  });
-  out.textContent = 'Tree: ' + ok + ' / ' + n;
-  out.style.color = ok === n ? '#166534' : '#92400e';
-};
 </script></body></html>

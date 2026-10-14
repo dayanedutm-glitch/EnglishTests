@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beginner Unit 3 — Grammar Diagnostic & Mastery Profile</title>
+  <style>
+    :root {
+      --primary: #0d568c;
+      --primary-light: #e0f2fe;
+      --primary-dark: #073860;
+      --accent: #d97706;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --warning: #f59e0b;
+      --warning-bg: #fef3c7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 26px 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--primary);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .notice-banner {
+      margin-top: 16px;
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #1e40af;
+      line-height: 1.6;
+    }
+
+    /* Section Card */
+    .section-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 26px 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+    }
+
+    .section-header {
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    /* Task Item */
+    .task-item {
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .task-item.correct {
+      background: var(--success-bg);
+      border-color: #86efac;
+    }
+
+    .task-item.incorrect {
+      background: var(--danger-bg);
+      border-color: #fca5a5;
+    }
+
+    .task-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .task-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    .tags-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: #e2e8f0;
+      color: #475569;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .tag.highlight {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    /* Word Order Specific */
+    .drop-zone {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 8px;
+      min-height: 52px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .drop-placeholder {
+      color: #94a3b8;
+      font-size: 13px;
+      font-style: italic;
+      user-select: none;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px;
+      background: #f1f5f9;
+      border-radius: 6px;
+    }
+
+    .word-tile {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      transition: all 0.15s ease;
+    }
+
+    .word-tile:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .word-tile.used {
+      opacity: 0.3;
+      pointer-events: none;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .constructed-tile {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      animation: popIn 0.15s ease;
+    }
+
+    .constructed-tile:hover {
+      background: var(--primary-dark);
+    }
+
+    .constructed-tile::after {
+      content: "×";
+      font-size: 14px;
+      font-weight: bold;
+      opacity: 0.8;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Fill in Blank Specific */
+    .cloze-text {
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+
+    .blank-input {
+      padding: 5px 10px;
+      border: 1px solid #94a3b8;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      min-width: 110px;
+      margin: 0 4px;
+      text-align: center;
+      outline: none;
+      transition: border 0.15s;
+    }
+
+    .blank-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-light);
+    }
+
+    /* Turkmen Translation Card */
+    .tk-prompt {
+      background: #f0fdf4;
+      border-left: 4px solid var(--success);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #14532d;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .type-select-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .type-select-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .type-dropdown {
+      padding: 6px 12px;
+      border: 1px solid #94a3b8;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      background: #ffffff;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .type-dropdown:focus {
+      border-color: var(--primary);
+    }
+
+    /* Error Hunter Specific */
+    .story-card {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .error-item-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+    }
+
+    .error-sentence {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .error-token {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      border: 1px dashed #ef4444;
+    }
+
+    .fix-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .fix-input {
+      padding: 6px 12px;
+      border: 1px solid #94a3b8;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      min-width: 140px;
+    }
+
+    /* Explanation & Feedback */
+    .task-feedback {
+      font-size: 13px;
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: none;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .task-feedback.ok {
+      display: block;
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .task-feedback.err {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    /* Action Controls */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0;
+      flex-wrap: wrap;
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(13, 86, 140, 0.25);
+      transition: all 0.15s ease;
+    }
+
+    .btn-submit:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-reset {
+      background: #64748b;
+      color: #ffffff;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-reset:hover {
+      background: #475569;
+    }
+
+    .btn-print {
+      background: #0d9488;
+      color: #ffffff;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      margin-left: auto;
+      display: none;
+    }
+
+    /* DIAGNOSTIC REPORT CARD */
+    #diagnostic-report {
+      display: none;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 30px;
+      margin-top: 24px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+      border: 2px solid var(--primary);
+      animation: popIn 0.2s ease;
+    }
+
+    .report-hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 24px;
+    }
+
+    .hero-score-badge {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .score-circle {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgba(13, 86, 140, 0.3);
+    }
+
+    .score-circle span {
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.85;
+      margin-top: -2px;
+    }
+
+    .stats-matrix {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .matrix-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .matrix-title {
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .stat-label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .progress-bar-container {
+      width: 100px;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    .stat-val {
+      font-weight: 700;
+      min-width: 42px;
+      text-align: right;
+    }
+
+    .teacher-summary-card {
+      background: #fffbeb;
+      border-left: 5px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #78350f;
+      line-height: 1.6;
+    }
+
+    .teacher-summary-card strong {
+      color: #451a03;
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .action-bar, .word-bank { display: none !important; }
+      #diagnostic-report { display: block !important; border: 1px solid #000; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="badge">New English File Beginner &bull; Unit 3</div>
+    <h1>Grammar Diagnostic: Auxiliary & Syntax Profile</h1>
+    <p class="subtitle">Word Order &bull; Auxiliary Agreement &bull; Error Hunter &bull; Turkmen Translation &bull; Preposition + Noun Metric</p>
+    <div class="notice-banner">
+      ⚡ <strong>Anti-Guessing Diagnostics:</strong> Tracks exact percentages for pronouns, auxiliaries, syntax, and a dedicated <strong>"Preposition + Noun"</strong> agreement metric (e.g. <em>Our father speaks</em> [singular] vs. <em>My friends don't</em> [plural]).
+    </div>
+  </header>
+
+  <!-- EXERCISE 1: WORD ORDER (SCRAMBLED TILES) -->
+  <section class="section-card" id="sec-1">
+    <div class="section-header">
+      <div class="section-title">
+        <span>Part 1 &bull; Word Order Architecture (10 Scrambled Sentences)</span>
+      </div>
+      <div class="section-desc">
+        Tap the scrambled words in the exact grammatical sequence to construct the sentence. (Click a word in the box above to remove it).
+      </div>
+    </div>
+
+    <!-- WO-0: I / don't / Negation -->
+    <div class="task-item" id="wo-item-0" data-pronoun="I" data-aux="dont" data-structure="negation" data-answer="I don't drink coffee in the evening.">
+      <div class="task-meta">
+        <span class="task-title">1. Routine Negation (I)</span>
+        <div class="tags-group"><span class="tag">Pronoun: I</span><span class="tag">Aux: don't</span><span class="tag">Negation</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-0" onclick="clearZone('wo', 0)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-0">
+        <span class="word-tile" onclick="addWord('wo', 0, this)">in</span>
+        <span class="word-tile" onclick="addWord('wo', 0, this)">don't</span>
+        <span class="word-tile" onclick="addWord('wo', 0, this)">evening.</span>
+        <span class="word-tile" onclick="addWord('wo', 0, this)">coffee</span>
+        <span class="word-tile" onclick="addWord('wo', 0, this)">I</span>
+        <span class="word-tile" onclick="addWord('wo', 0, this)">the</span>
+        <span class="word-tile" onclick="addWord('wo', 0, this)">drink</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-0"></div>
+    </div>
+
+    <!-- WO-1: you / do / Wh-Q -->
+    <div class="task-item" id="wo-item-1" data-pronoun="you" data-aux="do" data-structure="wh_question" data-answer="What do you have for breakfast?">
+      <div class="task-meta">
+        <span class="task-title">2. Wh- Question (You)</span>
+        <div class="tags-group"><span class="tag">Pronoun: you</span><span class="tag">Aux: do</span><span class="tag">Wh- Question</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-1" onclick="clearZone('wo', 1)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-1">
+        <span class="word-tile" onclick="addWord('wo', 1, this)">breakfast?</span>
+        <span class="word-tile" onclick="addWord('wo', 1, this)">you</span>
+        <span class="word-tile" onclick="addWord('wo', 1, this)">do</span>
+        <span class="word-tile" onclick="addWord('wo', 1, this)">What</span>
+        <span class="word-tile" onclick="addWord('wo', 1, this)">for</span>
+        <span class="word-tile" onclick="addWord('wo', 1, this)">have</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-1"></div>
+    </div>
+
+    <!-- WO-2: you / do / Yes-No Q -->
+    <div class="task-item" id="wo-item-2" data-pronoun="you" data-aux="do" data-structure="yesno_question" data-answer="Do you live in a big house?">
+      <div class="task-meta">
+        <span class="task-title">3. Yes/No Inverted Question (You)</span>
+        <div class="tags-group"><span class="tag">Pronoun: you</span><span class="tag">Aux: do</span><span class="tag">Yes/No Question</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-2" onclick="clearZone('wo', 2)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-2">
+        <span class="word-tile" onclick="addWord('wo', 2, this)">house?</span>
+        <span class="word-tile" onclick="addWord('wo', 2, this)">live</span>
+        <span class="word-tile" onclick="addWord('wo', 2, this)">Do</span>
+        <span class="word-tile" onclick="addWord('wo', 2, this)">a</span>
+        <span class="word-tile" onclick="addWord('wo', 2, this)">in</span>
+        <span class="word-tile" onclick="addWord('wo', 2, this)">you</span>
+        <span class="word-tile" onclick="addWord('wo', 2, this)">big</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-2"></div>
+    </div>
+
+    <!-- WO-3: he (Colin) / does / Wh-Q -->
+    <div class="task-item" id="wo-item-3" data-pronoun="he_she_it" data-aux="does" data-structure="wh_question" data-answer="Where does Colin work in Cardiff?">
+      <div class="task-meta">
+        <span class="task-title">4. Wh- Question with 3rd Person Singular (Colin)</span>
+        <div class="tags-group"><span class="tag">Pronoun: he</span><span class="tag">Aux: does</span><span class="tag">Wh- Question</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-3" onclick="clearZone('wo', 3)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-3">
+        <span class="word-tile" onclick="addWord('wo', 3, this)">Colin</span>
+        <span class="word-tile" onclick="addWord('wo', 3, this)">Cardiff?</span>
+        <span class="word-tile" onclick="addWord('wo', 3, this)">Where</span>
+        <span class="word-tile" onclick="addWord('wo', 3, this)">work</span>
+        <span class="word-tile" onclick="addWord('wo', 3, this)">in</span>
+        <span class="word-tile" onclick="addWord('wo', 3, this)">does</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-3"></div>
+    </div>
+
+    <!-- WO-4: she (your sister) / does / Yes-No Q -> Preposition + Noun (Singular) -->
+    <div class="task-item" id="wo-item-4" data-pronoun="he_she_it" data-aux="does" data-structure="yesno_question" data-prepnoun="singular" data-answer="Does your sister speak French at work?">
+      <div class="task-meta">
+        <span class="task-title">5. Question: Your sister (Preposition + Noun Singular)</span>
+        <div class="tags-group"><span class="tag">Pronoun: she</span><span class="tag">Aux: does</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-4" onclick="clearZone('wo', 4)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-4">
+        <span class="word-tile" onclick="addWord('wo', 4, this)">French</span>
+        <span class="word-tile" onclick="addWord('wo', 4, this)">work?</span>
+        <span class="word-tile" onclick="addWord('wo', 4, this)">sister</span>
+        <span class="word-tile" onclick="addWord('wo', 4, this)">Does</span>
+        <span class="word-tile" onclick="addWord('wo', 4, this)">at</span>
+        <span class="word-tile" onclick="addWord('wo', 4, this)">speak</span>
+        <span class="word-tile" onclick="addWord('wo', 4, this)">your</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-4"></div>
+    </div>
+
+    <!-- WO-5: he (Jack) / doesn't / Negation -->
+    <div class="task-item" id="wo-item-5" data-pronoun="he_she_it" data-aux="doesnt" data-structure="negation" data-answer="Jack doesn't work in the coffee shop.">
+      <div class="task-meta">
+        <span class="task-title">6. 3rd Person Singular Negation (Jack)</span>
+        <div class="tags-group"><span class="tag">Pronoun: he</span><span class="tag">Aux: doesn't</span><span class="tag">Negation</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-5" onclick="clearZone('wo', 5)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-5">
+        <span class="word-tile" onclick="addWord('wo', 5, this)">coffee</span>
+        <span class="word-tile" onclick="addWord('wo', 5, this)">doesn't</span>
+        <span class="word-tile" onclick="addWord('wo', 5, this)">Jack</span>
+        <span class="word-tile" onclick="addWord('wo', 5, this)">shop.</span>
+        <span class="word-tile" onclick="addWord('wo', 5, this)">in</span>
+        <span class="word-tile" onclick="addWord('wo', 5, this)">the</span>
+        <span class="word-tile" onclick="addWord('wo', 5, this)">work</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-5"></div>
+    </div>
+
+    <!-- WO-6: she (my mother) / doesn't / Negation -> Preposition + Noun (Singular) -->
+    <div class="task-item" id="wo-item-6" data-pronoun="he_she_it" data-aux="doesnt" data-structure="negation" data-prepnoun="singular" data-answer="My mother doesn't like her job.">
+      <div class="task-meta">
+        <span class="task-title">7. Negation: My mother (Preposition + Noun Singular)</span>
+        <div class="tags-group"><span class="tag">Pronoun: she</span><span class="tag">Aux: doesn't</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-6" onclick="clearZone('wo', 6)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-6">
+        <span class="word-tile" onclick="addWord('wo', 6, this)">her</span>
+        <span class="word-tile" onclick="addWord('wo', 6, this)">My</span>
+        <span class="word-tile" onclick="addWord('wo', 6, this)">job.</span>
+        <span class="word-tile" onclick="addWord('wo', 6, this)">mother</span>
+        <span class="word-tile" onclick="addWord('wo', 6, this)">like</span>
+        <span class="word-tile" onclick="addWord('wo', 6, this)">doesn't</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-6"></div>
+    </div>
+
+    <!-- WO-7: we / don't / Negation -->
+    <div class="task-item" id="wo-item-7" data-pronoun="we" data-aux="dont" data-structure="negation" data-answer="We don't want pasta for lunch.">
+      <div class="task-meta">
+        <span class="task-title">8. 1st Person Plural Negation (We)</span>
+        <div class="tags-group"><span class="tag">Pronoun: we</span><span class="tag">Aux: don't</span><span class="tag">Negation</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-7" onclick="clearZone('wo', 7)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-7">
+        <span class="word-tile" onclick="addWord('wo', 7, this)">want</span>
+        <span class="word-tile" onclick="addWord('wo', 7, this)">lunch.</span>
+        <span class="word-tile" onclick="addWord('wo', 7, this)">pasta</span>
+        <span class="word-tile" onclick="addWord('wo', 7, this)">don't</span>
+        <span class="word-tile" onclick="addWord('wo', 7, this)">for</span>
+        <span class="word-tile" onclick="addWord('wo', 7, this)">We</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-7"></div>
+    </div>
+
+    <!-- WO-8: they / do / Wh-Q -->
+    <div class="task-item" id="wo-item-8" data-pronoun="they" data-aux="do" data-structure="wh_question" data-answer="What time do they finish work?">
+      <div class="task-meta">
+        <span class="task-title">9. Wh- Question with Plural (They)</span>
+        <div class="tags-group"><span class="tag">Pronoun: they</span><span class="tag">Aux: do</span><span class="tag">Wh- Question</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-8" onclick="clearZone('wo', 8)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-8">
+        <span class="word-tile" onclick="addWord('wo', 8, this)">finish</span>
+        <span class="word-tile" onclick="addWord('wo', 8, this)">time</span>
+        <span class="word-tile" onclick="addWord('wo', 8, this)">do</span>
+        <span class="word-tile" onclick="addWord('wo', 8, this)">work?</span>
+        <span class="word-tile" onclick="addWord('wo', 8, this)">What</span>
+        <span class="word-tile" onclick="addWord('wo', 8, this)">they</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-8"></div>
+    </div>
+
+    <!-- WO-9: they (your parents) / do / Yes-No Q -> Preposition + Noun (Plural) -->
+    <div class="task-item" id="wo-item-9" data-pronoun="they" data-aux="do" data-structure="yesno_question" data-prepnoun="plural" data-answer="Do your parents live in London?">
+      <div class="task-meta">
+        <span class="task-title">10. Question: Your parents (Preposition + Noun Plural)</span>
+        <div class="tags-group"><span class="tag">Pronoun: they</span><span class="tag">Aux: do</span><span class="tag highlight">Preposition + Noun (Plural)</span></div>
+      </div>
+      <div class="drop-zone" id="dz-wo-9" onclick="clearZone('wo', 9)"><span class="drop-placeholder">Tap scrambled words below to assemble...</span></div>
+      <div class="word-bank" id="wb-wo-9">
+        <span class="word-tile" onclick="addWord('wo', 9, this)">live</span>
+        <span class="word-tile" onclick="addWord('wo', 9, this)">London?</span>
+        <span class="word-tile" onclick="addWord('wo', 9, this)">your</span>
+        <span class="word-tile" onclick="addWord('wo', 9, this)">Do</span>
+        <span class="word-tile" onclick="addWord('wo', 9, this)">parents</span>
+        <span class="word-tile" onclick="addWord('wo', 9, this)">in</span>
+      </div>
+      <div class="task-feedback" id="fb-wo-9"></div>
+    </div>
+  </section>
+
+  <!-- EXERCISE 2: FILL IN THE BLANK (AUXILIARY & VERB AGREEMENT) -->
+  <section class="section-card" id="sec-2">
+    <div class="section-header">
+      <div class="section-title">
+        <span>Part 2 &bull; Auxiliary & Verb Agreement in Context (10 Items)</span>
+      </div>
+      <div class="section-desc">
+        Type the exact correct verb or auxiliary in the blanks.
+      </div>
+    </div>
+
+    <!-- FIB-0: I / don't -->
+    <div class="task-item" id="fib-item-0" data-pronoun="I" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">1. Negation with 1st Person Singular</span>
+        <div class="tags-group"><span class="tag">Pronoun: I</span><span class="tag">Negation</span></div>
+      </div>
+      <p class="cloze-text">
+        I <input type="text" class="blank-input" id="fib-inp-0" placeholder="auxiliary"> drink milk with my cereal. I prefer orange juice.
+      </p>
+      <div class="task-feedback" id="fb-fib-0"></div>
+    </div>
+
+    <!-- FIB-1: you / do -->
+    <div class="task-item" id="fib-item-1" data-pronoun="you" data-aux="do" data-structure="wh_question" data-answer="do">
+      <div class="task-meta">
+        <span class="task-title">2. Wh- Question with 2nd Person</span>
+        <div class="tags-group"><span class="tag">Pronoun: you</span><span class="tag">Question</span></div>
+      </div>
+      <p class="cloze-text">
+        A: What time <input type="text" class="blank-input" id="fib-inp-1" placeholder="auxiliary"> you start work every morning?<br>
+        B: At half past eight.
+      </p>
+      <div class="task-feedback" id="fb-fib-1"></div>
+    </div>
+
+    <!-- FIB-2: you / don't -->
+    <div class="task-item" id="fib-item-2" data-pronoun="you" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">3. Negation with 2nd Person</span>
+        <div class="tags-group"><span class="tag">Pronoun: you</span><span class="tag">Negation</span></div>
+      </div>
+      <p class="cloze-text">
+        You <input type="text" class="blank-input" id="fib-inp-2" placeholder="auxiliary"> eat meat because you are a vegetarian.
+      </p>
+      <div class="task-feedback" id="fb-fib-2"></div>
+    </div>
+
+    <!-- FIB-3: he (Colin) / Does -->
+    <div class="task-item" id="fib-item-3" data-pronoun="he_she_it" data-aux="does" data-structure="yesno_question" data-answer="does">
+      <div class="task-meta">
+        <span class="task-title">4. Yes/No Question with 3rd Person (Colin)</span>
+        <div class="tags-group"><span class="tag">Pronoun: he</span><span class="tag">Question</span></div>
+      </div>
+      <p class="cloze-text">
+        A: <input type="text" class="blank-input" id="fib-inp-3" placeholder="auxiliary"> Colin work in an office?<br>
+        B: Yes, he does.
+      </p>
+      <div class="task-feedback" id="fb-fib-3"></div>
+    </div>
+
+    <!-- FIB-4: Our father speaks -> Preposition + Noun (Singular) -->
+    <div class="task-item" id="fib-item-4" data-pronoun="he_she_it" data-aux="does" data-structure="affirmative" data-prepnoun="singular" data-answer="speaks">
+      <div class="task-meta">
+        <span class="task-title">5. Our father (Preposition + Noun Singular Agreement)</span>
+        <div class="tags-group"><span class="tag">Subject: Our father</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <p class="cloze-text">
+        Our father <input type="text" class="blank-input" id="fib-inp-4" placeholder="speaks / speak"> English very well at his job. <em>(Hint: write "speak" or "speaks")</em>
+      </p>
+      <div class="task-feedback" id="fb-fib-4"></div>
+    </div>
+
+    <!-- FIB-5: My friends don't -> Preposition + Noun (Plural) -->
+    <div class="task-item" id="fib-item-5" data-pronoun="they" data-aux="dont" data-structure="negation" data-prepnoun="plural" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">6. My friends (Preposition + Noun Plural Agreement)</span>
+        <div class="tags-group"><span class="tag">Subject: My friends</span><span class="tag highlight">Preposition + Noun (Plural)</span></div>
+      </div>
+      <p class="cloze-text">
+        My friends <input type="text" class="blank-input" id="fib-inp-5" placeholder="don't / doesn't"> speak English; they speak Turkmen.
+      </p>
+      <div class="task-feedback" id="fb-fib-5"></div>
+    </div>
+
+    <!-- FIB-6: she (Gina) / doesn't -->
+    <div class="task-item" id="fib-item-6" data-pronoun="he_she_it" data-aux="doesnt" data-structure="negation" data-answer="doesn't|doesnt">
+      <div class="task-meta">
+        <span class="task-title">7. Negation with 3rd Person (Gina)</span>
+        <div class="tags-group"><span class="tag">Pronoun: she</span><span class="tag">Negation</span></div>
+      </div>
+      <p class="cloze-text">
+        Gina is an accountant, so she <input type="text" class="blank-input" id="fib-inp-6" placeholder="auxiliary"> work in the kitchen.
+      </p>
+      <div class="task-feedback" id="fb-fib-6"></div>
+    </div>
+
+    <!-- FIB-7: we / don't -->
+    <div class="task-item" id="fib-item-7" data-pronoun="we" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">8. Negation with 1st Person Plural (We)</span>
+        <div class="tags-group"><span class="tag">Pronoun: we</span><span class="tag">Negation</span></div>
+      </div>
+      <p class="cloze-text">
+        We <input type="text" class="blank-input" id="fib-inp-7" placeholder="auxiliary"> speak Chinese, but we speak English and Russian.
+      </p>
+      <div class="task-feedback" id="fb-fib-7"></div>
+    </div>
+
+    <!-- FIB-8: they (the students) / Do -->
+    <div class="task-item" id="fib-item-8" data-pronoun="they" data-aux="do" data-structure="yesno_question" data-prepnoun="plural" data-answer="do">
+      <div class="task-meta">
+        <span class="task-title">9. Question: The students (Plural Noun Agreement)</span>
+        <div class="tags-group"><span class="tag">Subject: the students</span><span class="tag highlight">Preposition + Noun (Plural)</span></div>
+      </div>
+      <p class="cloze-text">
+        <input type="text" class="blank-input" id="fib-inp-8" placeholder="auxiliary"> the students like the big sandwiches in the café?
+      </p>
+      <div class="task-feedback" id="fb-fib-8"></div>
+    </div>
+
+    <!-- FIB-9: they / don't -->
+    <div class="task-item" id="fib-item-9" data-pronoun="they" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">10. Negation with 3rd Person Plural (They)</span>
+        <div class="tags-group"><span class="tag">Pronoun: they</span><span class="tag">Negation</span></div>
+      </div>
+      <p class="cloze-text">
+        Bob and Diane have four coffee shops, but they <input type="text" class="blank-input" id="fib-inp-9" placeholder="auxiliary"> sell meat or beer.
+      </p>
+      <div class="task-feedback" id="fb-fib-9"></div>
+    </div>
+  </section>
+
+  <!-- EXERCISE 3: CORRECT THE MISTAKES IN THE STORY -->
+  <section class="section-card" id="sec-3">
+    <div class="section-header">
+      <div class="section-title">
+        <span>Part 3 &bull; Diagnostic Error Hunter (8 Passage Traps)</span>
+      </div>
+      <div class="section-desc">
+        Each sentence from the story below contains a common grammatical slip. Type the correct word to repair each error.
+      </div>
+    </div>
+
+    <div class="story-card">
+      📖 <strong>The Wilson Family Story:</strong><br>
+      <em>"Hello! My name is Tom. I am 22 years old and I live in Cardiff. Here is a short story about my family and our weekly routines. Can you spot and repair the grammatical slips in our journal?"</em>
+    </div>
+
+    <!-- ERR-0: I doesn't -> don't -->
+    <div class="error-item-box task-item" id="err-item-0" data-pronoun="I" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">1. Tom's Morning Routine</span>
+        <div class="tags-group"><span class="tag">Pronoun: I</span><span class="tag">Auxiliary Slip</span></div>
+      </div>
+      <p class="error-sentence">
+        "I <span class="error-token">doesn't</span> like getting up early on Monday mornings."
+      </p>
+      <div class="fix-row">
+        <span>Correct word:</span>
+        <input type="text" class="fix-input" id="err-inp-0" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-err-0"></div>
+    </div>
+
+    <!-- ERR-1: Our father speak -> speaks (Preposition + Noun Singular) -->
+    <div class="error-item-box task-item" id="err-item-1" data-pronoun="he_she_it" data-aux="does" data-structure="affirmative" data-prepnoun="singular" data-answer="speaks">
+      <div class="task-meta">
+        <span class="task-title">2. Father's Languages (Preposition + Noun Singular)</span>
+        <div class="tags-group"><span class="tag">Subject: Our father</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <p class="error-sentence">
+        "Our father <span class="error-token">speak</span> English and German at his job."
+      </p>
+      <div class="fix-row">
+        <span>Correct verb:</span>
+        <input type="text" class="fix-input" id="err-inp-1" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-err-1"></div>
+    </div>
+
+    <!-- ERR-2: My friends doesn't -> don't (Preposition + Noun Plural) -->
+    <div class="error-item-box task-item" id="err-item-2" data-pronoun="they" data-aux="dont" data-structure="negation" data-prepnoun="plural" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">3. Tom's Friends (Preposition + Noun Plural)</span>
+        <div class="tags-group"><span class="tag">Subject: My friends</span><span class="tag highlight">Preposition + Noun (Plural)</span></div>
+      </div>
+      <p class="error-sentence">
+        "My friends <span class="error-token">doesn't</span> speak English; they speak Italian."
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="err-inp-2" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-err-2"></div>
+    </div>
+
+    <!-- ERR-3: sister don't -> doesn't (Preposition + Noun Singular) -->
+    <div class="error-item-box task-item" id="err-item-3" data-pronoun="he_she_it" data-aux="doesnt" data-structure="negation" data-prepnoun="singular" data-answer="doesn't|doesnt">
+      <div class="task-meta">
+        <span class="task-title">4. Sister's Preferences (Preposition + Noun Singular)</span>
+        <div class="tags-group"><span class="tag">Subject: My sister</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <p class="error-sentence">
+        "My sister Emma is a doctor, but she <span class="error-token">don't</span> drink coffee."
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="err-inp-3" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-err-3"></div>
+    </div>
+
+    <!-- ERR-4: Do your brother -> Does your brother (Preposition + Noun Singular) -->
+    <div class="error-item-box task-item" id="err-item-4" data-pronoun="he_she_it" data-aux="does" data-structure="yesno_question" data-prepnoun="singular" data-answer="does">
+      <div class="task-meta">
+        <span class="task-title">5. Brother's Job (Preposition + Noun Singular)</span>
+        <div class="tags-group"><span class="tag">Subject: Your brother</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <p class="error-sentence">
+        "<span class="error-token">Do</span> your brother speak French or German at his job?"
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="err-inp-4" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-err-4"></div>
+    </div>
+
+    <!-- ERR-5: We doesn't -> don't -->
+    <div class="error-item-box task-item" id="err-item-5" data-pronoun="we" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">6. Family Lunch Routine</span>
+        <div class="tags-group"><span class="tag">Pronoun: we</span><span class="tag">Auxiliary Slip</span></div>
+      </div>
+      <p class="error-sentence">
+        "On Sundays, we <span class="error-token">doesn't</span> have lunch at home; we go to a restaurant."
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="err-inp-5" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-err-5"></div>
+    </div>
+
+    <!-- ERR-6: parents works -> work (Preposition + Noun Plural) -->
+    <div class="error-item-box task-item" id="err-item-6" data-pronoun="they" data-aux="do" data-structure="word_order" data-prepnoun="plural" data-answer="work">
+      <div class="task-meta">
+        <span class="task-title">7. Parents' Workplace (Preposition + Noun Plural)</span>
+        <div class="tags-group"><span class="tag">Subject: My parents</span><span class="tag highlight">Preposition + Noun (Plural)</span></div>
+      </div>
+      <p class="error-sentence">
+        "Both of my parents <span class="error-token">works</span> in the centre of Cardiff."
+      </p>
+      <div class="fix-row">
+        <span>Correct verb:</span>
+        <input type="text" class="fix-input" id="err-inp-6" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-err-6"></div>
+    </div>
+
+    <!-- ERR-7: they doesn't -> don't -->
+    <div class="error-item-box task-item" id="err-item-7" data-pronoun="they" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">8. Plural Negative Auxiliary</span>
+        <div class="tags-group"><span class="tag">Pronoun: they</span><span class="tag">Auxiliary Slip</span></div>
+      </div>
+      <p class="error-sentence">
+        "They work in the city, but they <span class="error-token">doesn't</span> finish until seven o'clock."
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="err-inp-7" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-err-7"></div>
+    </div>
+  </section>
+
+  <!-- EXERCISE 4: TURKMEN TO ENGLISH TRANSLATION & SENTENCE TYPE CLASSIFICATION -->
+  <section class="section-card" id="sec-4">
+    <div class="section-header">
+      <div class="section-title">
+        <span>Part 4 &bull; Turkmen to English Translation & Sentence Type (10 Items)</span>
+      </div>
+      <div class="section-desc">
+        Read each Turkmen sentence. First, select the <strong>sentence type</strong>. Then, assemble the English translation using the <strong>scrambled word tiles</strong> below.
+      </div>
+    </div>
+
+    <!-- TR-0 -->
+    <div class="task-item" id="tr-item-0" data-pronoun="I" data-aux="dont" data-structure="negation" data-answer="I don't drink tea in the morning.">
+      <div class="tk-prompt">🇹🇲 Men daňdan çaý içmeýärin.</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-0">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / -meýärin)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-0" onclick="clearZone('tr', 0)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-0">
+        <span class="word-tile" onclick="addWord('tr', 0, this)">in</span>
+        <span class="word-tile" onclick="addWord('tr', 0, this)">tea</span>
+        <span class="word-tile" onclick="addWord('tr', 0, this)">don't</span>
+        <span class="word-tile" onclick="addWord('tr', 0, this)">the</span>
+        <span class="word-tile" onclick="addWord('tr', 0, this)">I</span>
+        <span class="word-tile" onclick="addWord('tr', 0, this)">morning.</span>
+        <span class="word-tile" onclick="addWord('tr', 0, this)">drink</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-0"></div>
+    </div>
+
+    <!-- TR-1 -->
+    <div class="task-item" id="tr-item-1" data-pronoun="you" data-aux="do" data-structure="wh_question" data-answer="What do you have for breakfast?">
+      <div class="tk-prompt">🇹🇲 Sen ertirlige näme iýýärsiň?</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-1">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-1" onclick="clearZone('tr', 1)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-1">
+        <span class="word-tile" onclick="addWord('tr', 1, this)">you</span>
+        <span class="word-tile" onclick="addWord('tr', 1, this)">What</span>
+        <span class="word-tile" onclick="addWord('tr', 1, this)">breakfast?</span>
+        <span class="word-tile" onclick="addWord('tr', 1, this)">have</span>
+        <span class="word-tile" onclick="addWord('tr', 1, this)">do</span>
+        <span class="word-tile" onclick="addWord('tr', 1, this)">for</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-1"></div>
+    </div>
+
+    <!-- TR-2 -->
+    <div class="task-item" id="tr-item-2" data-pronoun="you" data-aux="do" data-structure="yesno_question" data-answer="Do you live in a flat?">
+      <div class="tk-prompt">🇹🇲 Sen jaýda (kwartirada) ýaşaýarmyň?</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-2">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-2" onclick="clearZone('tr', 2)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-2">
+        <span class="word-tile" onclick="addWord('tr', 2, this)">live</span>
+        <span class="word-tile" onclick="addWord('tr', 2, this)">flat?</span>
+        <span class="word-tile" onclick="addWord('tr', 2, this)">in</span>
+        <span class="word-tile" onclick="addWord('tr', 2, this)">you</span>
+        <span class="word-tile" onclick="addWord('tr', 2, this)">a</span>
+        <span class="word-tile" onclick="addWord('tr', 2, this)">Do</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-2"></div>
+    </div>
+
+    <!-- TR-3 -->
+    <div class="task-item" id="tr-item-3" data-pronoun="he_she_it" data-aux="does" data-structure="wh_question" data-answer="Where does Colin live?">
+      <div class="tk-prompt">🇹🇲 Kolin nirede ýaşaýar?</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-3">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-3" onclick="clearZone('tr', 3)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-3">
+        <span class="word-tile" onclick="addWord('tr', 3, this)">Colin</span>
+        <span class="word-tile" onclick="addWord('tr', 3, this)">Where</span>
+        <span class="word-tile" onclick="addWord('tr', 3, this)">live?</span>
+        <span class="word-tile" onclick="addWord('tr', 3, this)">does</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-3"></div>
+    </div>
+
+    <!-- TR-4: Seniň uýaň (Preposition + Noun Singular) -->
+    <div class="task-item" id="tr-item-4" data-pronoun="he_she_it" data-aux="does" data-structure="yesno_question" data-prepnoun="singular" data-answer="Does your sister work in a hospital?">
+      <div class="tk-prompt">🇹🇲 Seniň uýaň keselhanada işleýärmi?</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-4">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-4" onclick="clearZone('tr', 4)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-4">
+        <span class="word-tile" onclick="addWord('tr', 4, this)">hospital?</span>
+        <span class="word-tile" onclick="addWord('tr', 4, this)">work</span>
+        <span class="word-tile" onclick="addWord('tr', 4, this)">your</span>
+        <span class="word-tile" onclick="addWord('tr', 4, this)">a</span>
+        <span class="word-tile" onclick="addWord('tr', 4, this)">sister</span>
+        <span class="word-tile" onclick="addWord('tr', 4, this)">in</span>
+        <span class="word-tile" onclick="addWord('tr', 4, this)">Does</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-4"></div>
+    </div>
+
+    <!-- TR-5 -->
+    <div class="task-item" id="tr-item-5" data-pronoun="he_she_it" data-aux="doesnt" data-structure="negation" data-answer="Jack doesn't work in the restaurant.">
+      <div class="tk-prompt">🇹🇲 Jek restoranda işlemeýär.</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-5">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-5" onclick="clearZone('tr', 5)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-5">
+        <span class="word-tile" onclick="addWord('tr', 5, this)">restaurant.</span>
+        <span class="word-tile" onclick="addWord('tr', 5, this)">doesn't</span>
+        <span class="word-tile" onclick="addWord('tr', 5, this)">in</span>
+        <span class="word-tile" onclick="addWord('tr', 5, this)">the</span>
+        <span class="word-tile" onclick="addWord('tr', 5, this)">work</span>
+        <span class="word-tile" onclick="addWord('tr', 5, this)">Jack</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-5"></div>
+    </div>
+
+    <!-- TR-6 -->
+    <div class="task-item" id="tr-item-6" data-pronoun="he_she_it" data-aux="doesnt" data-structure="negation" data-answer="Anna doesn't like meat.">
+      <div class="tk-prompt">🇹🇲 Anna eti halamaýar.</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-6">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-6" onclick="clearZone('tr', 6)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-6">
+        <span class="word-tile" onclick="addWord('tr', 6, this)">like</span>
+        <span class="word-tile" onclick="addWord('tr', 6, this)">meat.</span>
+        <span class="word-tile" onclick="addWord('tr', 6, this)">doesn't</span>
+        <span class="word-tile" onclick="addWord('tr', 6, this)">Anna</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-6"></div>
+    </div>
+
+    <!-- TR-7 -->
+    <div class="task-item" id="tr-item-7" data-pronoun="we" data-aux="dont" data-structure="negation" data-answer="We don't want coffee.">
+      <div class="tk-prompt">🇹🇲 Biz kofe islemeýäris.</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-7">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-7" onclick="clearZone('tr', 7)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-7">
+        <span class="word-tile" onclick="addWord('tr', 7, this)">want</span>
+        <span class="word-tile" onclick="addWord('tr', 7, this)">We</span>
+        <span class="word-tile" onclick="addWord('tr', 7, this)">coffee.</span>
+        <span class="word-tile" onclick="addWord('tr', 7, this)">don't</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-7"></div>
+    </div>
+
+    <!-- TR-8 -->
+    <div class="task-item" id="tr-item-8" data-pronoun="they" data-aux="do" data-structure="wh_question" data-answer="What time do they start work?">
+      <div class="tk-prompt">🇹🇲 Olar işi sagat näçede başlaýarlar?</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-8">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-8" onclick="clearZone('tr', 8)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-8">
+        <span class="word-tile" onclick="addWord('tr', 8, this)">time</span>
+        <span class="word-tile" onclick="addWord('tr', 8, this)">What</span>
+        <span class="word-tile" onclick="addWord('tr', 8, this)">they</span>
+        <span class="word-tile" onclick="addWord('tr', 8, this)">start</span>
+        <span class="word-tile" onclick="addWord('tr', 8, this)">do</span>
+        <span class="word-tile" onclick="addWord('tr', 8, this)">work?</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-8"></div>
+    </div>
+
+    <!-- TR-9: Kardiffdäki adamlar (Preposition + Noun Plural) -->
+    <div class="task-item" id="tr-item-9" data-pronoun="they" data-aux="do" data-structure="yesno_question" data-prepnoun="plural" data-answer="Do people in Cardiff speak English?">
+      <div class="tk-prompt">🇹🇲 Kardiffdäki adamlar iňlisçe gürleýärmi?</div>
+      <div class="type-select-row">
+        <label class="type-select-label">Sentence Type (Sözlem görnüşi):</label>
+        <select class="type-dropdown" id="tr-type-9">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="negation">Negative Statement (Ýalganlyk / Inkar)</option>
+          <option value="yesno_question">Yes/No Question (Hawa/Ýok Soragy)</option>
+          <option value="wh_question">Wh- Question (Näme/Nirede... Soragy)</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-tr-9" onclick="clearZone('tr', 9)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-tr-9">
+        <span class="word-tile" onclick="addWord('tr', 9, this)">Cardiff</span>
+        <span class="word-tile" onclick="addWord('tr', 9, this)">people</span>
+        <span class="word-tile" onclick="addWord('tr', 9, this)">Do</span>
+        <span class="word-tile" onclick="addWord('tr', 9, this)">speak</span>
+        <span class="word-tile" onclick="addWord('tr', 9, this)">in</span>
+        <span class="word-tile" onclick="addWord('tr', 9, this)">English?</span>
+      </div>
+      <div class="task-feedback" id="fb-tr-9"></div>
+    </div>
+  </section>
+
+  <!-- ACTION BAR -->
+  <div class="action-bar">
+    <button class="btn-submit" onclick="gradeAll()">✓ Calculate Full Diagnostic & Mastery %</button>
+    <button class="btn-reset" onclick="resetAll()">Reset All</button>
+    <button class="btn-print" id="btn-print" onclick="window.print()">🖨️ Print Diagnostic Profile</button>
+  </div>
+
+  <!-- DIAGNOSTIC BREAKDOWN REPORT -->
+  <div id="diagnostic-report">
+    <div class="report-hero">
+      <div>
+        <h2 style="color: var(--primary-dark); font-size: 24px; margin-bottom: 4px;">Student Mastery Profile</h2>
+        <p style="color: var(--muted); font-size: 14px;" id="report-date"></p>
+      </div>
+      <div class="hero-score-badge">
+        <div class="score-circle">
+          <div id="total-score-val">0/38</div>
+          <span>TOTAL</span>
+        </div>
+        <div>
+          <div id="total-pct-val" style="font-size: 28px; font-weight: 900; color: var(--primary-dark);">0%</div>
+          <div id="mastery-level-badge" style="font-size: 13px; font-weight: 800; text-transform: uppercase;">EVALUATING</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS MATRIX (4 BOXES INCLUDING PREPOSITION + NOUN) -->
+    <div class="stats-matrix">
+      <!-- 1. BY PRONOUN -->
+      <div class="matrix-box">
+        <div class="matrix-title">
+          <span>1. By Pronoun / Subject</span>
+          <span>Target: &ge;80%</span>
+        </div>
+        <div id="matrix-pronoun"></div>
+      </div>
+
+      <!-- 2. BY AUXILIARY -->
+      <div class="matrix-box">
+        <div class="matrix-title">
+          <span>2. By Auxiliary Form</span>
+          <span>Target: &ge;80%</span>
+        </div>
+        <div id="matrix-aux"></div>
+      </div>
+
+      <!-- 3. BY WORD ORDER & SYNTAX -->
+      <div class="matrix-box">
+        <div class="matrix-title">
+          <span>3. Word Order & Structure</span>
+          <span>Target: &ge;80%</span>
+        </div>
+        <div id="matrix-syntax"></div>
+      </div>
+
+      <!-- 4. BY PREPOSITION + NOUN -->
+      <div class="matrix-box">
+        <div class="matrix-title">
+          <span>4. Preposition + Noun</span>
+          <span>Target: &ge;80%</span>
+        </div>
+        <div id="matrix-prepnoun"></div>
+      </div>
+    </div>
+
+    <!-- TEACHER INSIGHT & ACTIONABLE RECOMMENDATION -->
+    <div class="teacher-summary-card" id="teacher-insight">
+      <!-- Dynamically filled by JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================== Dynamic Fisher-Yates Scrambler ================== */
+function shuffleTilesInBank(bankId) {
+  const bank = document.getElementById(bankId);
+  if (!bank) return;
+  const tiles = Array.from(bank.children);
+  for (let i = tiles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    bank.appendChild(tiles[j]);
+  }
+}
+
+function scrambleAllBanks() {
+  document.querySelectorAll('.word-bank').forEach(b => {
+    shuffleTilesInBank(b.id);
+  });
+}
+
+// Scramble automatically on load
+window.addEventListener('DOMContentLoaded', scrambleAllBanks);
+
+/* ================== Word Order Assembly State ================== */
+const woSelected = { wo: {}, tr: {} };
+
+function addWord(group, taskIdx, tileElem) {
+  if (tileElem.classList.contains('used')) return;
+  tileElem.classList.add('used');
+  
+  if (!woSelected[group][taskIdx]) woSelected[group][taskIdx] = [];
+  const text = tileElem.textContent.trim();
+  woSelected[group][taskIdx].push({ text, elem: tileElem });
+  
+  renderDropZone(group, taskIdx);
+}
+
+function removeConstructedWord(group, taskIdx, arrayIdx) {
+  if (!woSelected[group][taskIdx] || !woSelected[group][taskIdx][arrayIdx]) return;
+  const item = woSelected[group][taskIdx].splice(arrayIdx, 1)[0];
+  item.elem.classList.remove('used');
+  renderDropZone(group, taskIdx);
+}
+
+function clearZone(group, taskIdx) {
+  if (!woSelected[group][taskIdx] || woSelected[group][taskIdx].length === 0) return;
+  woSelected[group][taskIdx].forEach(item => item.elem.classList.remove('used'));
+  woSelected[group][taskIdx] = [];
+  renderDropZone(group, taskIdx);
+}
+
+function renderDropZone(group, taskIdx) {
+  const dz = document.getElementById(`dz-${group}-${taskIdx}`);
+  if (!woSelected[group][taskIdx] || woSelected[group][taskIdx].length === 0) {
+    dz.innerHTML = '<span class="drop-placeholder">Tap scrambled words below to assemble...</span>';
+    return;
+  }
+  
+  dz.innerHTML = '';
+  woSelected[group][taskIdx].forEach((item, idx) => {
+    const tile = document.createElement('span');
+    tile.className = 'constructed-tile';
+    tile.textContent = item.text;
+    tile.onclick = (e) => {
+      e.stopPropagation();
+      removeConstructedWord(group, taskIdx, idx);
+    };
+    dz.appendChild(tile);
+  });
+}
+
+/* ================== Diagnostic Grading Engine ================== */
+const norm = str => (str || '').trim().toLowerCase().replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
+
+function gradeAll() {
+  let totalScore = 0;
+  const totalCount = 38; // 10 (WO) + 10 (FIB) + 8 (ERR) + 10 (TR)
+
+  // Statistical accumulators
+  const statsPronoun = {
+    'I': { correct: 0, total: 0, label: 'I (1st Singular)' },
+    'you': { correct: 0, total: 0, label: 'you (2nd Person)' },
+    'he_she_it': { correct: 0, total: 0, label: 'he / she / it (3rd Singular)' },
+    'we': { correct: 0, total: 0, label: 'we (1st Plural)' },
+    'they': { correct: 0, total: 0, label: 'they (3rd Plural)' }
+  };
+
+  const statsAux = {
+    'do': { correct: 0, total: 0, label: 'do (Questions / Short Answers)' },
+    'does': { correct: 0, total: 0, label: 'does (3rd Singular Questions)' },
+    'dont': { correct: 0, total: 0, label: 'don\'t (Negation: I, you, we, they)' },
+    'doesnt': { correct: 0, total: 0, label: 'doesn\'t (Negation: he, she, it)' }
+  };
+
+  const statsSyntax = {
+    'word_order': { correct: 0, total: 0, label: 'Syntax Assembly (Part 1 & 4)' },
+    'negation': { correct: 0, total: 0, label: 'Negative Sentence Structure' },
+    'wh_question': { correct: 0, total: 0, label: 'Wh- Questions (QUASI)' },
+    'yesno_question': { correct: 0, total: 0, label: 'Yes/No Questions (ASI)' },
+    'type_classification': { correct: 0, total: 0, label: 'Sentence Type Identification' }
+  };
+
+  // Preposition + Noun accumulator
+  const statsPrepNoun = {
+    'singular': { correct: 0, total: 0, label: 'Singular (Our father speaks / doesn\'t...)' },
+    'plural': { correct: 0, total: 0, label: 'Plural (My friends don\'t / speak...)' },
+    'overall': { correct: 0, total: 0, label: 'Overall Preposition + Noun' }
+  };
+
+  // Grade Part 1: Word Order (10 items)
+  for (let i = 0; i < 10; i++) {
+    const item = document.getElementById('wo-item-' + i);
+    const expected = item.dataset.answer;
+    const pronoun = item.dataset.pronoun;
+    const aux = item.dataset.aux;
+    const structure = item.dataset.structure;
+    const prepnoun = item.dataset.prepnoun;
+    
+    const assembledWords = (woSelected['wo'][i] || []).map(x => x.text).join(' ');
+    const isCorrect = norm(assembledWords) === norm(expected);
+    
+    applyFeedback(item, 'fb-wo-' + i, isCorrect, `Correct sentence: <strong>${expected}</strong>`);
+    
+    if (isCorrect) totalScore++;
+    
+    statsPronoun[pronoun].total++;
+    if (isCorrect) statsPronoun[pronoun].correct++;
+    
+    statsAux[aux].total++;
+    if (isCorrect) statsAux[aux].correct++;
+    
+    statsSyntax['word_order'].total++;
+    if (isCorrect) statsSyntax['word_order'].correct++;
+    
+    if (statsSyntax[structure]) {
+      statsSyntax[structure].total++;
+      if (isCorrect) statsSyntax[structure].correct++;
+    }
+
+    if (prepnoun) {
+      statsPrepNoun[prepnoun].total++;
+      statsPrepNoun['overall'].total++;
+      if (isCorrect) {
+        statsPrepNoun[prepnoun].correct++;
+        statsPrepNoun['overall'].correct++;
+      }
+    }
+  }
+
+  // Grade Part 2: Fill in Blank (10 items)
+  for (let i = 0; i < 10; i++) {
+    const item = document.getElementById('fib-item-' + i);
+    const validAnswers = item.dataset.answer.split('|').map(norm);
+    const pronoun = item.dataset.pronoun;
+    const aux = item.dataset.aux;
+    const structure = item.dataset.structure;
+    const prepnoun = item.dataset.prepnoun;
+    
+    const userVal = norm(document.getElementById('fib-inp-' + i).value);
+    const isCorrect = validAnswers.includes(userVal);
+    
+    applyFeedback(item, 'fb-fib-' + i, isCorrect, `Correct answer: <strong>${validAnswers[0]}</strong>`);
+    
+    if (isCorrect) totalScore++;
+    
+    statsPronoun[pronoun].total++;
+    if (isCorrect) statsPronoun[pronoun].correct++;
+    
+    if (statsAux[aux]) {
+      statsAux[aux].total++;
+      if (isCorrect) statsAux[aux].correct++;
+    }
+    
+    if (statsSyntax[structure]) {
+      statsSyntax[structure].total++;
+      if (isCorrect) statsSyntax[structure].correct++;
+    }
+
+    if (prepnoun) {
+      statsPrepNoun[prepnoun].total++;
+      statsPrepNoun['overall'].total++;
+      if (isCorrect) {
+        statsPrepNoun[prepnoun].correct++;
+        statsPrepNoun['overall'].correct++;
+      }
+    }
+  }
+
+  // Grade Part 3: Error Hunter (8 items)
+  for (let i = 0; i < 8; i++) {
+    const item = document.getElementById('err-item-' + i);
+    const validAnswers = item.dataset.answer.split('|').map(norm);
+    const pronoun = item.dataset.pronoun;
+    const aux = item.dataset.aux;
+    const structure = item.dataset.structure;
+    const prepnoun = item.dataset.prepnoun;
+    
+    const userVal = norm(document.getElementById('err-inp-' + i).value);
+    const isCorrect = validAnswers.includes(userVal);
+    
+    applyFeedback(item, 'fb-err-' + i, isCorrect, `Correct repair: <strong>${validAnswers[0]}</strong>`);
+    
+    if (isCorrect) totalScore++;
+    
+    statsPronoun[pronoun].total++;
+    if (isCorrect) statsPronoun[pronoun].correct++;
+    
+    if (statsAux[aux]) {
+      statsAux[aux].total++;
+      if (isCorrect) statsAux[aux].correct++;
+    }
+    
+    if (statsSyntax[structure]) {
+      statsSyntax[structure].total++;
+      if (isCorrect) statsSyntax[structure].correct++;
+    }
+
+    if (prepnoun) {
+      statsPrepNoun[prepnoun].total++;
+      statsPrepNoun['overall'].total++;
+      if (isCorrect) {
+        statsPrepNoun[prepnoun].correct++;
+        statsPrepNoun['overall'].correct++;
+      }
+    }
+  }
+
+  // Grade Part 4: Turkmen to English Translation & Type (10 items)
+  for (let i = 0; i < 10; i++) {
+    const item = document.getElementById('tr-item-' + i);
+    const expected = item.dataset.answer;
+    const pronoun = item.dataset.pronoun;
+    const aux = item.dataset.aux;
+    const expectedStructure = item.dataset.structure;
+    const prepnoun = item.dataset.prepnoun;
+    
+    const chosenType = document.getElementById('tr-type-' + i).value;
+    const assembledWords = (woSelected['tr'][i] || []).map(x => x.text).join(' ');
+    
+    const translationOk = norm(assembledWords) === norm(expected);
+    const typeOk = chosenType === expectedStructure;
+    const overallItemOk = translationOk && typeOk;
+    
+    statsSyntax['type_classification'].total++;
+    if (typeOk) statsSyntax['type_classification'].correct++;
+
+    let feedbackMsg = '';
+    if (!typeOk && !translationOk) {
+      feedbackMsg = `Sentence type is incorrect & English translation was: <strong>${expected}</strong>`;
+    } else if (!typeOk) {
+      feedbackMsg = `Translation is good, but Sentence Type must be: <strong>${expectedStructure.replace('_', ' ').toUpperCase()}</strong>`;
+    } else if (!translationOk) {
+      feedbackMsg = `Sentence type is correct, but English translation must be: <strong>${expected}</strong>`;
+    }
+
+    applyFeedback(item, 'fb-tr-' + i, overallItemOk, feedbackMsg);
+    
+    if (overallItemOk) totalScore++;
+    
+    statsPronoun[pronoun].total++;
+    if (overallItemOk) statsPronoun[pronoun].correct++;
+    
+    statsAux[aux].total++;
+    if (overallItemOk) statsAux[aux].correct++;
+    
+    statsSyntax['word_order'].total++;
+    if (translationOk) statsSyntax['word_order'].correct++;
+    
+    if (statsSyntax[expectedStructure]) {
+      statsSyntax[expectedStructure].total++;
+      if (overallItemOk) statsSyntax[expectedStructure].correct++;
+    }
+
+    if (prepnoun) {
+      statsPrepNoun[prepnoun].total++;
+      statsPrepNoun['overall'].total++;
+      if (overallItemOk) {
+        statsPrepNoun[prepnoun].correct++;
+        statsPrepNoun['overall'].correct++;
+      }
+    }
+  }
+
+  // Render Report
+  renderDiagnosticReport(totalScore, totalCount, statsPronoun, statsAux, statsSyntax, statsPrepNoun);
+}
+
+function applyFeedback(itemElem, fbId, isCorrect, solutionHtml) {
+  itemElem.classList.remove('correct', 'incorrect');
+  itemElem.classList.add(isCorrect ? 'correct' : 'incorrect');
+  
+  const fb = document.getElementById(fbId);
+  fb.className = 'task-feedback ' + (isCorrect ? 'ok' : 'err');
+  fb.innerHTML = isCorrect 
+    ? '✓ <strong>Correct!</strong> Grammatical match verified.' 
+    : `✕ <strong>Needs review:</strong> ${solutionHtml}`;
+}
+
+function renderDiagnosticReport(score, total, pronouns, auxiliaries, syntax, prepnoun) {
+  const report = document.getElementById('diagnostic-report');
+  report.style.display = 'block';
+  document.getElementById('btn-print').style.display = 'inline-block';
+  
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('total-score-val').textContent = `${score}/${total}`;
+  document.getElementById('total-pct-val').textContent = `${pct}%`;
+  document.getElementById('report-date').textContent = 'Generated on: ' + new Date().toLocaleString();
+
+  const badge = document.getElementById('mastery-level-badge');
+  if (pct >= 85) {
+    badge.textContent = '🟢 MASTERED';
+    badge.style.color = '#16a34a';
+  } else if (pct >= 65) {
+    badge.textContent = '🟡 DEVELOPING';
+    badge.style.color = '#d97706';
+  } else {
+    badge.textContent = '🔴 NEEDS REVIEW';
+    badge.style.color = '#dc2626';
+  }
+
+  // Render Matrix Boxes
+  renderStatGroup('matrix-pronoun', pronouns);
+  renderStatGroup('matrix-aux', auxiliaries);
+  renderStatGroup('matrix-syntax', syntax);
+  renderStatGroup('matrix-prepnoun', prepnoun);
+
+  // Generate Insight Text
+  generateTeacherInsight(pct, pronouns, auxiliaries, syntax, prepnoun);
+
+  // Scroll to report
+  report.scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderStatGroup(containerId, statsObj) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  
+  for (const key in statsObj) {
+    const item = statsObj[key];
+    const p = item.total > 0 ? Math.round((item.correct / item.total) * 100) : 0;
+    
+    let color = '#16a34a';
+    if (p < 50) color = '#dc2626';
+    else if (p < 80) color = '#d97706';
+    
+    const row = document.createElement('div');
+    row.className = 'stat-row';
+    row.innerHTML = `
+      <span class="stat-label" title="${item.label}">${item.label}</span>
+      <div style="display:flex; align-items:center;">
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style="width: ${p}%; background: ${color};"></div>
+        </div>
+        <span class="stat-val" style="color: ${color};">${p}% <small style="color:#64748b; font-weight:normal;">(${item.correct}/${item.total})</small></span>
+      </div>
+    `;
+    container.appendChild(row);
+  }
+}
+
+function generateTeacherInsight(overallPct, pronouns, auxes, syntax, prepnoun) {
+  const box = document.getElementById('teacher-insight');
+  const weakPronouns = Object.values(pronouns).filter(p => (p.correct / p.total) < 0.7);
+  const weakAuxes = Object.values(auxes).filter(a => (a.correct / a.total) < 0.7);
+  const heShePct = Math.round((pronouns['he_she_it'].correct / pronouns['he_she_it'].total) * 100);
+  const wordOrderPct = Math.round((syntax['word_order'].correct / syntax['word_order'].total) * 100);
+  const typeClassPct = Math.round((syntax['type_classification'].correct / syntax['type_classification'].total) * 100);
+  
+  const prepSingPct = prepnoun['singular'].total > 0 ? Math.round((prepnoun['singular'].correct / prepnoun['singular'].total) * 100) : 100;
+  const prepPlurPct = prepnoun['plural'].total > 0 ? Math.round((prepnoun['plural'].correct / prepnoun['plural'].total) * 100) : 100;
+
+  let insight = `<strong>Diagnostic Evaluation & Teacher Action Plan:</strong><br>`;
+
+  if (overallPct >= 85) {
+    insight += `Outstanding mastery! The student demonstrates systematic command of Present Simple syntax (<strong>${wordOrderPct}%</strong>), sentence type recognition (<strong>${typeClassPct}%</strong>), and <em>Preposition + Noun</em> subject agreement (<strong>${Math.round((prepnoun['overall'].correct/prepnoun['overall'].total)*100)}%</strong>).<br>`;
+  } else {
+    insight += `The student achieved an overall accuracy of <strong>${overallPct}%</strong>. `;
+    
+    // Preposition + Noun diagnostics
+    if (prepSingPct < 70) {
+      insight += `<br>⚠️ <strong>Preposition + Noun (Singular) Mistake:</strong> The student scored only <strong>${prepSingPct}%</strong> when subjects are singular noun phrases (e.g. answering <em>"Our father speak"</em> instead of <em>"speaks"</em>, or <em>"My sister don't"</em> instead of <em>"doesn't"</em>). Emphasize that singular family/noun subjects act like <em>he/she</em> and require <strong>-s</strong> / <strong>doesn't</strong>.<br>`;
+    }
+
+    if (prepPlurPct < 70) {
+      insight += `<br>⚠️ <strong>Preposition + Noun (Plural) Mistake:</strong> The student scored <strong>${prepPlurPct}%</strong> on plural noun phrases (e.g. answering <em>"My friends doesn't"</em> instead of <em>"don't"</em>, or <em>"My parents works"</em> instead of <em>"work"</em>). Drill plural noun subjects (friends, parents, students = <em>they</em>).<br>`;
+    }
+
+    if (heShePct < 70 && prepSingPct >= 70) {
+      insight += `<br>⚠️ <strong>Pronoun 3rd Person Singular Slip:</strong> The student scored <strong>${heShePct}%</strong> on base pronouns (<em>he / she / it</em>).<br>`;
+    }
+    
+    if (wordOrderPct < 70) {
+      insight += `<br>⚠️ <strong>Word Order / Syntax Slips:</strong> Word order accuracy is at <strong>${wordOrderPct}%</strong>. Practice the <strong>QUASI / ASI</strong> question formula.<br>`;
+    }
+
+    if (weakAuxes.length > 0) {
+      insight += `<br>📌 <strong>Specific Auxiliaries Needing Review:</strong> ` + weakAuxes.map(a => `<strong>${a.label.split(' ')[0]}</strong> (${Math.round((a.correct/a.total)*100)}%)`).join(', ') + `.<br>`;
+    }
+  }
+
+  box.innerHTML = insight;
+}
+
+function resetAll() {
+  document.querySelectorAll('.task-item').forEach(el => {
+    el.classList.remove('correct', 'incorrect');
+  });
+  document.querySelectorAll('.task-feedback').forEach(el => {
+    el.style.display = 'none';
+  });
+  document.querySelectorAll('.blank-input, .fix-input').forEach(inp => {
+    inp.value = '';
+  });
+  document.querySelectorAll('.type-dropdown').forEach(sel => {
+    sel.selectedIndex = 0;
+  });
+  
+  for (let i = 0; i < 10; i++) {
+    clearZone('wo', i);
+    clearZone('tr', i);
+  }
+  
+  // Re-scramble all tiles randomly
+  scrambleAllBanks();
+  
+  document.getElementById('diagnostic-report').style.display = 'none';
+  document.getElementById('btn-print').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

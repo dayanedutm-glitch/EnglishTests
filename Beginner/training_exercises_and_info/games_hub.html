@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Present Simple Grammar Game Arena</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #131b2e;
+      --border: #23304c;
+      --primary: #38bdf8;
+      --accent: #f59e0b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hub-container {
+      max-width: 980px;
+      width: 100%;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 4px 14px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    p.subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .game-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      border-color: var(--primary);
+    }
+    .game-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+    .game-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .game-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .tag-blue { background: #0284c7; color: #fff; }
+    .tag-amber { background: #d97706; color: #fff; }
+    .tag-purple { background: #7c3aed; color: #fff; }
+
+    .game-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #1e293b;
+      border: 1px solid var(--border);
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: all 0.15s;
+    }
+    .game-card:hover .play-btn {
+      background: var(--primary);
+      color: #090d16;
+      border-color: var(--primary);
+    }
+
+    /* Rules banner */
+    .rules-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .rules-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .formula-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      font-size: 13px;
+    }
+    .formula-box {
+      background: #090d16;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .formula-box strong { color: #38bdf8; }
+  </style>
+</head>
+<body>
+
+<div class="hub-container">
+  <header>
+    <span class="badge">Teacher & Student Arena</span>
+    <h1>Present Simple Grammar Games</h1>
+    <p class="subtitle">
+      Master subject-verb agreement across tricky nouns, possessives, and compound subjects with three interactive mini-games.
+    </p>
+  </header>
+
+  <div class="games-grid">
+    <!-- Game 1 -->
+    <div class="game-card">
+      <div>
+        <div class="game-icon">🔬</div>
+        <span class="game-tag tag-blue">Split-Screen Analyzer</span>
+        <div class="game-title">The Subject X-Ray</div>
+        <p class="game-desc">
+          <strong>Dual Mode:</strong> 🔬 Subject X-Ray Mode & 🌍 Sentence Translation Mode. Identify the Master Sentence Formula, map 16 Subject Structures / 8 Pronouns, lock in V/Vs or Auxiliaries, and translate into English! Supports Türkmençe, Русский, and Türkçe.
+        </p>
+      </div>
+      <a href="Game_Subject_XRay.html" class="play-btn">Launch Game ➔</a>
+    </div>
+
+    <!-- Game 2 -->
+    <div class="game-card">
+      <div>
+        <div class="game-icon">🧲</div>
+        <span class="game-tag tag-amber">Arcade Detective</span>
+        <div class="game-title">The Magnet -S Mystery</div>
+        <p class="game-desc">
+          Only ONE -S coin exists per 3rd-person singular sentence! Learn why DOES steals the -S in questions and negatives, leaving the verb bare without triggering double-S overloads.
+        </p>
+      </div>
+      <a href="Game_Magnet_S.html" class="play-btn">Launch Game ➔</a>
+    </div>
+
+    <!-- Game 3 -->
+    <div class="game-card">
+      <div>
+        <div class="game-icon">🏗️</div>
+        <span class="game-tag tag-purple">Sentence Builder</span>
+        <div class="game-title">Sentence Architect</div>
+        <p class="game-desc">
+          Assemble complete sentences block-by-block across all four Present Simple patterns: <code>(+) S + V/Vs</code>, <code>(-) S + don't/doesn't + V</code>, <code>(? y/n) Do/Does + S + V?</code>, and <code>(Wh-) Wh + do/does + S + V?</code>
+        </p>
+      </div>
+      <a href="Game_Sentence_Builder.html" class="play-btn">Launch Game ➔</a>
+    </div>
+  </div>
+
+  <div class="rules-card">
+    <div class="rules-title">
+      <span>📐</span> The 4 Master Formulas at a Glance:
+    </div>
+    <div class="formula-row">
+      <div class="formula-box">
+        <strong>(+) Affirmative</strong><br>
+        <code>S + V / Vs + O</code><br>
+        <span style="color:#94a3b8; font-size:11px;">e.g., Their father works.</span>
+      </div>
+      <div class="formula-box">
+        <strong>(-) Negative</strong><br>
+        <code>S + don't/doesn't + V + O</code><br>
+        <span style="color:#94a3b8; font-size:11px;">e.g., Their father doesn't work.</span>
+      </div>
+      <div class="formula-box">
+        <strong>(? y/n) Question</strong><br>
+        <code>Do/Does + S + V + O?</code><br>
+        <span style="color:#94a3b8; font-size:11px;">e.g., Does their father work?</span>
+      </div>
+      <div class="formula-box">
+        <strong>(w/h) Wh- Question</strong><br>
+        <code>Wh + do/does + S + V + O?</code><br>
+        <span style="color:#94a3b8; font-size:11px;">e.g., Where does he work?</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

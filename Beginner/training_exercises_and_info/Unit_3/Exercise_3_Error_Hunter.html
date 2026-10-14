@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 3 — Exercise 3: Diagnostic Error Hunter</title>
+  <style>
+    :root {
+      --primary: #0d568c;
+      --primary-light: #e0f2fe;
+      --primary-dark: #073860;
+      --accent: #d97706;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px 16px;
+      line-height: 1.5;
+    }
+    .container { max-width: 860px; margin: 0 auto; }
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+      background: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+    .nav-link:hover { background: var(--primary-light); }
+    header {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--primary);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+    }
+    h1 { font-size: 24px; color: var(--primary-dark); margin-bottom: 6px; }
+    p.subtitle { color: var(--muted); font-size: 14px; }
+    .story-card {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+    .task-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      transition: all 0.2s;
+    }
+    .task-item.correct { background: var(--success-bg); border-color: #86efac; }
+    .task-item.incorrect { background: var(--danger-bg); border-color: #fca5a5; }
+    .task-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .task-title { font-weight: 700; font-size: 14px; color: #334155; }
+    .tags-group { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: #e2e8f0;
+      color: #475569;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .tag.highlight { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .error-sentence { font-size: 15px; margin-bottom: 12px; }
+    .error-token {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      border: 1px dashed #ef4444;
+    }
+    .fix-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .fix-input {
+      padding: 6px 12px;
+      border: 1px solid #94a3b8;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      min-width: 140px;
+    }
+    .task-feedback {
+      font-size: 13px;
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: none;
+      font-weight: 500;
+    }
+    .task-feedback.ok { display: block; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+    .task-feedback.err { display: block; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    .action-bar { display: flex; align-items: center; gap: 12px; margin: 28px 0; flex-wrap: wrap; }
+    .btn-submit {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-submit:hover { background: var(--primary-dark); }
+    .btn-reset {
+      background: #64748b;
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-next {
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 14px;
+      margin-left: auto;
+      display: none;
+    }
+    #score-summary-box {
+      display: none;
+      background: #fff;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-link">← Unit 3 Hub</a>
+    <span style="font-weight: bold; color: var(--muted); font-size: 13px;">Exercise 3 of 4</span>
+  </div>
+
+  <header>
+    <div class="badge">Part 3 &bull; Diagnostic Error Hunter</div>
+    <h1>Spot & Correct the Grammar Traps</h1>
+    <p class="subtitle">Find the highlighted error in each story sentence and type the correct repair.</p>
+  </header>
+
+  <div class="story-card">
+    📖 <strong>The Wilson Family Journal:</strong><br>
+    <em>"Hello! My name is Tom. I am 22 years old and I live in Cardiff. Here is a short story about my family and our weekly routines. Can you spot and repair the grammatical slips in our journal?"</em>
+  </div>
+
+  <div id="exercise-items">
+    <!-- Item 0 -->
+    <div class="task-item" id="item-0" data-pronoun="I" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">1. Tom's Morning Routine (I)</span>
+        <div class="tags-group"><span class="tag">Pronoun: I</span><span class="tag">Auxiliary Slip</span></div>
+      </div>
+      <p class="error-sentence">
+        "I <span class="error-token">doesn't</span> like getting up early on Monday mornings."
+      </p>
+      <div class="fix-row">
+        <span>Correct word:</span>
+        <input type="text" class="fix-input" id="inp-0" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-0"></div>
+    </div>
+
+    <!-- Item 1: Our father speak -> speaks -->
+    <div class="task-item" id="item-1" data-pronoun="he_she_it" data-aux="does" data-structure="affirmative" data-prepnoun="singular" data-answer="speaks">
+      <div class="task-meta">
+        <span class="task-title">2. Father's Languages (Our father)</span>
+        <div class="tags-group"><span class="tag">Subject: Our father</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <p class="error-sentence">
+        "Our father <span class="error-token">speak</span> English and German at his job."
+      </p>
+      <div class="fix-row">
+        <span>Correct verb:</span>
+        <input type="text" class="fix-input" id="inp-1" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-1"></div>
+    </div>
+
+    <!-- Item 2: My friends doesn't -> don't -->
+    <div class="task-item" id="item-2" data-pronoun="they" data-aux="dont" data-structure="negation" data-prepnoun="plural" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">3. Tom's Friends (My friends)</span>
+        <div class="tags-group"><span class="tag">Subject: My friends</span><span class="tag highlight">Preposition + Noun (Plural)</span></div>
+      </div>
+      <p class="error-sentence">
+        "My friends <span class="error-token">doesn't</span> speak English; they speak Italian."
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="inp-2" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-2"></div>
+    </div>
+
+    <!-- Item 3: My sister don't -> doesn't -->
+    <div class="task-item" id="item-3" data-pronoun="he_she_it" data-aux="doesnt" data-structure="negation" data-prepnoun="singular" data-answer="doesn't|doesnt">
+      <div class="task-meta">
+        <span class="task-title">4. Sister's Preferences (My sister)</span>
+        <div class="tags-group"><span class="tag">Subject: My sister</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <p class="error-sentence">
+        "My sister Emma is a doctor, but she <span class="error-token">don't</span> drink coffee."
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="inp-3" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-3"></div>
+    </div>
+
+    <!-- Item 4: Do your brother -> Does your brother -->
+    <div class="task-item" id="item-4" data-pronoun="he_she_it" data-aux="does" data-structure="yesno_question" data-prepnoun="singular" data-answer="does">
+      <div class="task-meta">
+        <span class="task-title">5. Brother's Job (Your brother)</span>
+        <div class="tags-group"><span class="tag">Subject: Your brother</span><span class="tag highlight">Preposition + Noun (Singular)</span></div>
+      </div>
+      <p class="error-sentence">
+        "<span class="error-token">Do</span> your brother speak French or German at his job?"
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="inp-4" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-4"></div>
+    </div>
+
+    <!-- Item 5: We doesn't -> don't -->
+    <div class="task-item" id="item-5" data-pronoun="we" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">6. Family Lunch Routine (We)</span>
+        <div class="tags-group"><span class="tag">Pronoun: we</span><span class="tag">Auxiliary Slip</span></div>
+      </div>
+      <p class="error-sentence">
+        "On Sundays, we <span class="error-token">doesn't</span> have lunch at home; we go to a restaurant."
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="inp-5" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-5"></div>
+    </div>
+
+    <!-- Item 6: parents works -> work -->
+    <div class="task-item" id="item-6" data-pronoun="they" data-aux="do" data-structure="word_order" data-prepnoun="plural" data-answer="work">
+      <div class="task-meta">
+        <span class="task-title">7. Parents' Workplace (My parents)</span>
+        <div class="tags-group"><span class="tag">Subject: My parents</span><span class="tag highlight">Preposition + Noun (Plural)</span></div>
+      </div>
+      <p class="error-sentence">
+        "Both of my parents <span class="error-token">works</span> in the centre of Cardiff."
+      </p>
+      <div class="fix-row">
+        <span>Correct verb:</span>
+        <input type="text" class="fix-input" id="inp-6" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-6"></div>
+    </div>
+
+    <!-- Item 7: they doesn't -> don't -->
+    <div class="task-item" id="item-7" data-pronoun="they" data-aux="dont" data-structure="negation" data-answer="don't|dont">
+      <div class="task-meta">
+        <span class="task-title">8. Plural Negative Auxiliary (They)</span>
+        <div class="tags-group"><span class="tag">Pronoun: they</span><span class="tag">Auxiliary Slip</span></div>
+      </div>
+      <p class="error-sentence">
+        "They work in the city, but they <span class="error-token">doesn't</span> finish until seven o'clock."
+      </p>
+      <div class="fix-row">
+        <span>Correct auxiliary:</span>
+        <input type="text" class="fix-input" id="inp-7" placeholder="Type correct word...">
+      </div>
+      <div class="task-feedback" id="fb-7"></div>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-submit" onclick="gradeExercise()">✓ Check Corrections</button>
+    <button class="btn-reset" onclick="resetExercise()">Reset</button>
+    <a href="Exercise_4_Turkmen_Translation.html" class="btn-next" id="btn-next">Next: Exercise 4 →</a>
+  </div>
+
+  <div id="score-summary-box">
+    <h2 style="font-size: 20px; color: var(--primary);">Exercise 3 Results: <span id="res-score"></span>/8 (<span id="res-pct"></span>%)</h2>
+    <p style="color: var(--muted); margin-top: 6px;">Your results have been saved to your Unit 3 Mastery Dashboard.</p>
+  </div>
+</div>
+
+<script>
+const norm = s => (s || '').trim().toLowerCase().replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
+
+function gradeExercise() {
+  let score = 0;
+  const results = [];
+
+  for (let i = 0; i < 8; i++) {
+    const item = document.getElementById('item-' + i);
+    const valid = item.dataset.answer.split('|').map(norm);
+    const userVal = norm(document.getElementById('inp-' + i).value);
+    const isOk = valid.includes(userVal);
+
+    item.classList.remove('correct', 'incorrect');
+    item.classList.add(isOk ? 'correct' : 'incorrect');
+
+    const fb = document.getElementById('fb-' + i);
+    fb.className = 'task-feedback ' + (isOk ? 'ok' : 'err');
+    fb.innerHTML = isOk ? '✓ Correct repair!' : `✕ Expected: <strong>${valid[0]}</strong>`;
+
+    if (isOk) score++;
+
+    results.push({
+      id: 'ex3_' + i,
+      pronoun: item.dataset.pronoun,
+      aux: item.dataset.aux,
+      structure: item.dataset.structure,
+      prepnoun: item.dataset.prepnoun || null,
+      correct: isOk
+    });
+  }
+
+  // Save to localStorage
+  const dataToSave = {
+    completed: true,
+    score: score,
+    total: 8,
+    timestamp: new Date().toISOString(),
+    results: results
+  };
+  localStorage.setItem('nef_beg_u3_ex3', JSON.stringify(dataToSave));
+
+  document.getElementById('res-score').textContent = score;
+  document.getElementById('res-pct').textContent = Math.round((score / 8) * 100);
+  document.getElementById('score-summary-box').style.display = 'block';
+  document.getElementById('btn-next').style.display = 'inline-block';
+  document.getElementById('score-summary-box').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetExercise() {
+  for (let i = 0; i < 8; i++) {
+    document.getElementById('inp-' + i).value = '';
+    const item = document.getElementById('item-' + i);
+    item.classList.remove('correct', 'incorrect');
+    document.getElementById('fb-' + i).style.display = 'none';
+  }
+  document.getElementById('score-summary-box').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New English File Beginner — Grammar & Vocabulary Training Gateway</title>
+  <style>
+    :root {
+      --primary: #0d568c;
+      --primary-light: #e0f2fe;
+      --primary-dark: #073860;
+      --accent: #d97706;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --warning: #f59e0b;
+      --warning-bg: #fef3c7;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 30px 18px 50px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1040px; margin: 0 auto; }
+    header {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 30px 36px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      border-top: 6px solid var(--primary);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+    }
+    h1 { font-size: 28px; color: var(--primary-dark); margin-bottom: 8px; }
+    p.subtitle { color: var(--muted); font-size: 15px; }
+
+    .units-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .unit-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .unit-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+      border-color: var(--primary);
+    }
+    .unit-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .unit-num {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+    .unit-status {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 99px;
+      background: #e2e8f0;
+      color: #475569;
+    }
+    .unit-status.completed { background: var(--success-bg); color: var(--success); }
+    .unit-title { font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+    .unit-syllabus {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.45;
+    }
+    .exercises-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+      font-size: 12.5px;
+      color: #334155;
+    }
+    .ex-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .unit-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+    .unit-btn:hover { background: var(--primary-dark); }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="badge">Oxford New English File &bull; Beginner Level</div>
+    <h1>Interactive Grammar & Diagnostic Training Gateway</h1>
+    <p class="subtitle">Select any unit below to access its 4 anti-guessing exercises (Scrambled Word Order, Fill-in-the-Blanks, Error Hunter, and Turkmen Translation) with cumulative diagnostics.</p>
+  </header>
+
+  <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 2px solid #38bdf8; border-radius: 14px; padding: 22px 28px; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.15); flex-wrap: wrap; gap: 15px;">
+    <div style="max-width: 650px;">
+      <span style="background:#0284c7; color:#fff; font-size:11px; font-weight:800; padding:3px 10px; border-radius:99px; text-transform:uppercase;">New Grammar Games</span>
+      <h2 style="font-size:22px; color:#fff; margin:6px 0 4px;">🎮 Present Simple Game Arena (Subjects, Auxiliaries & Verbs)</h2>
+      <p style="font-size:14px; color:#94a3b8; margin:0;">3 interactive games for your students to master Subject-Verb agreement across all 4 formulas: (+) S+V/Vs, (-) S+don't/doesn't+V, (? y/n) Do/Does+S+V?, and (Wh-) Wh+do/does+S+V?.</p>
+    </div>
+    <a href="games_hub.html" style="background:#38bdf8; color:#0f172a; padding:12px 22px; border-radius:8px; font-weight:800; text-decoration:none; font-size:14px; white-space:nowrap;">Enter Game Arena ➔</a>
+  </div>
+
+  <div class="units-grid">
+    <!-- Unit 1 -->
+    <div class="unit-card">
+      <div>
+        <div class="unit-top">
+          <span class="unit-num">Unit 1</span>
+          <span class="unit-status" id="u1-status">Ready</span>
+        </div>
+        <div class="unit-title">Verb 'to be' & Pronouns</div>
+        <div class="unit-syllabus">Present Simple of <i>to be</i> (am, is, are, isn't, aren't), inversion in questions, singular vs plural Preposition + Noun agreement.</div>
+        <div class="exercises-list">
+          <div class="ex-item">🔹 Ex 1: Word Order Architecture (10 items)</div>
+          <div class="ex-item">🔹 Ex 2: Fill in the Blanks (10 items)</div>
+          <div class="ex-item">🔹 Ex 3: Diagnostic Error Hunter (8 items)</div>
+          <div class="ex-item">🔹 Ex 4: Turkmen Translation (10 items)</div>
+        </div>
+      </div>
+      <a href="Unit_1/index.html" class="unit-btn">Enter Unit 1 Hub →</a>
+    </div>
+
+    <!-- Unit 2 -->
+    <div class="unit-card">
+      <div>
+        <div class="unit-top">
+          <span class="unit-num">Unit 2</span>
+          <span class="unit-status" id="u2-status">Ready</span>
+        </div>
+        <div class="unit-title">Possessives & Adjectives</div>
+        <div class="unit-syllabus">Possessive adjectives, possessive <i>'s</i>, demonstratives (this/that/these/those), adjective order rules, irregular plurals.</div>
+        <div class="exercises-list">
+          <div class="ex-item">🔹 Ex 1: Word Order Architecture (10 items)</div>
+          <div class="ex-item">🔹 Ex 2: Fill in the Blanks (10 items)</div>
+          <div class="ex-item">🔹 Ex 3: Diagnostic Error Hunter (8 items)</div>
+          <div class="ex-item">🔹 Ex 4: Turkmen Translation (10 items)</div>
+        </div>
+      </div>
+      <a href="Unit_2/index.html" class="unit-btn">Enter Unit 2 Hub →</a>
+    </div>
+
+    <!-- Unit 3 -->
+    <div class="unit-card" style="border-color: #0284c7;">
+      <div>
+        <div class="unit-top">
+          <span class="unit-num">Unit 3</span>
+          <span class="unit-status" id="u3-status">Ready</span>
+        </div>
+        <div class="unit-title">Present Simple Action Verbs</div>
+        <div class="unit-syllabus">Present Simple positive (V/Vs), negatives (don't/doesn't), QUASI/ASI questions (do/does), Preposition + Noun singular/plural agreement.</div>
+        <div class="exercises-list">
+          <div class="ex-item">🔹 Ex 1: Word Order Architecture (10 items)</div>
+          <div class="ex-item">🔹 Ex 2: Fill in the Blanks (10 items)</div>
+          <div class="ex-item">🔹 Ex 3: Diagnostic Error Hunter (8 items)</div>
+          <div class="ex-item">🔹 Ex 4: Turkmen Translation (10 items)</div>
+        </div>
+      </div>
+      <a href="Unit_3/index.html" class="unit-btn">Enter Unit 3 Hub →</a>
+    </div>
+
+    <!-- Unit 4 -->
+    <div class="unit-card">
+      <div>
+        <div class="unit-top">
+          <span class="unit-num">Unit 4</span>
+          <span class="unit-status" id="u4-status">Ready</span>
+        </div>
+        <div class="unit-title">Routines, Adverbs & Modal Can</div>
+        <div class="unit-syllabus">Frequency adverbs placement (before verb / after be), routine collocations (have/do/go/play), modal <i>can/can't</i> (bare infinitive).</div>
+        <div class="exercises-list">
+          <div class="ex-item">🔹 Ex 1: Word Order Architecture (10 items)</div>
+          <div class="ex-item">🔹 Ex 2: Fill in the Blanks (10 items)</div>
+          <div class="ex-item">🔹 Ex 3: Diagnostic Error Hunter (8 items)</div>
+          <div class="ex-item">🔹 Ex 4: Turkmen Translation (10 items)</div>
+        </div>
+      </div>
+      <a href="Unit_4/index.html" class="unit-btn">Enter Unit 4 Hub →</a>
+    </div>
+
+    <!-- Unit 5 -->
+    <div class="unit-card">
+      <div>
+        <div class="unit-top">
+          <span class="unit-num">Unit 5</span>
+          <span class="unit-status" id="u5-status">Ready</span>
+        </div>
+        <div class="unit-title">Past Simple & Prepositions</div>
+        <div class="unit-syllabus">Past Simple of <i>to be</i> (was/were), regular past (-ed), irregular past verbs, auxiliary <i>did/didn't + bare verb</i>, prepositions in/at/on.</div>
+        <div class="exercises-list">
+          <div class="ex-item">🔹 Ex 1: Word Order Architecture (10 items)</div>
+          <div class="ex-item">🔹 Ex 2: Fill in the Blanks (10 items)</div>
+          <div class="ex-item">🔹 Ex 3: Diagnostic Error Hunter (8 items)</div>
+          <div class="ex-item">🔹 Ex 4: Turkmen Translation (10 items)</div>
+        </div>
+      </div>
+      <a href="Unit_5/index.html" class="unit-btn">Enter Unit 5 Hub →</a>
+    </div>
+
+    <!-- Unit 6 -->
+    <div class="unit-card">
+      <div>
+        <div class="unit-top">
+          <span class="unit-num">Unit 6</span>
+          <span class="unit-status" id="u6-status">Ready</span>
+        </div>
+        <div class="unit-title">There is / There are & Pronouns</div>
+        <div class="unit-syllabus">Existentials (there is/are, there was/were), object pronouns (me, him, her, us, them), town directions and place prepositions.</div>
+        <div class="exercises-list">
+          <div class="ex-item">🔹 Ex 1: Word Order Architecture (10 items)</div>
+          <div class="ex-item">🔹 Ex 2: Fill in the Blanks (10 items)</div>
+          <div class="ex-item">🔹 Ex 3: Diagnostic Error Hunter (8 items)</div>
+          <div class="ex-item">🔹 Ex 4: Turkmen Translation (10 items)</div>
+        </div>
+      </div>
+      <a href="Unit_6/index.html" class="unit-btn">Enter Unit 6 Hub →</a>
+    </div>
+
+    <!-- Unit 7 -->
+    <div class="unit-card">
+      <div>
+        <div class="unit-top">
+          <span class="unit-num">Unit 7</span>
+          <span class="unit-status" id="u7-status">Ready</span>
+        </div>
+        <div class="unit-title">Future Intentions & Verb Patterns</div>
+        <div class="unit-syllabus">Future with <i>be going to + V</i>, verb + infinitive (want to, need to), verb + -ing (like/love), travel & future time expressions.</div>
+        <div class="exercises-list">
+          <div class="ex-item">🔹 Ex 1: Word Order Architecture (10 items)</div>
+          <div class="ex-item">🔹 Ex 2: Fill in the Blanks (10 items)</div>
+          <div class="ex-item">🔹 Ex 3: Diagnostic Error Hunter (8 items)</div>
+          <div class="ex-item">🔹 Ex 4: Turkmen Translation (10 items)</div>
+        </div>
+      </div>
+      <a href="Unit_7/index.html" class="unit-btn">Enter Unit 7 Hub →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function checkStatus() {
+  for (let i = 1; i <= 7; i++) {
+    const el = document.getElementById('u' + i + '-status');
+    if (!el) continue;
+    let completed = 0;
+    for (let e = 1; e <= 4; e++) {
+      const data = localStorage.getItem('nef_beg_u' + i + '_ex' + e);
+      if (data) {
+        try { if (JSON.parse(data).completed) completed++; } catch(err) {}
+      }
+    }
+    if (completed === 4) {
+      el.textContent = 'Completed (4/4)';
+      el.className = 'unit-status completed';
+    } else if (completed > 0) {
+      el.textContent = completed + '/4 Done';
+      el.className = 'unit-status completed';
+    } else {
+      el.textContent = 'Ready';
+      el.className = 'unit-status';
+    }
+  }
+}
+window.addEventListener('DOMContentLoaded', checkStatus);
+</script>
+</body>
+</html>

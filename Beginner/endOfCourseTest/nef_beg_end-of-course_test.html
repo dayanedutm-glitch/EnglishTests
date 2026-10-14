@@ -1,6 +1,51 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>New English File Beginner End-of-Course Test</title><style>
 :root{font-family:Arial,sans-serif;color:#1f2937;background:#eef4f8}body{margin:0}main{max-width:980px;margin:26px auto 55px;padding:0 18px}header,section{background:#fff;border-radius:14px;box-shadow:0 2px 12px #1f293714;padding:25px;margin-top:22px}header{margin-top:0}h1,h2{color:#0d568c}h1{margin:0 0 8px}h2{margin-top:0}.note{color:#526273}.q{margin:13px 0;line-height:1.6}.answers{display:flex;flex-wrap:wrap;gap:7px 17px;margin:5px 0 0 18px}.answers label{cursor:pointer}input[type=text],textarea{padding:7px;border:1px solid #aab9c9;border-radius:6px;font:inherit}input[type=text]{min-width:150px}.ok{background:#e4f6e8!important;border-color:#29974e!important}.bad{background:#fee7e7!important;border-color:#ce3c3c!important}.reading,.manual,.box-card{padding:14px;border-radius:6px;line-height:1.55}.reading{background:#f5f8fb;border-left:4px solid #6ba2d0}.manual{background:#fff7df;border-left:4px solid #d89b21}.box-card{background:#f0f5fa;border-left:4px solid #0d568c;margin:10px 0}.manual textarea{width:100%;min-height:70px;box-sizing:border-box;margin-top:5px}.audio{display:block;width:100%;margin:8px 0 18px}.actions{position:sticky;bottom:0;padding:14px 0 2px;background:linear-gradient(#eef4f800,#eef4f8 35%)}button{background:#0d6fa8;color:#fff;border:0;border-radius:7px;padding:11px 17px;font:inherit;font-weight:bold;cursor:pointer}#result{font-weight:bold;margin-left:12px}.writing p{margin-bottom:4px}.chk-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}.chk-label{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#f9fafb;border:1px solid #d1d5db;border-radius:6px;cursor:pointer}
+
+/* Mobile responsive fixes for header badge & title */
+@media (max-width: 600px) {
+    header {
+        padding: 15px 12px 20px !important;
+    }
+    header > div:first-child {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 10px 12px !important;
+        gap: 10px !important;
+    }
+    header > div:first-child > div {
+        min-width: 100% !important;
+        flex: unset !important;
+    }
+    header > div:last-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+    header > div:last-child > div:first-child {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    header > div:last-child > div:first-child > div:first-child {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        font-size: 20px !important;
+        margin-right: -10px !important;
+    }
+    header > div:last-child > div:first-child > div:last-child {
+        font-size: 14px !important;
+        padding: 8px 12px 8px 18px !important;
+    }
+    header > div:last-child > div:last-child h1 {
+        font-size: 20px !important;
+    }
+    header > div:last-child > div:last-child p {
+        font-size: 13px !important;
+    }
+}
+
 </style></head><body><main>
 <header><h1>New English File Beginner End-of-Course Test</h1><p class="note">Complete all sections. Grammar, Vocabulary, Pronunciation &amp; Practical English = 100 marks. Reading &amp; Writing = 25 marks. Listening &amp; Speaking = 25 marks. Total = 150 marks.</p></header>
 <section id="student-info">
@@ -231,11 +276,7 @@ title(s.listening,'2. Listen to five conversations. Tick A, B, or C.');
 
 /* --- CHECK ANSWERS SCRIPT --- */
 document.querySelector('#check').onclick=()=>{
-  const password=window.prompt('Enter the teacher password to check answers:');
-  if(password!=='123'){
-    if(password!==null)window.alert('Incorrect password.');
-    return;
-  }
+  
   let score=0,total=0;
   
   document.querySelectorAll('input[type=text][data-answer]').forEach(f=>{
@@ -271,6 +312,59 @@ document.querySelector('#check').onclick=()=>{
     });
   });
 
-  document.querySelector('#result').textContent=`Checked score: ${score} / ${total}. Add Writing (10) and Speaking (15) for total out of 150.`;
+  const objScore = score;
+  const objPct = ((objScore / 125) * 100).toFixed(1);
+  const initExamPct = ((objScore / 150) * 100).toFixed(1);
+  const initColor = initExamPct >= 70 ? '#16a34a' : (initExamPct >= 50 ? '#d97706' : '#dc2626');
+  const prevW = document.getElementById('calc-writing') ? document.getElementById('calc-writing').value : '';
+  const prevS = document.getElementById('calc-speaking') ? document.getElementById('calc-speaking').value : '';
+
+  document.querySelector('#result').innerHTML=`<div style="background:#eef4f8; border:2px solid #0d568c; color:#1f2937; padding:20px; border-radius:10px; font-size:16px; margin-top:20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+      <div>
+        <strong style="font-size:19px; color:#0d568c;">Objective Score: ${objScore} / 125</strong>
+        &nbsp;
+        <span style="display:inline-block; padding:3px 12px; background:#0d568c; color:#fff; border-radius:12px; font-weight:bold; font-size:15px;">${objPct}%</span>
+      </div>
+      <div style="font-size:14px; color:#526273;">
+        Exam Contribution: <strong>${initExamPct}%</strong> of 150 max marks
+      </div>
+    </div>
+    <hr style="border:0; border-top:1px solid #cbd5e1; margin:12px 0;">
+    <div style="font-size:13px; color:#475569; margin-bottom:12px; line-height:1.5;">
+      The objective part of the paper (Grammar 30 + Vocabulary 40 + Pronunciation 20 + Practical English 10 + Reading 15 + Listening 10) is marked out of 125. Add the teacher scores for Writing (10) and Speaking (15) and the whole End-of-Course Test is marked out of 150.
+      <br><strong>Enter teacher marks below to calculate the final course grade &amp; percentage:</strong>
+    </div>
+    <div style="display:flex; align-items:center; flex-wrap:wrap; gap:15px; background:#fff; padding:12px 16px; border-radius:8px; border:1px solid #cbd5e1;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label style="font-size:13px; font-weight:bold; color:#0d568c;">Writing (/10):</label>
+        <input type="number" id="calc-writing" min="0" max="10" step="0.5" placeholder="0" style="width:65px; padding:5px 8px; border:1px solid #94a3b8; border-radius:4px; font-size:14px; text-align:center;">
+      </div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <label style="font-size:13px; font-weight:bold; color:#0d568c;">Speaking (/15):</label>
+        <input type="number" id="calc-speaking" min="0" max="15" step="0.5" placeholder="0" style="width:65px; padding:5px 8px; border:1px solid #94a3b8; border-radius:4px; font-size:14px; text-align:center;">
+      </div>
+      <div style="margin-left:auto; font-size:16px; font-weight:bold; color:#0f172a; display:flex; align-items:center; gap:10px;">
+        <span>Final Grade: <span id="calc-final-score" style="color:#0d568c;">${objScore}</span> / 150</span>
+        <span id="calc-final-pct" style="display:inline-block; padding:4px 12px; background:${initColor}; color:#fff; border-radius:12px; font-size:16px;">${initExamPct}%</span>
+      </div>
+    </div>
+  </div>`;
+
+  const updateFinalCalc = () => {
+    const w = parseFloat(document.getElementById('calc-writing').value) || 0;
+    const s = parseFloat(document.getElementById('calc-speaking').value) || 0;
+    const finalScore = Math.min(150, Math.max(0, objScore + w + s));
+    const finalPct = ((finalScore / 150) * 100).toFixed(1);
+    document.getElementById('calc-final-score').textContent = finalScore;
+    const pctBadge = document.getElementById('calc-final-pct');
+    pctBadge.textContent = finalPct + '%';
+    pctBadge.style.background = finalPct >= 70 ? '#16a34a' : (finalPct >= 50 ? '#d97706' : '#dc2626');
+  };
+  document.getElementById('calc-writing').addEventListener('input', updateFinalCalc);
+  document.getElementById('calc-speaking').addEventListener('input', updateFinalCalc);
+  if (prevW) { document.getElementById('calc-writing').value = prevW; }
+  if (prevS) { document.getElementById('calc-speaking').value = prevS; }
+  if (prevW || prevS) { updateFinalCalc(); }
 };
 </script></body></html>

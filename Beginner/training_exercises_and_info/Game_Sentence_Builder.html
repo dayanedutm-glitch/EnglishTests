@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentence Architect — Present Simple Construction Game</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --primary: #3b82f6;
+      --accent: #8b5cf6;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+    .builder-box {
+      max-width: 860px;
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #a78bfa;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stats {
+      display: flex;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .stat-pill {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 99px;
+    }
+
+    /* Target Mission Card */
+    .mission-card {
+      background: #0f172a;
+      border: 2px solid #8b5cf6;
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin-bottom: 22px;
+    }
+    .mission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .mission-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      background: #8b5cf6;
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+    .mission-desc {
+      font-size: 15px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    /* Live Blueprint Preview */
+    .blueprint-preview {
+      background: #020617;
+      border: 2px dashed #475569;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 24px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .block-slot {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 800;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+    .slot-wh   { background: #0284c7; color: #fff; }
+    .slot-aux  { background: #d97706; color: #fff; }
+    .slot-subj { background: #475569; color: #fff; }
+    .slot-verb { background: #16a34a; color: #fff; }
+    .slot-obj  { background: #334155; color: #cbd5e1; }
+    .slot-empty { background: transparent; border: 2px dashed #64748b; color: #64748b; }
+
+    /* Builder Slots Container */
+    .construction-area {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+    .control-row {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .control-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      min-width: 130px;
+    }
+    .options-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .chip-btn {
+      background: #1e293b;
+      border: 1px solid var(--border);
+      color: #f8fafc;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip-btn:hover {
+      border-color: #8b5cf6;
+      background: #2d3748;
+    }
+    .chip-btn.active {
+      background: #8b5cf6 !important;
+      border-color: #c4b5fd !important;
+      color: #fff !important;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+    }
+
+    /* Actions */
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-test {
+      background: #22c55e;
+      color: #052e16;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-test:hover { background: #16a34a; color: #fff; }
+
+    .feedback-panel {
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      display: none;
+    }
+    .feedback-panel.pass {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid #22c55e;
+      color: #86efac;
+    }
+    .feedback-panel.fail {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+    }
+    .btn-next-mission {
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="builder-box">
+  <div class="top-header">
+    <div class="logo">
+      <span>🏗️</span> Sentence Architect
+    </div>
+    <div class="stats">
+      <div class="stat-pill">Mission: <span id="m-num" style="color:#a78bfa;">1 / 10</span></div>
+      <div class="stat-pill">Architect Score: <span id="m-score" style="color:#4ade80;">0</span></div>
+    </div>
+  </div>
+
+  <div class="mission-card">
+    <div class="mission-header">
+      <span class="mission-tag" id="mission-tag">Pattern: (-) S + doesn't/don't + V + O</span>
+      <span style="font-size:12px; color:#a78bfa;" id="mission-type">NEGATIVE SENTENCE</span>
+    </div>
+    <div class="mission-desc" id="mission-desc">
+      Build a correct sentence with <strong>"Our friendly dog"</strong> and the verb <strong>"eat"</strong>.
+    </div>
+  </div>
+
+  <div class="blueprint-preview" id="preview-area">
+    <!-- Live sentence blocks rendered here -->
+  </div>
+
+  <div class="construction-area" id="controls-area">
+    <!-- Row 1: Auxiliary / Question word -->
+    <div class="control-row" id="row-aux">
+      <span class="control-label" id="label-aux">Auxiliary:</span>
+      <div class="options-row" id="options-aux"></div>
+    </div>
+
+    <!-- Row 2: Subject (Fixed or selection) -->
+    <div class="control-row" id="row-subj">
+      <span class="control-label">Subject:</span>
+      <div class="options-row" id="options-subj"></div>
+    </div>
+
+    <!-- Row 3: Verb -->
+    <div class="control-row" id="row-verb">
+      <span class="control-label">Verb:</span>
+      <div class="options-row" id="options-verb"></div>
+    </div>
+
+    <!-- Row 4: Object / Rest -->
+    <div class="control-row" id="row-obj">
+      <span class="control-label">Rest of sentence:</span>
+      <div class="options-row" id="options-obj"></div>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-test" onclick="evaluateSentence()">🧪 Test Blueprint</button>
+  </div>
+
+  <div class="feedback-panel" id="feedback-panel"></div>
+</div>
+
+<script>
+// Audio
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+function playFx(f, d) {
+  try {
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.frequency.value = f;
+    g.gain.setValueAtTime(0.08, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + d);
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime + d);
+  } catch(e){}
+}
+
+const missions = [
+  // Mission 1: Negative with possessive singular
+  {
+    type: "(-) Negative",
+    formula: "S + don't / doesn't + V + O",
+    prompt: "Construct a negative sentence with 'Their father' and verb 'work'.",
+    structure: "S_AUX_V_O", // Subject -> Aux -> Verb -> Object
+    subject: "Their father",
+    auxOptions: ["doesn't", "don't", "not"],
+    verbOptions: ["work", "works"],
+    obj: "in an office.",
+    correctAux: "doesn't",
+    correctVerb: "work",
+    explain: "'Their father' = HE (singular). Negative requires 'doesn't' + base verb 'work'. Never write 'doesn't works'!"
+  },
+  // Mission 2: Affirmative with compound subject
+  {
+    type: "(+) Affirmative",
+    formula: "S + V / Vs + O",
+    prompt: "Construct an affirmative sentence with 'Andy and Mary' and verb 'live'.",
+    structure: "S_V_O",
+    subject: "Andy and Mary",
+    auxOptions: ["[No Auxiliary]"],
+    verbOptions: ["live", "lives"],
+    obj: "in a big house.",
+    correctAux: "[No Auxiliary]",
+    correctVerb: "live",
+    explain: "'Andy and Mary' = THEY (plural). Plural subjects take the base verb 'live' (no -s)."
+  },
+  // Mission 3: Question with possessive plural
+  {
+    type: "(? y/n) Question",
+    formula: "Do / Does + S + V + O?",
+    prompt: "Form a Yes/No question for 'your sisters' and verb 'have'.",
+    structure: "AUX_S_V_O", // Aux -> Subject -> Verb -> Object?
+    subject: "your sisters",
+    auxOptions: ["Do", "Does"],
+    verbOptions: ["have", "has"],
+    obj: "cars?",
+    correctAux: "Do",
+    correctVerb: "have",
+    explain: "'your sisters' = THEY (plural). Question starts with 'Do' and uses base verb 'have': 'Do your sisters have cars?'"
+  },
+  // Mission 4: Wh- Question with singular person
+  {
+    type: "(w/h) Wh- Question",
+    formula: "Wh + do/does + S + V + O?",
+    prompt: "Construct a Wh- question asking where 'Merjen' works.",
+    structure: "WH_AUX_S_V_O",
+    whWord: "Where",
+    subject: "Merjen",
+    auxOptions: ["does", "do", "is"],
+    verbOptions: ["work", "works"],
+    obj: "?",
+    correctAux: "does",
+    correctVerb: "work",
+    explain: "Merjen = SHE. Wh- questions use 'Where does Merjen work?'"
+  },
+  // Mission 5: Negative with two nouns
+  {
+    type: "(-) Negative",
+    formula: "S + don't / doesn't + V + O",
+    prompt: "Construct a negative sentence for 'My brother and I' and verb 'like'.",
+    structure: "S_AUX_V_O",
+    subject: "My brother and I",
+    auxOptions: ["don't", "doesn't", "aren't"],
+    verbOptions: ["like", "likes"],
+    obj: "fast food.",
+    correctAux: "don't",
+    correctVerb: "like",
+    explain: "'My brother and I' = WE. Plural/WE takes 'don't like'."
+  },
+  // Mission 6: Positive with single animal
+  {
+    type: "(+) Affirmative",
+    formula: "S + V / Vs + O",
+    prompt: "Construct an affirmative sentence for 'Our old dog' and verb 'sleep'.",
+    structure: "S_V_O",
+    subject: "Our old dog",
+    auxOptions: ["[No Auxiliary]"],
+    verbOptions: ["sleeps", "sleep"],
+    obj: "under the table.",
+    correctAux: "[No Auxiliary]",
+    correctVerb: "sleeps",
+    explain: "'Our old dog' = IT. In positive sentences, IT takes verb-s: 'sleeps'."
+  }
+];
+
+let mIdx = 0;
+let mScore = 0;
+let selectedAux = "";
+let selectedVerb = "";
+
+function loadMission() {
+  const m = missions[mIdx];
+  document.getElementById('m-num').textContent = `${mIdx + 1} / ${missions.length}`;
+  document.getElementById('mission-tag').textContent = m.formula;
+  document.getElementById('mission-type').textContent = m.type;
+  document.getElementById('mission-desc').innerHTML = m.prompt;
+
+  // reset selections
+  selectedAux = m.auxOptions[0];
+  selectedVerb = m.verbOptions[0];
+
+  // build aux options
+  const auxBox = document.getElementById('options-aux');
+  auxBox.innerHTML = '';
+  if (m.structure.startsWith("WH_")) {
+    document.getElementById('label-aux').textContent = `${m.whWord} + Auxiliary:`;
+  } else {
+    document.getElementById('label-aux').textContent = m.structure.startsWith("AUX_") ? "Starting Question Aux:" : "Auxiliary:";
+  }
+  m.auxOptions.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'chip-btn' + (opt === selectedAux ? ' active' : '');
+    btn.textContent = opt;
+    btn.onclick = () => {
+      selectedAux = opt;
+      document.querySelectorAll('#options-aux .chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateBlueprint();
+    };
+    auxBox.appendChild(btn);
+  });
+
+  // subject row
+  const subjBox = document.getElementById('options-subj');
+  subjBox.innerHTML = `<span class="chip-btn active" style="cursor:default;">${m.subject}</span>`;
+
+  // verb row
+  const verbBox = document.getElementById('options-verb');
+  verbBox.innerHTML = '';
+  m.verbOptions.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'chip-btn' + (opt === selectedVerb ? ' active' : '');
+    btn.textContent = opt;
+    btn.onclick = () => {
+      selectedVerb = opt;
+      document.querySelectorAll('#options-verb .chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateBlueprint();
+    };
+    verbBox.appendChild(btn);
+  });
+
+  // obj row
+  document.getElementById('options-obj').innerHTML = `<span class="chip-btn active" style="cursor:default;">${m.obj}</span>`;
+
+  document.getElementById('feedback-panel').style.display = 'none';
+  updateBlueprint();
+}
+
+function updateBlueprint() {
+  const m = missions[mIdx];
+  const area = document.getElementById('preview-area');
+  let html = "";
+
+  if (m.structure === "S_AUX_V_O") {
+    html = `
+      <span class="block-slot slot-subj">${m.subject}</span>
+      <span class="block-slot slot-aux">${selectedAux}</span>
+      <span class="block-slot slot-verb">${selectedVerb}</span>
+      <span class="block-slot slot-obj">${m.obj}</span>
+    `;
+  } else if (m.structure === "S_V_O") {
+    html = `
+      <span class="block-slot slot-subj">${m.subject}</span>
+      <span class="block-slot slot-verb">${selectedVerb}</span>
+      <span class="block-slot slot-obj">${m.obj}</span>
+    `;
+  } else if (m.structure === "AUX_S_V_O") {
+    html = `
+      <span class="block-slot slot-aux">${selectedAux}</span>
+      <span class="block-slot slot-subj">${m.subject}</span>
+      <span class="block-slot slot-verb">${selectedVerb}</span>
+      <span class="block-slot slot-obj">${m.obj}</span>
+    `;
+  } else if (m.structure === "WH_AUX_S_V_O") {
+    html = `
+      <span class="block-slot slot-wh">${m.whWord}</span>
+      <span class="block-slot slot-aux">${selectedAux}</span>
+      <span class="block-slot slot-subj">${m.subject}</span>
+      <span class="block-slot slot-verb">${selectedVerb}</span>
+      <span class="block-slot slot-obj">${m.obj}</span>
+    `;
+  }
+
+  area.innerHTML = html;
+}
+
+function evaluateSentence() {
+  const m = missions[mIdx];
+  const isOk = (selectedAux === m.correctAux) && (selectedVerb === m.correctVerb);
+  const fb = document.getElementById('feedback-panel');
+  fb.style.display = 'block';
+
+  if (isOk) {
+    playFx(600, 0.2);
+    mScore += 20;
+    document.getElementById('m-score').textContent = mScore;
+    fb.className = 'feedback-panel pass';
+    fb.innerHTML = `
+      ✅ <strong>PERFECT ARCHITECTURE!</strong><br>
+      ${m.explain}<br>
+      <button class="btn-next-mission" onclick="nextMission()">Proceed to Next Mission ➔</button>
+    `;
+  } else {
+    playFx(160, 0.3);
+    fb.className = 'feedback-panel fail';
+    fb.innerHTML = `
+      ❌ <strong>STRUCTURAL DEFECT DETECTED:</strong><br>
+      ${m.explain}<br>
+      <em>Adjust your blocks above and test again!</em>
+    `;
+  }
+}
+
+function nextMission() {
+  mIdx++;
+  if (mIdx >= missions.length) {
+    document.querySelector('.builder-box').innerHTML = `
+      <div style="text-align:center; padding:40px 10px;">
+        <div style="font-size:60px; margin-bottom:15px;">🏛️🏆</div>
+        <h2 style="font-size:26px; color:#a78bfa; margin-bottom:10px;">Master Architect License Granted!</h2>
+        <p style="font-size:18px; color:#f8fafc; margin-bottom:20px;">Score: <strong style="color:#22c55e;">${mScore} points</strong></p>
+        <p style="font-size:14px; color:#94a3b8; max-width:480px; margin:0 auto 30px;">
+          You successfully assembled all 4 Present Simple patterns across compound subjects, possessive traps, and complex noun phrases!
+        </p>
+        <button class="btn-test" onclick="location.reload()">Build Again 🔄</button>
+      </div>
+    `;
+    return;
+  }
+  loadMission();
+}
+
+loadMission();
+</script>
+</body>
+</html>

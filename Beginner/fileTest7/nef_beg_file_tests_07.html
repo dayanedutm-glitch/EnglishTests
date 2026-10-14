@@ -20,6 +20,51 @@
 .actions button:hover:not(:disabled){transform:translateY(-1px)}
 @media print{button{display:none!important}}h3 { margin-top: 40px; padding-top: 25px; border-top: 2px dashed #cbd5e1; } section > h3:first-of-type, .reading h3, .manual h3 { margin-top: 0; padding-top: 0; border-top: none; }
 
+
+/* Mobile responsive fixes for header badge & title */
+@media (max-width: 600px) {
+    header {
+        padding: 15px 12px 20px !important;
+    }
+    header > div:first-child {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 10px 12px !important;
+        gap: 10px !important;
+    }
+    header > div:first-child > div {
+        min-width: 100% !important;
+        flex: unset !important;
+    }
+    header > div:last-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+    header > div:last-child > div:first-child {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    header > div:last-child > div:first-child > div:first-child {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        font-size: 20px !important;
+        margin-right: -10px !important;
+    }
+    header > div:last-child > div:first-child > div:last-child {
+        font-size: 14px !important;
+        padding: 8px 12px 8px 18px !important;
+    }
+    header > div:last-child > div:last-child h1 {
+        font-size: 20px !important;
+    }
+    header > div:last-child > div:last-child p {
+        font-size: 13px !important;
+    }
+}
+
 </style></head><body>
 <main>
 <header style="background: #e6e6e6; border-radius: 0; box-shadow: none; padding: 20px 30px 30px; margin-top: 0; margin-bottom: 22px;">
@@ -379,129 +424,63 @@
 const s={grammar:document.querySelector('#grammar'),vocabulary:document.querySelector('#vocabulary'),pronunciation:document.querySelector('#pronunciation'),practical:document.querySelector('#practical'),reading:document.querySelector('#reading'),listening:document.querySelector('#listening')};let id=0, exId=0;const norm=x=>x.trim().toLowerCase().replace(/[.?!,]/g,'').replace(/\s+/g,' ');const title=(t,x)=>{ exId++; t.insertAdjacentHTML('beforeend',`<h3>${x}</h3>`); };const endEx=(t,pts)=>t.insertAdjacentHTML('beforeend',`<div style="display:flex; justify-content:flex-end; margin:10px 0 25px;"><div id="score-box-${exId}" style="border: 1px solid #333; width: 25px; height: 25px; background: #fff; display: flex; justify-content: center; align-items: center; font-weight: bold; color: #29974e; font-family: Arial, sans-serif;"></div><div style="border: 1px solid #333; background: #999; color: #fff; font-weight: bold; font-family: Arial, sans-serif; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center; margin-left: -1px; font-size: 14px;">${pts}</div></div>`);function fill(t,p,a){id++;t.insertAdjacentHTML('beforeend',`<div class="q">${p.replace('___',`<input type="text" data-answer="${a}" data-ex="${exId}">`)}</div>`)}function choice(t,p,o,c){id++;t.insertAdjacentHTML('beforeend',`<div class="q">${p}<div class="answers">${o.map((x,i)=>`<label><input type="radio" name="q${id}" data-ex="${exId}" ${i===c?'data-correct="true"':''}> ${String.fromCharCode(65+i)}. ${x}</label>`).join('')}</div></div>`)}const example=(t,html)=>t.insertAdjacentHTML('beforeend',`<div class="example" style="background:#fff7df; padding:8px 12px; margin-bottom:15px; border-radius:4px; font-style:italic;"><strong>Example:</strong> ${html}</div>`);function syllable(t,syls,c){id++;const html=syls.map((s,i)=>`<span class="syl" data-ex="${exId}" data-name="q${id}" data-idx="${i}" style="cursor:pointer; padding:3px 2px; font-size:16px;">${s}</span>`).join('&middot;');t.insertAdjacentHTML('beforeend',`<div class="q syl-q" data-correct="${c}" style="padding:4px;">${html}</div>`);}
 document.addEventListener('click', e => { if(e.target.classList.contains('syl')){ const p=e.target.closest('.syl-q'); p.querySelectorAll('.syl').forEach(s=>{s.style.textDecoration='none'; s.style.fontWeight='normal'; s.classList.remove('selected');}); e.target.style.textDecoration='underline'; e.target.style.fontWeight='bold'; e.target.classList.add('selected'); }});
 
+let examWords = {
+  record: '🎙️ Record Answer',
+  recording: '🎙️ Recording & Transcribing...',
+  recorded: '✅ Recorded & Transcribed',
+  record_cleared: 'Cleared. Ready to record again.',
+  stop: '⏹️ Stop Recording',
+  clear_recording: '🗑️ Clear Recording',
+  microphone_error: 'Microphone access denied or error.'
+};
+let recordControllers = [];
 window.studentRecordings = {};
-window.studentTranscripts = {};
 window.studentAudioUrls = {};
-let _rId = 1;
-const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-document.querySelectorAll('.recorder-widget').forEach(widget => {
-  const btnRecord = widget.querySelector('.btn-record');
-  const btnStop = widget.querySelector('.btn-stop');
-  const btnDownload = widget.querySelector('.btn-download');
-  const audioPlayback = widget.querySelector('.audio-playback');
-  const transcriptText = widget.querySelector('.transcript-text');
-  const sttStatus = widget.querySelector('.stt-status');
-  const promptText = widget.dataset.prompt || ("Question " + _rId);
-  const recId = "Speaking_" + _rId++;
-
-  let mediaRecorder;
-  let audioChunks = [];
-  let recognition = null;
-  let manualEdit = false;
-
-  transcriptText.addEventListener('input', () => {
-    manualEdit = true;
-    window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-    updateAiPreview();
-  });
-
-  btnRecord.onclick = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
-
-      mediaRecorder.ondataavailable = e => {
-        if(e.data.size > 0) audioChunks.push(e.data);
-      };
-
-      mediaRecorder.onstop = () => {
-        const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'; const audioBlob = new Blob(audioChunks, { type: mimeType });
-        window.studentRecordings[recId] = audioBlob;
-        const audioUrl = URL.createObjectURL(audioBlob);
-        window.studentAudioUrls[recId] = audioUrl;
-        audioPlayback.src = audioUrl;
-        audioPlayback.style.display = 'block';
-
-        if(btnDownload){
-          btnDownload.style.display = 'inline-block';
-          btnDownload.onclick = () => {
-            const a = document.createElement('a');
-            a.href = audioUrl;
-            a.download = `${recId}.webm`;
-            a.click();
-          };
-        }
-
-        stream.getTracks().forEach(track => track.stop());
-      };
-
-      // Set up Speech-to-Text
-      if (SpeechRec) {
-        try {
-          recognition = new SpeechRec();
-          recognition.continuous = true;
-          recognition.interimResults = true;
-          recognition.lang = 'en-US';
-
-          let initialText = manualEdit ? transcriptText.value + ' ' : '';
-          recognition.onresult = event => {
-            let interim = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-              interim += event.results[i][0].transcript;
-            }
-            transcriptText.value = (initialText + interim).trim();
-            window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-            updateAiPreview();
-          };
-
-          recognition.onerror = e => {
-            console.warn('SpeechRecognition error:', e.error);
-            sttStatus.textContent = 'STT notice: ' + e.error;
-          };
-
-          recognition.start();
-          sttStatus.textContent = '🎙️ Recording & Transcribing...';
-          sttStatus.style.color = '#dc2626';
-        } catch(sttErr) {
-          console.warn('Could not start SpeechRecognition:', sttErr);
-          sttStatus.textContent = '🎙️ Recording audio...';
-        }
-      } else {
-        sttStatus.textContent = '🎙️ Recording (Web Speech API not supported in this browser)';
-      }
-
-      mediaRecorder.start();
-      btnRecord.disabled = true;
-      btnRecord.innerHTML = '&#9209; Recording...';
-      btnRecord.style.background = '#ce3c3c';
-      btnStop.disabled = false;
-      btnStop.style.background = '#0d6fa8';
-    } catch(err) {
-      alert('Microphone access denied or error: ' + err.message);
-    }
-  };
-
-  btnStop.onclick = () => {
-    if(mediaRecorder && mediaRecorder.state !== 'inactive') {
-      mediaRecorder.stop();
-      if (recognition) {
-        try { recognition.stop(); } catch(e){}
-      }
-      btnRecord.disabled = false;
-      btnRecord.innerHTML = '&#127908; Re-record';
-      btnRecord.style.background = '#0d6fa8';
-      btnStop.disabled = true;
-      btnStop.style.background = '#526273';
-      sttStatus.textContent = '✅ Recorded & Transcribed';
-      sttStatus.style.color = '#16a34a';
-
-      window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-      updateAiPreview();
-    }
-  };
+window.setExamLanguage = words => {examWords=Object.assign(examWords,words);recordControllers.forEach(r=>r.labels());};
+window.restoreExamRecording = (id,blob) => {const r=recordControllers.find(r=>r.id===id);if(r)r.restore(blob);};
+window.stopExamRecordings = () => Promise.all(recordControllers.map(r=>r.stop()));
+document.querySelectorAll('.recorder-widget').forEach((widget,index) => {
+ const recId='Speaking_'+(index+1),promptText=widget.dataset.prompt||('Question '+(index+1));
+ const btnRecord=widget.querySelector('.btn-record'),btnStop=widget.querySelector('.btn-stop'),btnDownload=widget.querySelector('.btn-download');
+ const audio=widget.querySelector('.audio-playback'),transcript=widget.querySelector('.transcript-text'),status=widget.querySelector('.stt-status');
+ const clear=document.createElement('button');clear.type='button';clear.className='btn-clear-recording';clear.style.cssText='padding:6px 12px;font-size:14px;background:#b91c1c;min-height:44px';btnRecord.insertAdjacentElement('afterend',clear);
+ let recorder=null,recognition=null,stream=null,chunks=[],generation=0,pendingStop=null,resolveStop=null;
+ function labels(){btnRecord.textContent=examWords.record;btnStop.textContent=examWords.stop;clear.textContent=examWords.clear_recording;}
+ function changed(blob){document.dispatchEvent(new CustomEvent('exam-recording-change',{detail:{id:recId,blob:blob||null}}));}
+ function release(){audio.pause();audio.removeAttribute('src');audio.load();audio.style.display='none';if(window.studentAudioUrls[recId])URL.revokeObjectURL(window.studentAudioUrls[recId]);delete window.studentAudioUrls[recId];delete window.studentRecordings[recId];if(btnDownload){btnDownload.style.display='none';btnDownload.onclick=null;}}
+ function show(blob){release();window.studentRecordings[recId]=blob;const url=URL.createObjectURL(blob);window.studentAudioUrls[recId]=url;audio.src=url;audio.style.display='block';if(btnDownload){btnDownload.style.display='inline-block';btnDownload.onclick=()=>{const a=document.createElement('a');a.href=url;a.download=recId+(blob.type.includes('mp4')?'.m4a':'.webm');a.click();};}}
+ function stop(){if(recognition){try{recognition.stop();}catch(e){}}if(recorder&&recorder.state!=='inactive'){recorder.stop();return pendingStop||Promise.resolve();}return pendingStop||Promise.resolve();}
+ transcript.addEventListener('input',()=>{window.studentTranscripts[recId]={prompt:promptText,text:transcript.value};updateAiPreview();});
+ clear.onclick=()=>{
+  generation++;if(recognition){recognition.onresult=null;try{recognition.abort();}catch(e){}}
+  if(recorder&&recorder.state!=='inactive')recorder.stop();if(stream)stream.getTracks().forEach(t=>t.stop());
+  chunks=[];release();delete window.studentTranscripts[recId];transcript.value='';transcript.dispatchEvent(new Event('input',{bubbles:true}));delete window.studentTranscripts[recId];
+  btnRecord.disabled=false;btnStop.disabled=true;status.textContent=examWords.record_cleared;labels();changed(null);updateAiPreview();
+ };
+ btnRecord.onclick=async()=>{
+  const current=++generation;btnRecord.disabled=true;
+  try{
+   const incoming=await navigator.mediaDevices.getUserMedia({audio:true});
+   if(current!==generation){incoming.getTracks().forEach(t=>t.stop());return;}
+   stream=incoming;const mime=['audio/webm;codecs=opus','audio/mp4','audio/webm'].find(t=>MediaRecorder.isTypeSupported(t));recorder=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
+   const activeRecorder=recorder,clipChunks=[];let finish;
+   pendingStop=new Promise(resolve=>{finish=resolve;});
+   activeRecorder.ondataavailable=e=>{if(current===generation&&e.data.size)clipChunks.push(e.data);};
+   activeRecorder.onstop=()=>{
+    incoming.getTracks().forEach(t=>t.stop());
+    if(current===generation){const blob=new Blob(clipChunks,{type:activeRecorder.mimeType||mime||'audio/webm'});show(blob);changed(blob);status.textContent=examWords.recorded;btnRecord.disabled=false;btnStop.disabled=true;labels();}
+    finish();if(recorder===activeRecorder)pendingStop=null;
+   };
+   if(SpeechRec){try{recognition=new SpeechRec();recognition.continuous=true;recognition.interimResults=true;recognition.lang='en-US';
+    const initial=transcript.value?transcript.value+' ':'';
+    recognition.onresult=e=>{if(current!==generation)return;let text='';for(let i=0;i<e.results.length;i++)text+=e.results[i][0].transcript+' ';transcript.value=(initial+text).trim();transcript.dispatchEvent(new Event('input',{bubbles:true}));};recognition.onerror=()=>{};recognition.start();
+   }catch(e){}}
+   recorder.start();btnStop.disabled=false;status.textContent=examWords.recording;
+  }catch(e){if(stream)stream.getTracks().forEach(t=>t.stop());btnRecord.disabled=false;btnStop.disabled=true;status.textContent=examWords.microphone_error;}
+ };
+ btnStop.onclick=stop;labels();recordControllers.push({id:recId,labels,stop,restore:show});
 });
+
 
 /* ================= Writing analysis & client checks ================= */
 const SPELL = [
@@ -570,8 +549,9 @@ function updateWritingCounts(){
   const a = analyzeWriting();
   const wc = document.getElementById('writing-counts');
   if (wc) {
-    wc.textContent = `${a.words} words · ${a.sentences} sentences (${a.inputs.filter(Boolean).length}/6 answered)`;
+    wc.textContent = `${a.words} words · ${a.sentences} sentences (${a.inputs.filter(Boolean).length}/${a.inputs.length} answered)`;
   }
+  renderWritingBasics();
 }
 
 document.querySelectorAll('.writing-inp').forEach(inp => {
@@ -581,7 +561,7 @@ document.querySelectorAll('.writing-inp').forEach(inp => {
   });
 });
 
-document.getElementById('btn-check-writing').onclick = () => {
+function renderWritingBasics(){
   const a = analyzeWriting();
   const msg = document.getElementById('writing-msg');
   const box = document.getElementById('writing-checks');
@@ -645,7 +625,11 @@ document.getElementById('btn-check-writing').onclick = () => {
 
   box.style.display = 'grid';
   total.style.display = 'flex';
-  total.innerHTML = `<span>Basic Writing Checks</span><span>${passed} / ${scoredRows.length} passed</span>`;
+  total.innerHTML = `<div style="display:flex; flex-direction:column; gap:5px;">
+    <span style="font-weight:700; color:#0d568c;">Writing Basics Result</span>
+    <span>Correct: <b>${passed} / ${scoredRows.length}</b></span>
+    <span>Max Score: <b>${scoredRows.length}</b></span>
+  </div>`;
   msg.style.display = 'block';
   msg.style.background = passed >= scoredRows.length - 1 ? '#dcfce7' : '#fef3c7';
   msg.style.color = passed >= scoredRows.length - 1 ? '#166534' : '#92400e';
@@ -953,28 +937,44 @@ endEx(s.pronunciation, 5);
 /* --- PRACTICAL ENGLISH (5 marks) --- */
 title(s.practical,'8. Look at the map then complete the two dialogues with the words in the list.');
 s.practical.insertAdjacentHTML('beforeend', '<div class="box-card"><span class="phrase-click" data-val="turn right" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">turn right</span> &bull; <span class="phrase-click" data-val="on the left" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">on the left</span> &bull; <span class="phrase-click" data-val="between" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">between</span> &bull; <span class="phrase-click" data-val="next to" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">next to</span> &bull; <span class="phrase-click" data-val="straight on" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">straight on</span></div>');
-s.practical.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:center;"><svg width="350" height="250" viewBox="0 0 350 250" xmlns="http://www.w3.org/2000/svg" style="background:#fff; border:1px solid #d1d5db; border-radius:8px; margin: 15px 0;">
-  <!-- Roads -->
-  <rect x="150" y="50" width="50" height="200" fill="#e5e7eb" />
-  <rect x="0" y="50" width="350" height="50" fill="#e5e7eb" />
-  <text x="175" y="240" font-family="Arial" font-size="12" fill="#dc2626" font-style="italic" text-anchor="middle">&uarr; you are here</text>
+s.practical.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:center;"><svg width="380" height="240" viewBox="0 0 380 240" xmlns="http://www.w3.org/2000/svg" style="background:#fff; border:1px solid #d1d5db; border-radius:8px; margin: 15px 0;">
+  <!-- Roads Background -->
+  <rect x="15" y="50" width="350" height="38" fill="#f1f5f9" />
+  <rect x="205" y="88" width="50" height="142" fill="#f1f5f9" />
+
+  <!-- Road Curbs / Borders -->
+  <line x1="15" y1="50" x2="365" y2="50" stroke="#1f2937" stroke-width="1.8" />
+  <path d="M 15 88 L 205 88 L 205 230" fill="none" stroke="#1f2937" stroke-width="1.8" />
+  <path d="M 365 88 L 255 88 L 255 230" fill="none" stroke="#1f2937" stroke-width="1.8" />
+
+  <!-- 'You Are Here' Pin & Label -->
+  <line x1="65" y1="68" x2="65" y2="112" stroke="#1f2937" stroke-width="1.8" />
+  <circle cx="65" cy="65" r="4.5" fill="#fff" stroke="#1f2937" stroke-width="1.8" />
+  <text x="65" y="128" font-family="Arial, sans-serif" font-size="11" font-weight="bold" font-style="italic" fill="#1f2937" text-anchor="middle">you are here</text>
+
   <!-- Buildings Top -->
-  <rect x="20" y="10" width="60" height="30" fill="#d1d5db" />
-  <text x="50" y="30" font-family="Arial" font-size="11" text-anchor="middle" dominant-baseline="middle">hotel</text>
-  <rect x="100" y="10" width="60" height="30" fill="#d1d5db" />
-  <text x="130" y="30" font-family="Arial" font-size="11" text-anchor="middle" dominant-baseline="middle">bank</text>
-  <rect x="180" y="10" width="70" height="30" fill="#d1d5db" />
-  <text x="215" y="30" font-family="Arial" font-size="11" text-anchor="middle" dominant-baseline="middle">bookshop</text>
-  <!-- Buildings Left -->
-  <rect x="70" y="110" width="70" height="30" fill="#d1d5db" />
-  <text x="105" y="130" font-family="Arial" font-size="11" text-anchor="middle" dominant-baseline="middle">museum</text>
-  <rect x="70" y="150" width="70" height="30" fill="#d1d5db" />
-  <text x="105" y="170" font-family="Arial" font-size="11" text-anchor="middle" dominant-baseline="middle">chemist\'s</text>
-  <rect x="70" y="190" width="70" height="30" fill="#d1d5db" />
-  <text x="105" y="210" font-family="Arial" font-size="11" text-anchor="middle" dominant-baseline="middle">post office</text>
-  <!-- Buildings Right -->
-  <rect x="210" y="110" width="70" height="30" fill="#d1d5db" />
-  <text x="245" y="130" font-family="Arial" font-size="11" text-anchor="middle" dominant-baseline="middle">petrol station</text>
+  <rect x="40" y="12" width="60" height="28" fill="#cbd5e1" />
+  <text x="70" y="26" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" dominant-baseline="middle">hotel</text>
+
+  <rect x="135" y="12" width="60" height="28" fill="#cbd5e1" />
+  <text x="165" y="26" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" dominant-baseline="middle">bank</text>
+
+  <rect x="235" y="12" width="70" height="28" fill="#cbd5e1" />
+  <text x="270" y="26" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" dominant-baseline="middle">bookshop</text>
+
+  <!-- Buildings Left of vertical road -->
+  <rect x="130" y="105" width="65" height="28" fill="#cbd5e1" />
+  <text x="162" y="119" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" dominant-baseline="middle">museum</text>
+
+  <rect x="130" y="145" width="65" height="28" fill="#cbd5e1" />
+  <text x="162" y="159" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" dominant-baseline="middle">chemist\'s</text>
+
+  <rect x="130" y="185" width="65" height="28" fill="#cbd5e1" />
+  <text x="162" y="199" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" dominant-baseline="middle">post office</text>
+
+  <!-- Buildings Right of vertical road -->
+  <rect x="265" y="105" width="80" height="28" fill="#cbd5e1" />
+  <text x="305" y="119" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" dominant-baseline="middle">petrol station</text>
 </svg></div>`);
 
 [['1 A Where\'s the post office, please?<br>B Er...OK. Go <sup>1</sup>___ then <sup>2</sup>___. It\'s <sup>3</sup>___ the chemist\'s. A Thanks.','straight on|turn right|next to'],
@@ -1033,11 +1033,7 @@ endEx(s.listening, 5);
 
 /* --- CHECK ANSWERS SCRIPT --- */
 document.querySelector('#check').onclick=()=>{
-  const password=window.prompt('Enter the teacher password to check answers:');
-  if(password!=='123'){
-    if(password!==null)window.alert('Incorrect password.');
-    return;
-  }
+  
   let score=0,total=0;
   let exScores = {};
   

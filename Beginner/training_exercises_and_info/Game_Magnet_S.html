@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Mystery of the Magnet -S — Grammar Arcade</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #131b2e;
+      --border: #23304c;
+      --accent: #f59e0b;
+      --blue: #38bdf8;
+      --green: #22c55e;
+      --red: #ef4444;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+    .game-box {
+      max-width: 840px;
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-bar {
+      display: flex;
+      gap: 12px;
+    }
+    .badge {
+      background: #090d16;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Magnet rule visualizer */
+    .magnet-display {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 12px;
+      padding: 18px 24px;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.15);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .magnet-rule-text {
+      font-size: 14px;
+      color: #cbd5e1;
+      max-width: 500px;
+      line-height: 1.5;
+    }
+    .magnet-orb {
+      width: 56px;
+      height: 56px;
+      background: radial-gradient(circle, #fbbf24 30%, #d97706 90%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      color: #78350f;
+      box-shadow: 0 0 20px #f59e0b;
+      animation: pulse 2s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px #f59e0b; }
+      50% { transform: scale(1.1); box-shadow: 0 0 28px #fbbf24; }
+    }
+
+    /* Challenge card */
+    .challenge-card {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .sentence-type-pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+    .type-pos { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+    .type-neg { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+    .type-q   { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
+
+    .sentence-headline {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+    .subj-highlight {
+      color: #facc15;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .drop-slot {
+      display: inline-block;
+      min-width: 110px;
+      padding: 4px 10px;
+      background: #1e293b;
+      border: 2px dashed #38bdf8;
+      border-radius: 6px;
+      color: #38bdf8;
+      font-weight: 800;
+    }
+
+    /* Choices */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .choice-btn {
+      background: #1e293b;
+      border: 2px solid var(--border);
+      color: #f8fafc;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .choice-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: #182235;
+      transform: translateY(-2px);
+    }
+    .choice-btn.ok {
+      background: rgba(34, 197, 94, 0.2) !important;
+      border-color: #22c55e !important;
+      color: #86efac !important;
+    }
+    .choice-btn.bad {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border-color: #ef4444 !important;
+      color: #fca5a5 !important;
+    }
+    .choice-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    /* Explanation popup */
+    .result-banner {
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .result-banner.ok {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid #22c55e;
+      color: #86efac;
+    }
+    .result-banner.bad {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+    }
+    .next-btn {
+      background: var(--accent);
+      color: #78350f;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      float: right;
+      transition: background 0.15s;
+    }
+    .next-btn:hover { background: #d97706; color: #fff; }
+  </style>
+</head>
+<body>
+
+<div class="game-box">
+  <div class="top-bar">
+    <div class="title">
+      <span>🧲</span> The Mystery of the Magnet -S
+    </div>
+    <div class="badge-bar">
+      <div class="badge">Round: <span id="r-idx" style="color:#38bdf8;">1 / 14</span></div>
+      <div class="badge">Score: <span id="r-score" style="color:#4ade80;">0</span></div>
+      <div class="badge">Energy: <span id="r-streak" style="color:#f59e0b;">100% ⚡</span></div>
+    </div>
+  </div>
+
+  <div class="magnet-display">
+    <div class="magnet-rule-text">
+      <strong style="color:#facc15; font-size:15px;">Magnet Law:</strong><br>
+      • <strong>He / She / It</strong> gets exactly <strong>ONE</strong> -S per sentence!<br>
+      • In <strong>(+)</strong>: The verb takes the -S (<em>works</em>).<br>
+      • In <strong>(-) and (?)</strong>: <strong>DOES</strong> steals the -S, so the verb stays bare (<em>doesn't work</em> / <em>Does he work?</em>).<br>
+      • <strong>I / You / We / They</strong>: <strong>NO -S ALLOWED</strong>!
+    </div>
+    <div class="magnet-orb">-S</div>
+  </div>
+
+  <div class="challenge-card">
+    <span class="sentence-type-pill" id="type-pill">(+) Positive</span>
+    <div class="sentence-headline" id="sentence-text">
+      Loading sentence...
+    </div>
+    <div style="font-size:13px; color:#94a3b8;" id="subject-hint">
+      Subject: <span style="color:#facc15;">Loading...</span>
+    </div>
+  </div>
+
+  <div class="choices-grid" id="choices-container">
+    <!-- Choices inserted dynamically -->
+  </div>
+
+  <div class="result-banner" id="result-banner"></div>
+  <button class="next-btn" id="next-btn" style="display:none;" onclick="loadNext()">Next Sentence ➔</button>
+  <div style="clear:both;"></div>
+</div>
+
+<script>
+// Sound engine
+const ctx = new (window.AudioContext || window.webkitAudioContext)();
+function tone(freq, type, dur) {
+  try {
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = type;
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0.08, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.start();
+    o.stop(ctx.currentTime + dur);
+  } catch(e){}
+}
+function sfxWin() { tone(523.25, 'sine', 0.1); setTimeout(() => tone(659.25, 'sine', 0.1), 80); setTimeout(() => tone(783.99, 'sine', 0.25), 160); }
+function sfxBuzzer() { tone(140, 'sawtooth', 0.25); setTimeout(() => tone(110, 'sawtooth', 0.35), 100); }
+
+const bank = [
+  // 1. Possessive Trap
+  {
+    type: "(-) Negative",
+    typeClass: "type-neg",
+    subject: "Their mother",
+    headNoun: "mother (= SHE)",
+    sentence: "Their mother <span class='drop-slot'>[ ? ]</span> fast food.",
+    choices: [
+      { text: "doesn't eat", ok: true },
+      { text: "don't eat", ok: false, trap: "Trapped by 'Their'! 'Mother' is singular (SHE), so she needs 'doesn't'." },
+      { text: "doesn't eats", ok: false, trap: "DOUBLE -S OVERLOAD! 'Does' already stole the -S, so 'eat' must be bare!" },
+      { text: "don't eats", ok: false, trap: "Wrong auxiliary and wrong verb ending." }
+    ],
+    explanation: "'Their mother' = SHE. In negative sentences, DOES steals the -S: 'doesn't eat'. Never say 'doesn't eats'!"
+  },
+  // 2. Plural possessive
+  {
+    type: "(+) Positive",
+    typeClass: "type-pos",
+    subject: "My parents",
+    headNoun: "parents (= THEY)",
+    sentence: "My parents <span class='drop-slot'>[ ? ]</span> in a small flat.",
+    choices: [
+      { text: "live", ok: true },
+      { text: "lives", ok: false, trap: "Trapped by 'My'! 'Parents' is plural (= THEY), so no -S on the verb!" },
+      { text: "are live", ok: false, trap: "Don't use 'are' with present simple action verbs." },
+      { text: "living", ok: false, trap: "Needs base verb 'live'." }
+    ],
+    explanation: "'My parents' = THEY. Plural subjects don't take any -S: 'My parents live in a small flat'."
+  },
+  // 3. Question with compound subject
+  {
+    type: "(? y/n) Question",
+    typeClass: "type-q",
+    subject: "Andy and Mary",
+    headNoun: "Andy and Mary (= THEY)",
+    sentence: "<span class='drop-slot'>[ ? ]</span> Andy and Mary work in an office?",
+    choices: [
+      { text: "Do", ok: true },
+      { text: "Does", ok: false, trap: "Trapped by looking only at Mary! Two people = THEY, so use 'Do'!" },
+      { text: "Are", ok: false, trap: "Use 'Do' for questions with action verbs like 'work'." },
+      { text: "Is", ok: false, trap: "'Is' cannot be used with plural subjects or simple verbs." }
+    ],
+    explanation: "'Andy and Mary' = THEY (plural). Use 'Do Andy and Mary work...?'"
+  },
+  // 4. Question with double blank
+  {
+    type: "(? y/n) Question",
+    typeClass: "type-q",
+    subject: "your brother",
+    headNoun: "brother (= HE)",
+    sentence: "<span class='drop-slot'>[ ? ]</span> your brother <span class='drop-slot'>[ ? ]</span> coffee?",
+    choices: [
+      { text: "Does ... drink", ok: true },
+      { text: "Does ... drinks", ok: false, trap: "MAGNET OVERLOAD! 'Does' already absorbed the -S! 'drink' must stay plain!" },
+      { text: "Do ... drink", ok: false, trap: "Trapped by 'your'! 'brother' is singular (HE), so it needs 'Does'." },
+      { text: "Do ... drinks", ok: false, trap: "Completely backwards!" }
+    ],
+    explanation: "'your brother' = HE. 'Does' steals the -S: 'Does your brother drink coffee?'"
+  },
+  // 5. Adjective + singular noun
+  {
+    type: "(+) Positive",
+    typeClass: "type-pos",
+    subject: "The big yellow taxi",
+    headNoun: "taxi (= IT)",
+    sentence: "The big yellow taxi <span class='drop-slot'>[ ? ]</span> here every morning.",
+    choices: [
+      { text: "stops", ok: true },
+      { text: "stop", ok: false, trap: "The taxi = IT! In positive sentences, IT needs -S on the verb!" },
+      { text: "is stop", ok: false, trap: "Don't combine 'is' with base verbs." },
+      { text: "stopping", ok: false, trap: "Needs present simple form 'stops'." }
+    ],
+    explanation: "'The big yellow taxi' = IT. In positive (+), the verb holds the magnet -S: 'stops'."
+  },
+  // 6. Wh- Question with sister
+  {
+    type: "(w/h) Wh- Question",
+    typeClass: "type-q",
+    subject: "her sister",
+    headNoun: "sister (= SHE)",
+    sentence: "Where <span class='drop-slot'>[ ? ]</span> her sister <span class='drop-slot'>[ ? ]</span>?",
+    choices: [
+      { text: "does ... live", ok: true },
+      { text: "does ... lives", ok: false, trap: "DOUBLE -S! 'does' has the -S, so 'live' must be bare!" },
+      { text: "do ... live", ok: false, trap: "Trapped by 'her'! 'Sister' is singular (SHE), so use 'does'." },
+      { text: "is ... live", ok: false, trap: "Use auxiliary 'does' for questions." }
+    ],
+    explanation: "Wh- question for SHE: 'Where does her sister live?' The auxiliary 'does' takes the -S."
+  },
+  // 7. Negative with Merjen
+  {
+    type: "(-) Negative",
+    typeClass: "type-neg",
+    subject: "Merjen",
+    headNoun: "Merjen (= SHE)",
+    sentence: "Merjen <span class='drop-slot'>[ ? ]</span> wine or beer.",
+    choices: [
+      { text: "doesn't drink", ok: true },
+      { text: "doesn't drinks", ok: false, trap: "DOUBLE -S! 'doesn't' already has the -S!" },
+      { text: "don't drink", ok: false, trap: "Merjen is singular (SHE), so use 'doesn't'." },
+      { text: "no drinks", ok: false, trap: "'no drinks' is not correct English grammar." }
+    ],
+    explanation: "Merjen = SHE. Negative: 'doesn't drink'. Only one -S allowed!"
+  },
+  // 8. Plural cars
+  {
+    type: "(-) Negative",
+    typeClass: "type-neg",
+    subject: "Our two cars",
+    headNoun: "cars (= THEY)",
+    sentence: "Our two cars <span class='drop-slot'>[ ? ]</span> much petrol.",
+    choices: [
+      { text: "don't use", ok: true },
+      { text: "doesn't use", ok: false, trap: "Trapped! 'Two cars' is plural (= THEY), so use 'don't'!" },
+      { text: "don't uses", ok: false, trap: "'use' never takes -S with 'don't'!" },
+      { text: "aren't use", ok: false, trap: "Use 'don't' with simple action verbs." }
+    ],
+    explanation: "'Our two cars' = THEY. Plural subjects use 'don't use'."
+  }
+];
+
+let idx = 0;
+let score = 0;
+
+function showRound() {
+  const q = bank[idx];
+  document.getElementById('r-idx').textContent = `${idx + 1} / ${bank.length}`;
+  document.getElementById('type-pill').textContent = q.type;
+  document.getElementById('type-pill').className = 'sentence-type-pill ' + q.typeClass;
+  document.getElementById('sentence-text').innerHTML = q.sentence;
+  document.getElementById('subject-hint').innerHTML = `Target Subject: <span class='subj-highlight'>${q.subject}</span> &rarr; Head: <strong>${q.headNoun}</strong>`;
+
+  const container = document.getElementById('choices-container');
+  container.innerHTML = '';
+  q.choices.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = `<span>${c.text}</span> <span style="font-size:12px; opacity:0.6;">Option ${String.fromCharCode(65+i)}</span>`;
+    btn.onclick = () => verify(i);
+    container.appendChild(btn);
+  });
+
+  document.getElementById('result-banner').style.display = 'none';
+  document.getElementById('next-btn').style.display = 'none';
+}
+
+function verify(chosenIdx) {
+  const q = bank[idx];
+  const choice = q.choices[chosenIdx];
+  const buttons = document.querySelectorAll('.choice-btn');
+  buttons.forEach(b => b.disabled = true);
+
+  const banner = document.getElementById('result-banner');
+  banner.style.display = 'block';
+
+  if (choice.ok) {
+    sfxWin();
+    buttons[chosenIdx].classList.add('ok');
+    score += 15;
+    document.getElementById('r-score').textContent = score;
+    banner.className = 'result-banner ok';
+    banner.innerHTML = `🧲 <strong>MAGNET STABLE! Correct!</strong><br>${q.explanation}`;
+  } else {
+    sfxBuzzer();
+    buttons[chosenIdx].classList.add('bad');
+    // find correct
+    const correctIdx = q.choices.findIndex(c => c.ok);
+    buttons[correctIdx].classList.add('ok');
+    banner.className = 'result-banner bad';
+    banner.innerHTML = `⚡ <strong>MAGNET OVERLOAD:</strong> ${choice.trap}<br><br>💡 <em>${q.explanation}</em>`;
+  }
+
+  document.getElementById('next-btn').style.display = 'inline-block';
+}
+
+function loadNext() {
+  idx++;
+  if (idx >= bank.length) {
+    document.querySelector('.game-box').innerHTML = `
+      <div style="text-align:center; padding:40px 10px;">
+        <div style="font-size:60px; margin-bottom:15px;">🧲⚡</div>
+        <h2 style="font-size:26px; color:#f59e0b; margin-bottom:10px;">Magnet -S Machine Fully Calibrated!</h2>
+        <p style="font-size:18px; color:#f8fafc; margin-bottom:20px;">Final Score: <strong style="color:#22c55e;">${score} points</strong></p>
+        <p style="font-size:14px; color:#94a3b8; max-width:460px; margin:0 auto 30px;">
+          You know exactly when the -S snaps onto the verb, when DOES steals it away, and when plurals reject it entirely!
+        </p>
+        <button class="next-btn" style="float:none;" onclick="location.reload()">Play Again 🔄</button>
+      </div>
+    `;
+    return;
+  }
+  showRound();
+}
+
+showRound();
+</script>
+</body>
+</html>

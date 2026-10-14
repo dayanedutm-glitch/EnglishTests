@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Beginner Unit 4 — Mastery Portal & Diagnostic Hub</title>
+<style>
+  :root { --primary: #0d568c; --primary-light: #e0f2fe; --primary-dark: #073860; --success: #16a34a; --success-bg: #dcfce7; --warning: #f59e0b; --warning-bg: #fef3c7; --danger: #dc2626; --danger-bg: #fee2e2; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --muted: #64748b; --border: #cbd5e1; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); padding: 28px 16px; line-height: 1.5; }
+  .container { max-width: 960px; margin: 0 auto; }
+  header { background: var(--card); border-radius: 12px; padding: 28px 32px; margin-bottom: 26px; box-shadow: 0 4px 14px rgba(0,0,0,0.05); border-top: 5px solid var(--primary); }
+  .badge { display: inline-block; background: var(--primary-light); color: var(--primary-dark); font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 99px; margin-bottom: 8px; }
+  h1 { font-size: 26px; color: var(--primary-dark); margin-bottom: 6px; }
+  p.subtitle { color: var(--muted); font-size: 15px; }
+  .section-title { font-size: 19px; font-weight: 800; color: var(--primary-dark); margin-bottom: 16px; display: flex; justify-content: space-between; }
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 30px; }
+  .exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; }
+  .exercise-card:hover { transform: translateY(-2px); border-color: var(--primary); }
+  .card-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+  .card-num { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; }
+  .status-pill { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #e2e8f0; color: #475569; }
+  .status-pill.completed { background: var(--success-bg); color: var(--success); }
+  .card-title { font-size: 17px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .card-btn { display: inline-flex; align-items: center; justify-content: center; background: var(--primary); color: #fff; text-decoration: none; font-weight: 700; font-size: 13px; padding: 10px 16px; border-radius: 8px; }
+  .diagnostic-panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
+  .hero-summary { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+  .score-circle { width: 74px; height: 74px; border-radius: 50%; background: var(--primary-light); color: var(--primary-dark); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; border: 3px solid var(--primary); }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .stat-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .stat-head { font-size: 12px; font-weight: 800; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+  .progress-bar-bg { height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 6px 0; }
+  .progress-bar-fill { height: 100%; border-radius: 99px; background: var(--primary); }
+  .advice-box { background: #eff6ff; border-left: 4px solid var(--primary); padding: 14px 18px; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.5; margin-top: 15px; }
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--muted); }
+</style></head>
+<body><div class="container">
+  <header>
+    <div class="badge">Mastery Portal &bull; New English File Beginner</div>
+    <h1>Unit 4: Routines, Adverbs & Modal Can</h1>
+    <p class="subtitle">Complete standalone interactive anti-guessing exercises. Real-time statistics automatically sync here.</p>
+  </header>
+  <div class="section-title">Training Exercises</div>
+  <div class="cards-grid">
+    <div class="exercise-card">
+      <div>
+        <div class="card-header"><span class="card-num">Exercise 1</span><span class="status-pill" id="pill-ex1">Not Started</span></div>
+        <div class="card-title">Word Order Architecture</div>
+        <div class="card-desc">10 scrambled tile items. Sentence structure and grammar order.</div>
+      </div>
+      <a href="Exercise_1_Word_Order.html" class="card-btn">Open Exercise 1 →</a>
+    </div>
+    <div class="exercise-card">
+      <div>
+        <div class="card-header"><span class="card-num">Exercise 2</span><span class="status-pill" id="pill-ex2">Not Started</span></div>
+        <div class="card-title">Fill in the Blanks</div>
+        <div class="card-desc">10 morphological production blanks and Preposition + Noun agreement.</div>
+      </div>
+      <a href="Exercise_2_Fill_in_Blanks.html" class="card-btn">Open Exercise 2 →</a>
+    </div>
+    <div class="exercise-card">
+      <div>
+        <div class="card-header"><span class="card-num">Exercise 3</span><span class="status-pill" id="pill-ex3">Not Started</span></div>
+        <div class="card-title">Diagnostic Error Hunter</div>
+        <div class="card-desc">8 connected errors in narrative. Diagnose and fix grammar slips.</div>
+      </div>
+      <a href="Exercise_3_Error_Hunter.html" class="card-btn">Open Exercise 3 →</a>
+    </div>
+    <div class="exercise-card">
+      <div>
+        <div class="card-header"><span class="card-num">Exercise 4</span><span class="status-pill" id="pill-ex4">Not Started</span></div>
+        <div class="card-title">Turkmen Translation</div>
+        <div class="card-desc">10 items translating Turkmen prompts with sentence type classification.</div>
+      </div>
+      <a href="Exercise_4_Turkmen_Translation.html" class="card-btn">Open Exercise 4 →</a>
+    </div>
+  </div>
+
+  <div class="section-title"><span>Cumulative Diagnostic Mastery Profile</span><span style="font-size: 13px; color: var(--muted); font-weight: normal;" id="summary-meta"></span></div>
+  <div id="diagnostic-area"></div>
+</div>
+<script>
+function loadAllStats() {
+  const ex1 = JSON.parse(localStorage.getItem('nef_beg_u4_ex1') || 'null');
+  const ex2 = JSON.parse(localStorage.getItem('nef_beg_u4_ex2') || 'null');
+  const ex3 = JSON.parse(localStorage.getItem('nef_beg_u4_ex3') || 'null');
+  const ex4 = JSON.parse(localStorage.getItem('nef_beg_u4_ex4') || 'null');
+
+  updatePill('pill-ex1', ex1); updatePill('pill-ex2', ex2); updatePill('pill-ex3', ex3); updatePill('pill-ex4', ex4);
+  const completed = [ex1, ex2, ex3, ex4].filter(x => x && x.completed);
+  if (completed.length === 0) {
+    document.getElementById('diagnostic-area').innerHTML = '<div class="empty-state"><h3>No Exercises Completed Yet</h3><p>Complete any exercise above to begin building live statistics.</p></div>';
+    return;
+  }
+
+  let totalScore = 0, totalCount = 0;
+  const statsPronoun = {
+    'I': { correct: 0, total: 0, label: 'I (1st Singular)' },
+    'you': { correct: 0, total: 0, label: 'you (2nd Person)' },
+    'he_she_it': { correct: 0, total: 0, label: 'he / she / it (3rd Singular)' },
+    'we': { correct: 0, total: 0, label: 'we (1st Plural)' },
+    'they': { correct: 0, total: 0, label: 'they (3rd Plural)' }
+  };
+  const statsPrepNoun = {
+    'singular': { correct: 0, total: 0, label: 'Singular (Preposition + Noun)' },
+    'plural': { correct: 0, total: 0, label: 'Plural (Preposition + Noun)' },
+    'overall': { correct: 0, total: 0, label: 'Overall Preposition + Noun' }
+  };
+  const statsSyntax = {
+    'affirmative': { correct: 0, total: 0, label: 'Affirmative Statements' },
+    'negation': { correct: 0, total: 0, label: 'Negative Structures' },
+    'yesno_question': { correct: 0, total: 0, label: 'Yes/No Questions' },
+    'wh_question': { correct: 0, total: 0, label: 'Wh- Questions' }
+  };
+
+  [ex1, ex2, ex3, ex4].forEach(mod => {
+    if (!mod || !mod.results) return;
+    totalScore += mod.score; totalCount += mod.total;
+    mod.results.forEach(item => {
+      if (statsPronoun[item.pronoun]) { statsPronoun[item.pronoun].total++; if (item.correct) statsPronoun[item.pronoun].correct++; }
+      if (item.structure && statsSyntax[item.structure]) { statsSyntax[item.structure].total++; if (item.correct) statsSyntax[item.structure].correct++; }
+      if (item.prepnoun && item.prepnoun !== 'none' && statsPrepNoun[item.prepnoun]) {
+        statsPrepNoun[item.prepnoun].total++; statsPrepNoun['overall'].total++;
+        if (item.correct) { statsPrepNoun[item.prepnoun].correct++; statsPrepNoun['overall'].correct++; }
+      }
+    });
+  });
+
+  const overallPct = Math.round((totalScore / totalCount) * 100);
+  document.getElementById('summary-meta').textContent = completed.length + ' of 4 exercises completed (' + totalCount + ' total items evaluated)';
+  document.getElementById('diagnostic-area').innerHTML = `
+    <div class="diagnostic-panel">
+      <div class="hero-summary">
+        <div><h2 style="font-size: 22px; color: var(--primary-dark); margin-bottom: 4px;">Universal Competency Score</h2><p style="color: var(--muted); font-size: 13px;">Unit 4 cumulative evaluation score.</p></div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div class="score-circle">${overallPct}%</div>
+          <div><div style="font-size: 18px; font-weight: 800;">${totalScore} / ${totalCount} Correct</div><div style="font-size: 12px; color: var(--muted);">Unit 4 Pool</div></div>
+        </div>
+      </div>
+      <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 12px;">1. Pronoun Accuracy</h3>
+      <div class="stat-grid">${renderGroup(statsPronoun)}</div>
+      <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 12px;">2. Preposition + Noun Agreement</h3>
+      <div class="stat-grid">${renderGroup(statsPrepNoun)}</div>
+      <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 12px;">3. Sentence Structure & Syntax</h3>
+      <div class="stat-grid">${renderGroup(statsSyntax)}</div>
+      <div class="advice-box"><strong>💡 Automated Teacher Diagnosis:</strong><br>${overallPct >= 80 ? 'Mastery demonstrated across Unit 4 grammar and syntax structures!' : 'Check frequency adverb position (before action verb, after 'be') and modal 'can' (bare infinitive).'}</div>
+      <div style="text-align: right; margin-top: 15px;"><button onclick="clearAll()" style="background: none; border: 1px solid var(--border); color: #dc2626; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;">Reset All Unit 4 Stats</button></div>
+    </div>`;
+}
+function renderGroup(group) {
+  return Object.values(group).map(item => {
+    const pct = item.total > 0 ? Math.round((item.correct / item.total) * 100) : 0;
+    const color = pct >= 80 ? 'var(--success)' : (pct >= 60 ? 'var(--warning)' : 'var(--danger)');
+    return '<div class="stat-card"><div class="stat-head">' + item.label + '</div><div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 14px;"><span>' + pct + '%</span><span style="color: var(--muted); font-size: 12px;">' + item.correct + ' / ' + item.total + '</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ' + pct + '%; background: ' + color + ';"></div></div></div>';
+  }).join('');
+}
+function updatePill(id, obj) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (obj && obj.completed) { el.textContent = 'Score: ' + obj.score + '/' + obj.total; el.className = 'status-pill completed'; }
+  else { el.textContent = 'Not Started'; el.className = 'status-pill'; }
+}
+function clearAll() {
+  if (confirm('Reset all Unit 4 statistics?')) {
+    ['nef_beg_u4_ex1', 'nef_beg_u4_ex2', 'nef_beg_u4_ex3', 'nef_beg_u4_ex4'].forEach(k => localStorage.removeItem(k));
+    loadAllStats();
+  }
+}
+window.addEventListener('DOMContentLoaded', loadAllStats);
+</script></body></html>

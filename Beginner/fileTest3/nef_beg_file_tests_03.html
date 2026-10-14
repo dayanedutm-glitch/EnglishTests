@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>New English File Beginner File Test 3</title><style>
 :root{font-family:Arial,sans-serif;color:#1f2937;background:#eef4f8}body{margin:0}main{max-width:980px;margin:26px auto 55px;padding:0 18px}header,section{background:#fff;border-radius:14px;box-shadow:0 2px 12px #1f293714;padding:25px;margin-top:22px}header{margin-top:0}h1,h2{color:#0d568c}h1{margin:0 0 8px}h2{margin-top:0}.note{color:#526273}.q{margin:13px 0;line-height:1.6}.answers{display:flex;flex-direction:column;gap:8px;margin:5px 0 0 18px}.answers label{cursor:pointer}input[type=text],textarea{padding:7px;border:1px solid #aab9c9;border-radius:6px;font:inherit}input[type=text]{min-width:150px}.ok{background:#e4f6e8!important;border-color:#29974e!important}.bad{background:#fee7e7!important;border-color:#ce3c3c!important}.reading,.manual,.box-card{padding:14px;border-radius:6px;line-height:1.55}.reading{background:#f5f8fb;border-left:4px solid #6ba2d0}.manual{background:#fff7df;border-left:4px solid #d89b21}.box-card{background:#f0f5fa;border-left:4px solid #0d568c;margin:10px 0}.manual textarea{width:100%;min-height:70px;box-sizing:border-box;margin-top:5px}.audio{display:block;width:100%;margin:8px 0 18px}.actions{padding:14px 0 2px;background:linear-gradient(#eef4f800,#eef4f8 35%)}button{background:#0d6fa8;color:#fff;border:0;border-radius:7px;padding:11px 17px;font:inherit;font-weight:bold;cursor:pointer}#result{font-weight:bold;margin-left:12px}.writing p{margin-bottom:4px}.chk-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}.chk-label{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#f9fafb;border:1px solid #d1d5db;border-radius:6px;cursor:pointer}
 .pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:bold;margin-right:4px}
@@ -748,32 +748,63 @@ example(s.grammar, 'A Do you like coffee?<br>B No, I <u>don\'t</u>.');
  ['B Yes, they ___.', 'do']].forEach(x => fill(s.grammar, ...x));
 endEx(s.grammar, 8);
 
-title(s.grammar, '2 Complete the email. Use the verbs in brackets in the present simple.');
-s.grammar.insertAdjacentHTML('beforeend', `<div class="box-card">Thanks for your email. Do you want to know about my family? Well, we live (live) in a big house in the centre.</div>`);
-[['My mother 1 ___ (work) in an office near here', 'works'],
- ['and my two sisters 2 ___ (have) jobs in the city.', 'have'],
- ['Me? I 3 ___ (not work) in the city.', 'don\'t work|do not work'],
- ['My mother 4 ___ (not like) her job,', 'doesn\'t like|does not like'],
- ['but I 5 ___ (like) my job very much. I\'m a teacher!', 'like'],
- ['What 6 ___ you ___ (do)? (Hint: two blanks side-by-side)', 'do'],
- ['(second blank for what do you do)', 'do'],
- ['7 ___ your husband ___ (work)? (first blank)', 'Does'],
- ['(second blank)', 'work']].forEach(x => fill(s.grammar, ...x));
-// Wait, the double blank in one line would just be two `fill` commands separated.
-// Let\'s adjust to match the 7 marks. 
-// "What 6 ___ you ___ (do)?" => fill: "What ___ you do?" -> do
-// Actually, it\'s 7 blanks total according to the test!
-// 1. works 2. have 3. don\'t work 4. doesn\'t like 5. like 6. do ... do?
-// Wait, the test says: 
-// What 6 ___ you ___ (do)? 7 ___ your husband ___ (work)?
-// That is 2 blanks for 6, and 2 blanks for 7. But total grammar score is 15. 8 + 7 = 15.
-// So 6 is just "What do you do?" and 7 is "Does your husband work?".
-// Wait, 1: works, 2: have, 3: don\'t work, 4: doesn\'t like, 5: like, 6: do you do (1 mark for both? No, wait. 1, 2, 3, 4, 5, 6, 7. 7 items!)
-// So 6 is one item, 7 is one item. We can format it as:
-// What 6 ___ (do) you do? -> "do" or "do ... do"
-// Let\'s do: "What 6 ___ (do) you do?" -> do.
-// "7 ___ (work) your husband work?" -> Does.
-
+title(s.grammar, '2 Complete the email. Use the verbs from the box in the present simple.');
+s.grammar.insertAdjacentHTML('beforeend', `
+<div class="box-card" style="margin-bottom:15px; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:10px; padding:12px 16px;">
+  <div style="font-weight:700; color:#0369a1; margin-bottom:10px; font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">
+    Verbs to use:
+  </div>
+  <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
+    <div style="background:#fff; border:1px dashed #94a3b8; border-radius:6px; padding:8px 10px; text-align:center; font-size:14px; color:#64748b; display:flex; align-items:center; justify-content:center; gap:6px;">
+      <span style="font-size:11px; text-transform:uppercase; font-weight:700; background:#f1f5f9; padding:2px 6px; border-radius:4px; color:#64748b;">Example</span>
+      <strong>live</strong>
+    </div>
+    <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; text-align:center; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:flex; align-items:center; justify-content:center; gap:6px;">
+      <strong style="color:#0d568c; font-size:15px;">1.</strong> <span style="font-weight:500;">work</span>
+    </div>
+    <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; text-align:center; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:flex; align-items:center; justify-content:center; gap:6px;">
+      <strong style="color:#0d568c; font-size:15px;">2.</strong> <span style="font-weight:500;">have</span>
+    </div>
+    <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; text-align:center; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:flex; align-items:center; justify-content:center; gap:6px;">
+      <strong style="color:#0d568c; font-size:15px;">3.</strong> <span style="font-weight:500;">not work</span>
+    </div>
+    <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; text-align:center; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:flex; align-items:center; justify-content:center; gap:6px;">
+      <strong style="color:#0d568c; font-size:15px;">4.</strong> <span style="font-weight:500;">not like</span>
+    </div>
+    <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; text-align:center; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:flex; align-items:center; justify-content:center; gap:6px;">
+      <strong style="color:#0d568c; font-size:15px;">5.</strong> <span style="font-weight:500;">like</span>
+    </div>
+    <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; text-align:center; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:flex; align-items:center; justify-content:center; gap:6px;">
+      <strong style="color:#0d568c; font-size:15px;">6.</strong> <span style="font-weight:500;">do</span>
+    </div>
+    <div style="background:#fff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 10px; text-align:center; font-size:14px; box-shadow:0 1px 2px rgba(0,0,0,0.04); display:flex; align-items:center; justify-content:center; gap:6px;">
+      <strong style="color:#0d568c; font-size:15px;">7.</strong> <span style="font-weight:500;">work</span>
+    </div>
+  </div>
+</div>
+<div style="background:#f8fafc; border:1px solid #cbd5e1; border-left:4px solid #0d568c; border-radius:8px; padding:18px 22px; font-size:15px; line-height:2.4; margin-bottom:15px;">
+  <p style="margin:0 0 10px; font-weight:bold; color:#334155;">Hi Sophie,</p>
+  <p style="margin:0 0 12px;">
+    Thanks for your email. Do you want to know about my family? Well, we <strong>live</strong> in a big house in the centre.
+  </p>
+  <p style="margin:0 0 12px;">
+    My mother <strong>1</strong> <input type="text" data-answer="works" data-ex="${exId}" style="width:110px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;"> in an office near here and my two sisters <strong>2</strong> <input type="text" data-answer="have" data-ex="${exId}" style="width:90px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;"> jobs in the city. Me? I <strong>3</strong> <input type="text" data-answer="don't work|do not work|dont work" data-ex="${exId}" style="width:140px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;"> in the city.
+  </p>
+  <p style="margin:0 0 12px;">
+    My mother <strong>4</strong> <input type="text" data-answer="doesn't like|does not like|doesnt like" data-ex="${exId}" style="width:150px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;"> her job, but I <strong>5</strong> <input type="text" data-answer="like" data-ex="${exId}" style="width:90px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;"> my job very much. I'm a teacher!
+  </p>
+  <p style="margin:0 0 12px;">
+    What <strong>6</strong> <input type="text" data-answer="do" data-pair="q6_1" data-ex="${exId}" style="width:75px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;"> you <input type="text" data-answer="do" data-pair="q6_2" data-ex="${exId}" style="width:75px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;">?
+  </p>
+  <p style="margin:0 0 15px;">
+    <strong>7</strong> <input type="text" data-answer="Does|does" data-pair="q7_1" data-ex="${exId}" style="width:85px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;"> your husband <input type="text" data-answer="work" data-pair="q7_2" data-ex="${exId}" style="width:90px; text-align:center; font-weight:600; padding:4px 8px; border:1px solid #94a3b8; border-radius:4px;">?
+  </p>
+  <p style="margin:0; color:#334155;">
+    Bye for now,<br>
+    <strong>James</strong>
+  </p>
+</div>
+`);
 endEx(s.grammar, 7);
 
 /* --- VOCABULARY (20 marks) --- */
@@ -895,8 +926,8 @@ document.querySelector('#check').onclick=()=>{
   let score=0,total=0;
   let exScores = {};
   
-  // Text inputs
-  document.querySelectorAll('input[type=text][data-answer]').forEach(f=>{
+  // Text inputs (standard single blanks)
+  document.querySelectorAll('input[type=text][data-answer]:not([data-pair])').forEach(f=>{
     total++;
     const ex = f.dataset.ex;
     if(!exScores[ex]) exScores[ex] = 0;
@@ -905,6 +936,28 @@ document.querySelector('#check').onclick=()=>{
     f.classList.toggle('bad',!ok);
     if(ok) { score++; exScores[ex]++; }
   });
+
+  // Paired question inputs (e.g. q6 and q7 where two blanks form 1 mark)
+  const pairedGroups = {};
+  document.querySelectorAll('input[type=text][data-pair]').forEach(f => {
+    const p = f.dataset.pair.split('_')[0];
+    if (!pairedGroups[p]) pairedGroups[p] = [];
+    pairedGroups[p].push(f);
+  });
+  for (const p in pairedGroups) {
+    total++;
+    const inputs = pairedGroups[p];
+    const ex = inputs[0].dataset.ex;
+    if (!exScores[ex]) exScores[ex] = 0;
+    let allOk = true;
+    inputs.forEach(f => {
+      const ok = f.dataset.answer.split('|').map(norm).includes(norm(f.value));
+      f.classList.toggle('ok', ok);
+      f.classList.toggle('bad', !ok);
+      if (!ok) allOk = false;
+    });
+    if (allOk) { score++; exScores[ex]++; }
+  }
   
   // Radio choices
   document.querySelectorAll('input[type=radio][data-correct]').forEach(r=>{
@@ -918,27 +971,29 @@ document.querySelector('#check').onclick=()=>{
     if(ok) { score++; exScores[ex]++; }
   });
   
-  // Checkbox items (Listening 1: 5 correct items to find)
-  bagItems.forEach((item,i)=>{
-    const chk=document.querySelector(`#chk_${i}`);
-    const ex = chk.dataset.ex;
-    if(!exScores[ex]) exScores[ex] = 0;
-    const lbl=document.querySelector(`#lbl_chk_${i}`);
-    lbl.classList.remove('ok','bad');
-    if(item.ok){
-      total++;
-      if(chk.checked){
-        lbl.classList.add('ok');
-        score++; exScores[ex]++;
+  // Checkbox items (Listening 1: 5 correct items to find, if present)
+  if (typeof bagItems !== 'undefined' && Array.isArray(bagItems)) {
+    bagItems.forEach((item,i)=>{
+      const chk=document.querySelector(`#chk_${i}`);
+      const ex = chk.dataset.ex;
+      if(!exScores[ex]) exScores[ex] = 0;
+      const lbl=document.querySelector(`#lbl_chk_${i}`);
+      lbl.classList.remove('ok','bad');
+      if(item.ok){
+        total++;
+        if(chk.checked){
+          lbl.classList.add('ok');
+          score++; exScores[ex]++;
+        } else {
+          lbl.classList.add('bad');
+        }
       } else {
-        lbl.classList.add('bad');
+        if(chk.checked){
+          lbl.classList.add('bad');
+        }
       }
-    } else {
-      if(chk.checked){
-        lbl.classList.add('bad');
-      }
-    }
-  });
+    });
+  }
 
   // Syllables
   document.querySelectorAll('.syl-q').forEach(q => {

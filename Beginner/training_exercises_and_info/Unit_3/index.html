@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beginner Unit 3 — Mastery Portal & Diagnostic Hub</title>
+  <style>
+    :root {
+      --primary: #0d568c;
+      --primary-light: #e0f2fe;
+      --primary-dark: #073860;
+      --accent: #d97706;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --warning: #f59e0b;
+      --warning-bg: #fef3c7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 28px 16px;
+      line-height: 1.5;
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+    header {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 26px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--primary);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+    }
+    h1 { font-size: 26px; color: var(--primary-dark); margin-bottom: 6px; }
+    p.subtitle { color: var(--muted); font-size: 15px; }
+
+    /* Exercise Cards Grid */
+    .section-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+    .exercise-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+    .exercise-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      border-color: var(--primary);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .card-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 99px;
+      background: #e2e8f0;
+      color: #475569;
+    }
+    .status-pill.done { background: var(--success-bg); color: var(--success); }
+    .card-title { font-size: 16px; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
+    .card-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
+    .card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 9px 16px;
+      border-radius: 7px;
+      transition: background 0.15s;
+    }
+    .card-btn:hover { background: var(--primary-dark); }
+
+    /* Cumulative Diagnostic Report */
+    .diagnostic-panel {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 30px;
+      border: 2px solid var(--primary);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      margin-bottom: 30px;
+    }
+    .hero-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 24px;
+    }
+    .score-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgba(13, 86, 140, 0.3);
+    }
+    .score-circle span { font-size: 11px; font-weight: 600; opacity: 0.85; margin-top: -2px; }
+    .stats-matrix {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .matrix-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .matrix-title {
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .stat-label { font-weight: 600; color: #334155; }
+    .progress-bar-container {
+      width: 90px;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0 10px;
+    }
+    .progress-bar-fill { height: 100%; background: var(--primary); border-radius: 4px; }
+    .stat-val { font-weight: 700; min-width: 42px; text-align: right; }
+    .teacher-summary-card {
+      background: #fffbeb;
+      border-left: 5px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #78350f;
+      line-height: 1.6;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+    .action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn-action {
+      background: #64748b;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .btn-action:hover { background: #475569; }
+    .btn-print {
+      background: #0d9488;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .cards-grid, .section-title, .action-row { display: none !important; }
+      .diagnostic-panel { border: 1px solid #000; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="badge">New English File Beginner &bull; Unit 3 Suite</div>
+    <h1>Unit 3 Mastery Portal & Diagnostic Hub</h1>
+    <p class="subtitle">Complete the 4 dedicated training exercises below. Progress and granular metrics are automatically synchronized into your live Diagnostic Profile.</p>
+  </header>
+
+  <div class="section-title">
+    <span>Training Exercises</span>
+    <span style="font-size: 13px; color: var(--muted); font-weight: normal;">4 Modules</span>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="cards-grid">
+    <!-- Card 1 -->
+    <div class="exercise-card">
+      <div>
+        <div class="card-header">
+          <span class="card-num">Exercise 1</span>
+          <span class="status-pill" id="pill-ex1">Not Started</span>
+        </div>
+        <div class="card-title">Word Order Architecture</div>
+        <div class="card-desc">10 scrambled sentences testing Present Simple word order across Wh- questions, Yes/No questions, and negations.</div>
+      </div>
+      <a href="Exercise_1_Word_Order.html" class="card-btn">Open Exercise 1 →</a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="exercise-card">
+      <div>
+        <div class="card-header">
+          <span class="card-num">Exercise 2</span>
+          <span class="status-pill" id="pill-ex2">Not Started</span>
+        </div>
+        <div class="card-title">Fill in the Blanks</div>
+        <div class="card-desc">10 items testing auxiliary choice (do, does, don't, doesn't) and verb agreement in natural dialogues.</div>
+      </div>
+      <a href="Exercise_2_Fill_in_Blanks.html" class="card-btn">Open Exercise 2 →</a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="exercise-card">
+      <div>
+        <div class="card-header">
+          <span class="card-num">Exercise 3</span>
+          <span class="status-pill" id="pill-ex3">Not Started</span>
+        </div>
+        <div class="card-title">Diagnostic Error Hunter</div>
+        <div class="card-desc">8 grammatical traps in a connected family narrative. Tests active error diagnosis and correction.</div>
+      </div>
+      <a href="Exercise_3_Error_Hunter.html" class="card-btn">Open Exercise 3 →</a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="exercise-card">
+      <div>
+        <div class="card-header">
+          <span class="card-num">Exercise 4</span>
+          <span class="status-pill" id="pill-ex4">Not Started</span>
+        </div>
+        <div class="card-title">Turkmen Translation</div>
+        <div class="card-desc">10 items translating Turkmen prompts into English with sentence type classification (Wh-, Yes/No, Negative).</div>
+      </div>
+      <a href="Exercise_4_Turkmen_Translation.html" class="card-btn">Open Exercise 4 →</a>
+    </div>
+  </div>
+
+  <!-- Cumulative Diagnostic Hub -->
+  <div class="section-title">
+    <span>Cumulative Diagnostic Mastery Profile</span>
+    <span style="font-size: 13px; color: var(--muted); font-weight: normal;" id="summary-meta"></span>
+  </div>
+
+  <div id="diagnostic-area">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<script>
+function loadAllStats() {
+  const ex1 = JSON.parse(localStorage.getItem('nef_beg_u3_ex1') || 'null');
+  const ex2 = JSON.parse(localStorage.getItem('nef_beg_u3_ex2') || 'null');
+  const ex3 = JSON.parse(localStorage.getItem('nef_beg_u3_ex3') || 'null');
+  const ex4 = JSON.parse(localStorage.getItem('nef_beg_u3_ex4') || 'null');
+
+  // Update pills
+  updatePill('pill-ex1', ex1);
+  updatePill('pill-ex2', ex2);
+  updatePill('pill-ex3', ex3);
+  updatePill('pill-ex4', ex4);
+
+  const completedModules = [ex1, ex2, ex3, ex4].filter(x => x && x.completed);
+
+  if (completedModules.length === 0) {
+    document.getElementById('diagnostic-area').innerHTML = `
+      <div class="empty-state">
+        <h3 style="font-size: 18px; margin-bottom: 8px; color: #475569;">No Exercises Completed Yet</h3>
+        <p>Complete any exercise above to begin building your live grammar diagnostic statistics.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Aggregate results
+  let totalScore = 0;
+  let totalCount = 0;
+
+  const statsPronoun = {
+    'I': { correct: 0, total: 0, label: 'I (1st Singular)' },
+    'you': { correct: 0, total: 0, label: 'you (2nd Person)' },
+    'he_she_it': { correct: 0, total: 0, label: 'he / she / it (3rd Singular)' },
+    'we': { correct: 0, total: 0, label: 'we (1st Plural)' },
+    'they': { correct: 0, total: 0, label: 'they (3rd Plural)' }
+  };
+
+  const statsAux = {
+    'do': { correct: 0, total: 0, label: 'do (Questions / Short Answers)' },
+    'does': { correct: 0, total: 0, label: 'does (3rd Singular Questions)' },
+    'dont': { correct: 0, total: 0, label: 'don\'t (Negation: I, you, we, they)' },
+    'doesnt': { correct: 0, total: 0, label: 'doesn\'t (Negation: he, she, it)' }
+  };
+
+  const statsSyntax = {
+    'word_order': { correct: 0, total: 0, label: 'Syntax Assembly (Part 1 & 4)' },
+    'negation': { correct: 0, total: 0, label: 'Negative Sentence Structure' },
+    'wh_question': { correct: 0, total: 0, label: 'Wh- Questions (QUASI)' },
+    'yesno_question': { correct: 0, total: 0, label: 'Yes/No Questions (ASI)' },
+    'type_classification': { correct: 0, total: 0, label: 'Sentence Type Identification' }
+  };
+
+  const statsPrepNoun = {
+    'singular': { correct: 0, total: 0, label: 'Singular (Our father speaks / doesn\'t...)' },
+    'plural': { correct: 0, total: 0, label: 'Plural (My friends don\'t / speak...)' },
+    'overall': { correct: 0, total: 0, label: 'Overall Preposition + Noun' }
+  };
+
+  [ex1, ex2, ex3, ex4].forEach(mod => {
+    if (!mod || !mod.results) return;
+    totalScore += mod.score;
+    totalCount += mod.total;
+
+    mod.results.forEach(item => {
+      // Pronoun
+      if (statsPronoun[item.pronoun]) {
+        statsPronoun[item.pronoun].total++;
+        if (item.correct) statsPronoun[item.pronoun].correct++;
+      }
+      // Aux
+      if (item.aux && statsAux[item.aux]) {
+        statsAux[item.aux].total++;
+        if (item.correct) statsAux[item.aux].correct++;
+      }
+      // Syntax & Word Order
+      if (item.structure && statsSyntax[item.structure]) {
+        statsSyntax[item.structure].total++;
+        if (item.correct) statsSyntax[item.structure].correct++;
+      }
+      if (item.translationOk !== undefined) {
+        statsSyntax['word_order'].total++;
+        if (item.translationOk) statsSyntax['word_order'].correct++;
+      } else if (mod === ex1) {
+        statsSyntax['word_order'].total++;
+        if (item.correct) statsSyntax['word_order'].correct++;
+      }
+      if (item.typeClassifiedOk !== undefined) {
+        statsSyntax['type_classification'].total++;
+        if (item.typeClassifiedOk) statsSyntax['type_classification'].correct++;
+      }
+      // Preposition + Noun
+      if (item.prepnoun && statsPrepNoun[item.prepnoun]) {
+        statsPrepNoun[item.prepnoun].total++;
+        statsPrepNoun['overall'].total++;
+        if (item.correct) {
+          statsPrepNoun[item.prepnoun].correct++;
+          statsPrepNoun['overall'].correct++;
+        }
+      }
+    });
+  });
+
+  const overallPct = Math.round((totalScore / totalCount) * 100);
+  let badgeColor = '#dc2626';
+  let badgeText = '🔴 NEEDS REVIEW';
+  if (overallPct >= 85) { badgeColor = '#16a34a'; badgeText = '🟢 MASTERED'; }
+  else if (overallPct >= 65) { badgeColor = '#d97706'; badgeText = '🟡 DEVELOPING'; }
+
+  document.getElementById('summary-meta').textContent = `${completedModules.length} of 4 exercises completed (${totalCount} total items evaluated)`;
+
+  document.getElementById('diagnostic-area').innerHTML = `
+    <div class="diagnostic-panel">
+      <div class="hero-summary">
+        <div>
+          <h2 style="font-size: 22px; color: var(--primary-dark); margin-bottom: 4px;">Universal Competency Score</h2>
+          <p style="color: var(--muted); font-size: 13px;">Accumulated across ${completedModules.length} completed exercise files.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="score-circle">
+            <div>${totalScore}/${totalCount}</div>
+            <span>TOTAL</span>
+          </div>
+          <div>
+            <div style="font-size: 28px; font-weight: 900; color: var(--primary-dark);">${overallPct}%</div>
+            <div style="font-size: 12px; font-weight: 800; color: ${badgeColor};">${badgeText}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-matrix">
+        <div class="matrix-box">
+          <div class="matrix-title"><span>1. By Pronoun / Subject</span><span>Target: &ge;80%</span></div>
+          <div id="hub-pronoun"></div>
+        </div>
+        <div class="matrix-box">
+          <div class="matrix-title"><span>2. By Auxiliary Form</span><span>Target: &ge;80%</span></div>
+          <div id="hub-aux"></div>
+        </div>
+        <div class="matrix-box">
+          <div class="matrix-title"><span>3. Word Order & Syntax</span><span>Target: &ge;80%</span></div>
+          <div id="hub-syntax"></div>
+        </div>
+        <div class="matrix-box">
+          <div class="matrix-title"><span>4. Preposition + Noun</span><span>Target: &ge;80%</span></div>
+          <div id="hub-prepnoun"></div>
+        </div>
+      </div>
+
+      <div class="teacher-summary-card" id="hub-insight"></div>
+
+      <div class="action-row">
+        <button class="btn-action" onclick="resetAllProgress()">↺ Reset All Unit 3 Progress</button>
+        <button class="btn-print" onclick="window.print()">🖨️ Print Complete Diagnostic Profile</button>
+      </div>
+    </div>
+  `;
+
+  renderStatRows('hub-pronoun', statsPronoun);
+  renderStatRows('hub-aux', statsAux);
+  renderStatRows('hub-syntax', statsSyntax);
+  renderStatRows('hub-prepnoun', statsPrepNoun);
+
+  // Generate insight
+  generateHubInsight(overallPct, statsPronoun, statsAux, statsSyntax, statsPrepNoun);
+}
+
+function updatePill(id, mod) {
+  const p = document.getElementById(id);
+  if (!p) return;
+  if (mod && mod.completed) {
+    p.className = 'status-pill done';
+    p.textContent = `✓ ${mod.score}/${mod.total} (${Math.round((mod.score/mod.total)*100)}%)`;
+  } else {
+    p.className = 'status-pill';
+    p.textContent = 'Not Started';
+  }
+}
+
+function renderStatRows(containerId, statsObj) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+
+  for (const k in statsObj) {
+    const item = statsObj[k];
+    if (item.total === 0) continue;
+    const p = Math.round((item.correct / item.total) * 100);
+    let color = '#16a34a';
+    if (p < 50) color = '#dc2626';
+    else if (p < 80) color = '#d97706';
+
+    const row = document.createElement('div');
+    row.className = 'stat-row';
+    row.innerHTML = `
+      <span class="stat-label">${item.label}</span>
+      <div style="display:flex; align-items:center;">
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style="width: ${p}%; background: ${color};"></div>
+        </div>
+        <span class="stat-val" style="color: ${color};">${p}% <small style="color:#64748b; font-weight:normal;">(${item.correct}/${item.total})</small></span>
+      </div>
+    `;
+    container.appendChild(row);
+  }
+}
+
+function generateHubInsight(overallPct, pronouns, auxes, syntax, prepnoun) {
+  const box = document.getElementById('hub-insight');
+  if (!box) return;
+
+  const prepSingPct = prepnoun['singular'].total > 0 ? Math.round((prepnoun['singular'].correct / prepnoun['singular'].total) * 100) : 100;
+  const prepPlurPct = prepnoun['plural'].total > 0 ? Math.round((prepnoun['plural'].correct / prepnoun['plural'].total) * 100) : 100;
+  const wordOrderPct = syntax['word_order'].total > 0 ? Math.round((syntax['word_order'].correct / syntax['word_order'].total) * 100) : 100;
+
+  let text = `<strong>Teacher Action Plan & Cumulative Diagnostic:</strong><br>`;
+
+  if (overallPct >= 85) {
+    text += `Systematic mastery achieved! The student demonstrates steady command across singular and plural subject noun phrases, auxiliary choice, and word order.<br>`;
+  } else {
+    text += `Overall accuracy is at <strong>${overallPct}%</strong>. `;
+    if (prepSingPct < 70) {
+      text += `<br>⚠️ <strong>Preposition + Noun (Singular) Gap:</strong> Scored <strong>${prepSingPct}%</strong> on singular noun phrases (e.g., dropping '-s' in <em>"Our father speaks"</em>).<br>`;
+    }
+    if (prepPlurPct < 70) {
+      text += `<br>⚠️ <strong>Preposition + Noun (Plural) Gap:</strong> Scored <strong>${prepPlurPct}%</strong> on plural noun phrases (e.g., using 'doesn't' in <em>"My friends don't"</em>).<br>`;
+    }
+    if (wordOrderPct < 70) {
+      text += `<br>⚠️ <strong>Syntax & Word Order:</strong> Scored <strong>${wordOrderPct}%</strong> on assembling sentences from scrambled blocks. Practice the <strong>QUASI / ASI</strong> formula.<br>`;
+    }
+  }
+
+  box.innerHTML = text;
+}
+
+function resetAllProgress() {
+  if (confirm("Are you sure you want to reset all Unit 3 progress and scores?")) {
+    localStorage.removeItem('nef_beg_u3_ex1');
+    localStorage.removeItem('nef_beg_u3_ex2');
+    localStorage.removeItem('nef_beg_u3_ex3');
+    localStorage.removeItem('nef_beg_u3_ex4');
+    loadAllStats();
+  }
+}
+
+window.addEventListener('DOMContentLoaded', loadAllStats);
+</script>
+</body>
+</html>

@@ -18,7 +18,52 @@
 .writing-summary{margin-top:15px;padding:12px;background:#fff;border:1px solid #d1d5db;border-radius:8px}
 .actions button{transition:transform .1s ease,opacity .15s ease}
 .actions button:hover:not(:disabled){transform:translateY(-1px)}
-h3 { margin-top: 40px; padding-top: 25px; border-top: 2px dashed #cbd5e1; } section > h3:first-of-type, .reading h3, .manual h3 { margin-top: 0; padding-top: 0; border-top: none; }</style></head><body><main>
+h3 { margin-top: 40px; padding-top: 25px; border-top: 2px dashed #cbd5e1; } section > h3:first-of-type, .reading h3, .manual h3 { margin-top: 0; padding-top: 0; border-top: none; }
+/* Mobile responsive fixes for header badge & title */
+@media (max-width: 600px) {
+    header {
+        padding: 15px 12px 20px !important;
+    }
+    header > div:first-child {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 10px 12px !important;
+        gap: 10px !important;
+    }
+    header > div:first-child > div {
+        min-width: 100% !important;
+        flex: unset !important;
+    }
+    header > div:last-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+    header > div:last-child > div:first-child {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    header > div:last-child > div:first-child > div:first-child {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        font-size: 20px !important;
+        margin-right: -10px !important;
+    }
+    header > div:last-child > div:first-child > div:last-child {
+        font-size: 14px !important;
+        padding: 8px 12px 8px 18px !important;
+    }
+    header > div:last-child > div:last-child h1 {
+        font-size: 20px !important;
+    }
+    header > div:last-child > div:last-child p {
+        font-size: 13px !important;
+    }
+}
+
+</style></head><body><main>
 <header><h1>New English File Beginner File Test 1</h1><p class="note">Complete all sections. The page checks the 75 objective marks, including Listening. Writing and Speaking require teacher assessment.</p></header>
 <section id="grammar"><h2>Grammar</h2></section><section id="vocabulary"><h2>Vocabulary</h2></section><section id="pronunciation"><h2>Pronunciation</h2></section><section id="practical"><h2>Practical English</h2></section>
 <section id="reading"><h2>Reading</h2>
@@ -214,209 +259,7 @@ title(s.pronunciation,'7. Underline the stressed syllable.');example(s.pronuncia
 title(s.practical,'9. Complete the dialogues.');s.practical.insertAdjacentHTML('beforeend', '<div class="box-card"><strong>Phrases:</strong> <span class="phrase-click" data-val="Bye" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Bye</span> &bull; <span class="phrase-click" data-val="Excuse me" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Excuse me</span> &bull; <span class="phrase-click" data-val="S-U-double T-O-N" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">S-U-double T-O-N</span> &bull; <span class="phrase-click" data-val="Sorry" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Sorry</span> &bull; <span class="phrase-click" data-val="Nice to meet you" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Nice to meet you</span> &bull; <span class="phrase-click" data-val="Good morning" style="cursor:pointer; padding:2px 4px; border-radius:3px; transition:all 0.2s;">Good morning</span></div>');[['A: ___, are you Paul Sutton? B: Yes, I am.','Excuse me'],['A: Hello Sally. B: ___, John.','Good morning'],['A: How do you spell your surname? B: ___.','s-u-double t-o-n|s u double t o n'],['A: My name\'s Reginald. B: ___?','Sorry'],['A: This is Sarah Cullen from Oxford. B: Hello Sarah. ___.','Nice to meet you']].forEach(x=>fill(s.practical,...x));
 title(s.reading,'1. Read the chat and choose A, B, or C.');[['Katie is...',['eighteen','nineteen','twenty'],0],['Jack is...',['eighteen','nineteen','twenty'],1],['Oscar is from...',['Spain','England','Mexico'],2],['Ana is from...',['Mexico','Spain','Brazil'],1],['Fernando is...',['Mexican','American','Spanish'],2],['Ana is...',['eighteen','nineteen','twenty'],1],['Jack is in...',['Manchester','Madrid','London'],2],["Katie isn't...",['English','on holiday','in London'],1],['Jack is...',['American','English','Mexican'],0]].forEach(x=>choice(s.reading,...x));title(s.reading,'2. Complete the ID cards.');[['Oscar: nationality ___','Mexican'],['Katie: surname ___','Steel'],['Katie: nationality ___','English'],['Ana: nationality ___','Spanish'],['American student: first name ___','Jack'],['American student: surname ___','Frost']].forEach(x=>fill(s.reading,...x));
 title(s.listening,'1. Listen to Dan and Jenny at reception.');[['Dan\'s name is...',['Dan Hughes','Dan Howes'],0],['Dan\'s nationality is...',['English','American'],1],['Dan\'s room is...',['fourteen','fifteen'],1],['Jenny\'s name is...',['Jenny Kerr','Jenny Carr'],1],['Jenny\'s nationality is...',['English','American'],0]].forEach(x=>choice(s.listening,...x));title(s.listening,'2. Listen to five conversations.');[["Her name is...",['Rachel Wells','Rachel Walls'],0],['Paul is in room...',['fourteen','thirteen'],1],['Anna is from...',['Hungary','Russia'],1],['Fiona is from...',['Wootton','Wooten'],0],['Go to page...',['eight','eighteen'],1]].forEach(x=>choice(s.listening,...x));
-document.querySelector('#check').onclick=()=>{const password=window.prompt('Enter the teacher password to check answers:');if(password!=='123'){if(password!==null)window.alert('Incorrect password.');return}let score=0,total=0;document.querySelectorAll('input[type=text][data-answer]').forEach(f=>{total++;const ok=f.dataset.answer.split('|').map(norm).includes(norm(f.value));f.classList.toggle('ok',ok);f.classList.toggle('bad',!ok);if(ok)score++});document.querySelectorAll('input[type=radio][data-correct]').forEach(r=>{total++;const chosen=document.querySelector(`input[name="${r.name}"]:checked`),ok=chosen===r;document.querySelectorAll(`input[name="${r.name}"]`).forEach(x=>x.parentElement.classList.remove('ok','bad'));if(chosen)chosen.parentElement.classList.add(ok?'ok':'bad');if(ok)score++});document.querySelectorAll('.syl-q').forEach(q=>{total++;const chosen=q.querySelector('.selected');const ok=chosen&&chosen.dataset.idx===q.dataset.correct;q.classList.remove('ok','bad');if(chosen)q.classList.add(ok?'ok':'bad');if(ok)score++});document.querySelector('#result').textContent=`Checked score: ${score} / ${total}. Add the teacher scores for Writing (10) and Speaking (15) for a final mark out of 100.`; document.getElementById('ai-buttons-container').style.display='flex'};
-
-window.studentRecordings = {};
-window.studentTranscripts = {};
-window.studentAudioUrls = {};
-let _rId = 1;
-const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-document.querySelectorAll('.recorder-widget').forEach(widget => {
-  const btnRecord = widget.querySelector('.btn-record');
-  const btnStop = widget.querySelector('.btn-stop');
-  const btnDownload = widget.querySelector('.btn-download');
-  const audioPlayback = widget.querySelector('.audio-playback');
-  const transcriptText = widget.querySelector('.transcript-text');
-  const sttStatus = widget.querySelector('.stt-status');
-  const promptText = widget.dataset.prompt || ("Question " + _rId);
-  const recId = "Speaking_" + _rId++;
-
-  let mediaRecorder;
-  let audioChunks = [];
-  let recognition = null;
-  let manualEdit = false;
-
-  transcriptText.addEventListener('input', () => {
-    manualEdit = true;
-    window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-    updateAiPreview();
-  });
-
-  btnRecord.onclick = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
-
-      mediaRecorder.ondataavailable = e => {
-        if(e.data.size > 0) audioChunks.push(e.data);
-      };
-
-      mediaRecorder.onstop = () => {
-        const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'; const audioBlob = new Blob(audioChunks, { type: mimeType });
-        window.studentRecordings[recId] = audioBlob;
-        const audioUrl = URL.createObjectURL(audioBlob);
-        window.studentAudioUrls[recId] = audioUrl;
-        audioPlayback.src = audioUrl;
-        audioPlayback.style.display = 'block';
-
-        if(btnDownload){
-          btnDownload.style.display = 'inline-block';
-          btnDownload.onclick = () => {
-            const a = document.createElement('a');
-            a.href = audioUrl;
-            a.download = `${recId}.webm`;
-            a.click();
-          };
-        }
-
-        stream.getTracks().forEach(track => track.stop());
-      };
-
-      if (SpeechRec) {
-        try {
-          recognition = new SpeechRec();
-          recognition.continuous = true;
-          recognition.interimResults = true;
-          recognition.lang = 'en-US';
-
-          let initialText = manualEdit ? transcriptText.value + ' ' : '';
-          recognition.onresult = event => {
-            let interim = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-              interim += event.results[i][0].transcript;
-            }
-            transcriptText.value = (initialText + interim).trim();
-            window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-            updateAiPreview();
-          };
-
-          recognition.onerror = e => {
-            console.warn('SpeechRecognition error:', e.error);
-            sttStatus.textContent = 'STT notice: ' + e.error;
-          };
-
-          recognition.start();
-          sttStatus.textContent = '🎙️ Recording & Transcribing...';
-          sttStatus.style.color = '#dc2626';
-        } catch(sttErr) {
-          console.warn('Could not start SpeechRecognition:', sttErr);
-          sttStatus.textContent = '🎙️ Recording audio...';
-        }
-      } else {
-        sttStatus.textContent = '🎙️ Recording (Web Speech API not supported in this browser)';
-      }
-
-      mediaRecorder.start();
-      btnRecord.disabled = true;
-      btnRecord.innerHTML = '&#9209; Recording...';
-      btnRecord.style.background = '#ce3c3c';
-      btnStop.disabled = false;
-      btnStop.style.background = '#0d6fa8';
-    } catch(err) {
-      alert('Microphone access denied or error: ' + err.message);
-    }
-  };
-
-  btnStop.onclick = () => {
-    if(mediaRecorder && mediaRecorder.state !== 'inactive') {
-      mediaRecorder.stop();
-      if (recognition) {
-        try { recognition.stop(); } catch(e){}
-      }
-      btnRecord.disabled = false;
-      btnRecord.innerHTML = '&#127908; Re-record';
-      btnRecord.style.background = '#0d6fa8';
-      btnStop.disabled = true;
-      btnStop.style.background = '#526273';
-      sttStatus.textContent = '✅ Recorded & Transcribed';
-      sttStatus.style.color = '#16a34a';
-
-      window.studentTranscripts[recId] = { prompt: promptText, text: transcriptText.value };
-      updateAiPreview();
-    }
-  };
-});
-
-/* ================= Writing analysis & client checks ================= */
-const SPELL = [
-  [/\bim\b/gi, "I'm"], [/\biam\b/gi, "I am"], [/\bdont\b/gi, "don't"],
-  [/\bdoesnt\b/gi, "doesn't"], [/\bisnt\b/gi, "isn't"], [/\barent\b/gi, "aren't"],
-  [/\bwasnt\b/gi, "wasn't"], [/\bwerent\b/gi, "weren't"], [/\bcant\b/gi, "can't"],
-  [/\bwont\b/gi, "won't"], [/\balot\b/gi, "a lot"], [/\bbecuase\b/gi, "because"],
-  [/\bfreind\b/gi, "friend"], [/\bteh\b/gi, "the"], [/\bstuding\b/gi, "studying"]
-];
-
-const AGREEMENT = [
-  {re:/\b(I)\s+(is|are)\b/gi,          ok:"am",  rule:"I → am"},
-  {re:/\b(he|she|it)\s+(am|are)\b/gi,  ok:"is",  rule:"he / she / it → is"},
-  {re:/\b(you|we|they)\s+(am|is)\b/gi, ok:"are", rule:"you / we / they → are"}
-];
-
-const MISSING_VERB = /\b(I|He|She|It|You|We|They)\s+(a|an|the)\b/g;
-
-function analyzeWriting(){
-  const inputs = Array.from(document.querySelectorAll('.writing-inp'));
-  const allText = inputs.map(i => i.value.trim()).filter(Boolean).join(' ');
-  const words = allText ? allText.split(/\s+/).filter(Boolean) : [];
-  const sentences = allText.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 2);
-
-  const caps = sentences.filter(s => {
-    const m = s.match(/[A-Za-z]/);
-    return m && m[0] === m[0].toLowerCase();
-  });
-  const lowerI = (allText.match(/(?:^|\s)i(?=\s|[.,!?]|$)/g) || []).length;
-
-  const agree = [];
-  AGREEMENT.forEach(r => {
-    let m; r.re.lastIndex = 0;
-    while ((m = r.re.exec(allText)) !== null){
-      let subj = m[1];
-      if (subj.toLowerCase() === "i") subj = "I";
-      agree.push({quote:m[0], fix:subj + " " + r.ok, rule:r.rule});
-      if (m.index === r.re.lastIndex) r.re.lastIndex++;
-    }
-  });
-
-  MISSING_VERB.lastIndex = 0;
-  let mv;
-  while ((mv = MISSING_VERB.exec(allText)) !== null){
-    const subj = mv[1].toLowerCase() === "i" ? "I" : mv[1];
-    const low = subj.toLowerCase();
-    const verb = low === "i" ? "am" : (["he","she","it"].includes(low) ? "is" : "are");
-    agree.push({quote:mv[0], fix:subj + " " + verb + " " + mv[2], rule:"verb missing after " + subj, soft:true});
-  }
-
-  const spell = [];
-  SPELL.forEach(p => { if (p[0].test(allText)) spell.push(p[1]); p[0].lastIndex = 0; });
-
-  return {
-    text: allText,
-    inputs: inputs.map(i => i.value.trim()),
-    words: words.length,
-    sentences: sentences.length,
-    caps, lowerI, agree, spell,
-    endsOk: inputs.every(i => !i.value.trim() || /[.!?]\s*$/.test(i.value.trim()))
-  };
-}
-
-function updateWritingCounts(){
-  const a = analyzeWriting();
-  const wc = document.getElementById('writing-counts');
-  if (wc) {
-    wc.textContent = `${a.words} words · ${a.sentences} sentences (${a.inputs.filter(Boolean).length}/6 answered)`;
-  }
-}
-
-document.querySelectorAll('.writing-inp').forEach(inp => {
-  inp.addEventListener('input', () => {
-    updateWritingCounts();
-    updateAiPreview();
-  });
-});
-
-document.getElementById('btn-check-writing').onclick = () => {
+function renderWritingBasics(){
   const a = analyzeWriting();
   const msg = document.getElementById('writing-msg');
   const box = document.getElementById('writing-checks');
@@ -480,11 +323,63 @@ document.getElementById('btn-check-writing').onclick = () => {
 
   box.style.display = 'grid';
   total.style.display = 'flex';
-  total.innerHTML = `<span>Basic Writing Checks</span><span>${passed} / ${scoredRows.length} passed</span>`;
+  total.innerHTML = `<div style="display:flex; flex-direction:column; gap:5px;">
+    <span style="font-weight:700; color:#0d568c;">Writing Basics Result</span>
+    <span>Correct: <b>${passed} / ${scoredRows.length}</b></span>
+    <span>Max Score: <b>${scoredRows.length}</b></span>
+  </div>`;
   msg.style.display = 'block';
   msg.style.background = passed >= scoredRows.length - 1 ? '#dcfce7' : '#fef3c7';
   msg.style.color = passed >= scoredRows.length - 1 ? '#166534' : '#92400e';
   msg.textContent = passed >= scoredRows.length - 1 ? 'Writing looks solid! Ready for AI Teacher grading. ✅' : 'Review the items below, make corrections, and re-check. 🙂';
+}
+const btnW = document.getElementById('btn-check-writing');
+if (btnW) btnW.onclick = renderWritingBasics;
+
+/* --- CHECK ANSWERS SCRIPT --- */
+document.querySelector('#check').onclick=()=>{
+  let score=0,total=0;
+  
+  // Text inputs
+  document.querySelectorAll('input[type=text][data-answer]').forEach(f=>{
+    total++;
+    const ok=f.dataset.answer.split('|').map(norm).includes(norm(f.value));
+    f.classList.toggle('ok',ok);
+    f.classList.toggle('bad',!ok);
+    if(ok) score++;
+  });
+  
+  // Radio choices
+  document.querySelectorAll('input[type=radio][data-correct]').forEach(r=>{
+    total++;
+    const chosen=document.querySelector(`input[name="${r.name}"]:checked`);
+    const ok=chosen===r;
+    document.querySelectorAll(`input[name="${r.name}"]`).forEach(x=>x.parentElement.classList.remove('ok','bad'));
+    if(chosen)chosen.parentElement.classList.add(ok?'ok':'bad');
+    if(ok) score++;
+  });
+
+  // Syllables
+  document.querySelectorAll('.syl-q').forEach(q => {
+    total++;
+    const correctIdx = q.dataset.correct;
+    const selected = q.querySelector('.syl.selected');
+    const ok = selected && selected.dataset.idx === correctIdx;
+    q.classList.remove('ok', 'bad');
+    if(selected) {
+      if(ok) {
+        selected.style.color = '#29974e'; q.classList.add('ok');
+        score++;
+      } else {
+        selected.style.color = '#ce3c3c'; q.classList.add('bad');
+      }
+    } else {
+      q.classList.add('bad');
+    }
+  });
+
+  document.querySelector('#result').innerHTML=`<div style="background:#eef4f8; border:2px solid #0d568c; color:#1f2937; padding:20px; border-radius:10px; font-size:18px; margin-top:20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);"><strong>Total Score: ${score} / ${total}</strong><br><span style="font-size:14px; font-weight:normal; color:#526273;">Add the teacher scores for Writing (10) and Speaking (15) for a final mark out of 100.</span></div>`;
+  document.getElementById('ai-buttons-container').style.display = 'flex';
 };
 
 /* ================= Combined AI Prompt Builder ================= */

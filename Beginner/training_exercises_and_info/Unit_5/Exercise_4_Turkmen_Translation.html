@@ -1,0 +1,485 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Unit 5 — Exercise 4: Turkmen to English Translation</title><style>
+    :root {
+      --primary: #0d568c;
+      --primary-light: #e0f2fe;
+      --primary-dark: #073860;
+      --accent: #d97706;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px 16px;
+      line-height: 1.5;
+    }
+    .container { max-width: 860px; margin: 0 auto; }
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+      background: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+    .nav-link:hover { background: var(--primary-light); }
+    header {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--primary);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+    }
+    h1 { font-size: 24px; color: var(--primary-dark); margin-bottom: 6px; }
+    p.subtitle { color: var(--muted); font-size: 14px; }
+    .task-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      transition: all 0.2s;
+    }
+    .task-item.correct { background: var(--success-bg); border-color: #86efac; }
+    .task-item.incorrect { background: var(--danger-bg); border-color: #fca5a5; }
+    .task-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .task-title { font-weight: 700; font-size: 14px; color: #334155; }
+    .tags-group { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: #e2e8f0;
+      color: #475569;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .tag.highlight { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .drop-zone {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 8px;
+      min-height: 52px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .drop-placeholder { color: #94a3b8; font-size: 13px; font-style: italic; user-select: none; }
+    .word-bank { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; min-height: 40px; }
+    .word-tile {
+      display: inline-flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .word-tile:hover { background: #e2e8f0; border-color: #94a3b8; transform: translateY(-1px); }
+    .word-tile.placed { opacity: 0.25; pointer-events: none; }
+    .task-feedback {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1.4;
+      margin-top: 10px;
+    }
+    .task-feedback.correct { display: block; background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .task-feedback.incorrect { display: block; background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+    .action-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn-main {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-main:hover { background: var(--primary-dark); }
+    .btn-secondary {
+      background: #fff;
+      color: #475569;
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: #f1f5f9; }
+    .score-badge {
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 14px;
+      display: none;
+    }
+    .error-word {
+      color: #dc2626;
+      font-weight: 800;
+      text-decoration: underline wavy #dc2626;
+      background: #fee2e2;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    .story-card {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+</style></head>
+<body><div class="container">
+  <div class="nav-bar"><a href="index.html" class="nav-link">← Unit 5 Hub</a><span style="font-weight: bold; color: var(--muted); font-size: 13px;">Exercise 4 of 4</span></div>
+  <header><div class="badge">Part 4 &bull; Translation & Syntax Classification</div><h1>Turkmen to English Translation</h1><p class="subtitle">Select the sentence type, then assemble the English translation from scrambled word tiles.</p></header>
+  <div id="exercise-items">
+    <div class="task-item" id="item-0" 
+         data-type="affirmative" data-pronoun="I" data-aux="was" data-prepnoun="none"
+         data-answer="Yesterday I was at home.">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Düýn men öýdedim.</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-0" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-0" onclick="clearZone(0)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-0">
+        <span class="word-tile" onclick="addWord(0, this)">Yesterday</span><span class="word-tile" onclick="addWord(0, this)">I</span><span class="word-tile" onclick="addWord(0, this)">was</span><span class="word-tile" onclick="addWord(0, this)">at</span><span class="word-tile" onclick="addWord(0, this)">home.</span>
+      </div>
+      <div class="task-feedback" id="fb-0"></div>
+    </div>
+    <div class="task-item" id="item-1" 
+         data-type="affirmative" data-pronoun="they" data-aux="none" data-prepnoun="none"
+         data-answer="They went to the cinema last week.">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Olar geçen hepde kinoteatra gitdiler.</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-1" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-1" onclick="clearZone(1)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-1">
+        <span class="word-tile" onclick="addWord(1, this)">They</span><span class="word-tile" onclick="addWord(1, this)">went</span><span class="word-tile" onclick="addWord(1, this)">to</span><span class="word-tile" onclick="addWord(1, this)">the</span><span class="word-tile" onclick="addWord(1, this)">cinema</span><span class="word-tile" onclick="addWord(1, this)">last</span><span class="word-tile" onclick="addWord(1, this)">week.</span>
+      </div>
+      <div class="task-feedback" id="fb-1"></div>
+    </div>
+    <div class="task-item" id="item-2" 
+         data-type="yesno_question" data-pronoun="you" data-aux="did" data-prepnoun="none"
+         data-answer="Did you buy a new car?">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Sen täze maşyn satyn aldyňmy?</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-2" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-2" onclick="clearZone(2)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-2">
+        <span class="word-tile" onclick="addWord(2, this)">Did</span><span class="word-tile" onclick="addWord(2, this)">you</span><span class="word-tile" onclick="addWord(2, this)">buy</span><span class="word-tile" onclick="addWord(2, this)">a</span><span class="word-tile" onclick="addWord(2, this)">new</span><span class="word-tile" onclick="addWord(2, this)">car?</span>
+      </div>
+      <div class="task-feedback" id="fb-2"></div>
+    </div>
+    <div class="task-item" id="item-3" 
+         data-type="negation" data-pronoun="he_she_it" data-aux="wasnt" data-prepnoun="singular"
+         data-answer="Our teacher wasn't at work yesterday.">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Biziň mugallymymyz düýn işde däldi.</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-3" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-3" onclick="clearZone(3)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-3">
+        <span class="word-tile" onclick="addWord(3, this)">Our</span><span class="word-tile" onclick="addWord(3, this)">teacher</span><span class="word-tile" onclick="addWord(3, this)">wasn't</span><span class="word-tile" onclick="addWord(3, this)">at</span><span class="word-tile" onclick="addWord(3, this)">work</span><span class="word-tile" onclick="addWord(3, this)">yesterday.</span>
+      </div>
+      <div class="task-feedback" id="fb-3"></div>
+    </div>
+    <div class="task-item" id="item-4" 
+         data-type="affirmative" data-pronoun="they" data-aux="were" data-prepnoun="plural"
+         data-answer="My friends were in the hospital.">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Meniň dostlarym keselhanadadylar.</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-4" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-4" onclick="clearZone(4)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-4">
+        <span class="word-tile" onclick="addWord(4, this)">My</span><span class="word-tile" onclick="addWord(4, this)">friends</span><span class="word-tile" onclick="addWord(4, this)">were</span><span class="word-tile" onclick="addWord(4, this)">in</span><span class="word-tile" onclick="addWord(4, this)">the</span><span class="word-tile" onclick="addWord(4, this)">hospital.</span>
+      </div>
+      <div class="task-feedback" id="fb-4"></div>
+    </div>
+    <div class="task-item" id="item-5" 
+         data-type="negation" data-pronoun="he_she_it" data-aux="didnt" data-prepnoun="none"
+         data-answer="He didn't phone me yesterday.">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Ol maňa jaň etmedi.</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-5" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-5" onclick="clearZone(5)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-5">
+        <span class="word-tile" onclick="addWord(5, this)">He</span><span class="word-tile" onclick="addWord(5, this)">didn't</span><span class="word-tile" onclick="addWord(5, this)">phone</span><span class="word-tile" onclick="addWord(5, this)">me</span><span class="word-tile" onclick="addWord(5, this)">yesterday.</span>
+      </div>
+      <div class="task-feedback" id="fb-5"></div>
+    </div>
+    <div class="task-item" id="item-6" 
+         data-type="wh_question" data-pronoun="you" data-aux="did" data-prepnoun="none"
+         data-answer="Where did you live before?">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Siz nirede ýaşadyňyz?</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-6" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-6" onclick="clearZone(6)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-6">
+        <span class="word-tile" onclick="addWord(6, this)">Where</span><span class="word-tile" onclick="addWord(6, this)">did</span><span class="word-tile" onclick="addWord(6, this)">you</span><span class="word-tile" onclick="addWord(6, this)">live</span><span class="word-tile" onclick="addWord(6, this)">before?</span>
+      </div>
+      <div class="task-feedback" id="fb-6"></div>
+    </div>
+    <div class="task-item" id="item-7" 
+         data-type="affirmative" data-pronoun="we" data-aux="were" data-prepnoun="none"
+         data-answer="We were on the bus.">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Biz awtobusda otyrdyk.</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-7" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-7" onclick="clearZone(7)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-7">
+        <span class="word-tile" onclick="addWord(7, this)">We</span><span class="word-tile" onclick="addWord(7, this)">were</span><span class="word-tile" onclick="addWord(7, this)">on</span><span class="word-tile" onclick="addWord(7, this)">the</span><span class="word-tile" onclick="addWord(7, this)">bus.</span>
+      </div>
+      <div class="task-feedback" id="fb-7"></div>
+    </div>
+    <div class="task-item" id="item-8" 
+         data-type="affirmative" data-pronoun="she" data-aux="none" data-prepnoun="none"
+         data-answer="She came to England last year.">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Ol geçen ýyl Angliýa geldi.</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-8" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-8" onclick="clearZone(8)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-8">
+        <span class="word-tile" onclick="addWord(8, this)">She</span><span class="word-tile" onclick="addWord(8, this)">came</span><span class="word-tile" onclick="addWord(8, this)">to</span><span class="word-tile" onclick="addWord(8, this)">England</span><span class="word-tile" onclick="addWord(8, this)">last</span><span class="word-tile" onclick="addWord(8, this)">year.</span>
+      </div>
+      <div class="task-feedback" id="fb-8"></div>
+    </div>
+    <div class="task-item" id="item-9" 
+         data-type="yesno_question" data-pronoun="you" data-aux="were" data-prepnoun="none"
+         data-answer="Were you late yesterday morning?">
+      <div style="font-size: 17px; font-weight: 700; color: #047857; margin-bottom: 10px;">🇹🇲 Siz düýn gijä galdyňyzmy?</div>
+      <div style="margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label style="font-size: 13px; font-weight: bold; color: var(--muted);">Sentence Type (Sözlem görnüşi):</label>
+        <select id="sel-9" style="padding: 5px 10px; font-size: 13px; border-radius: 6px; border: 1px solid var(--border); font-weight: 600;">
+          <option value="">-- Saýlaň (Select) --</option>
+          <option value="affirmative">Affirmative (+) Habar sözlemi</option>
+          <option value="negation">Negative (−) Ýalganlyk / Däl</option>
+          <option value="yesno_question">Yes/No Question (?) Hawa/Ýok Soragy</option>
+          <option value="wh_question">Wh- Question (?) Näme/Nirede... Soragy</option>
+        </select>
+      </div>
+      <div class="drop-zone" id="dz-9" onclick="clearZone(9)"><span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span></div>
+      <div class="word-bank" id="wb-9">
+        <span class="word-tile" onclick="addWord(9, this)">Were</span><span class="word-tile" onclick="addWord(9, this)">you</span><span class="word-tile" onclick="addWord(9, this)">late</span><span class="word-tile" onclick="addWord(9, this)">yesterday</span><span class="word-tile" onclick="addWord(9, this)">morning?</span>
+      </div>
+      <div class="task-feedback" id="fb-9"></div>
+    </div></div>
+  <div class="action-panel">
+    <button class="btn-main" onclick="checkAll()">Check Answers & Save Stats</button>
+    <button class="btn-secondary" onclick="resetAll()">Reset Tiles</button>
+    <span class="score-badge" id="score-badge"></span>
+  </div>
+</div>
+<script>
+const selections = {};
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.task-item').forEach((item, idx) => {
+    selections[idx] = [];
+    const bank = document.getElementById('wb-' + idx);
+    const tiles = Array.from(bank.querySelectorAll('.word-tile'));
+    shuffleArray(tiles);
+    bank.innerHTML = '';
+    tiles.forEach(t => bank.appendChild(t));
+  });
+});
+function addWord(idx, tile) {
+  if (tile.classList.contains('placed')) return;
+  selections[idx].push(tile.textContent.trim());
+  tile.classList.add('placed');
+  renderDropZone(idx);
+}
+function clearZone(idx) {
+  selections[idx] = [];
+  const bank = document.getElementById('wb-' + idx);
+  bank.querySelectorAll('.word-tile').forEach(t => t.classList.remove('placed'));
+  renderDropZone(idx);
+}
+function renderDropZone(idx) {
+  const dz = document.getElementById('dz-' + idx);
+  if (selections[idx].length === 0) dz.innerHTML = '<span class="drop-placeholder">Tap scrambled words below to assemble English translation...</span>';
+  else dz.innerHTML = selections[idx].map(w => '<span class="word-tile" style="cursor:default;">' + w + '</span>').join('');
+}
+function checkAll() {
+  let score = 0;
+  const results = [];
+  const items = document.querySelectorAll('.task-item');
+  items.forEach((item, idx) => {
+    const targetText = item.dataset.answer.trim();
+    const targetType = item.dataset.type;
+    const assembled = (selections[idx] || []).join(' ').trim();
+    const selType = document.getElementById('sel-' + idx).value;
+    const textOk = assembled === targetText;
+    const typeOk = selType === targetType;
+    const isCorrect = textOk && typeOk;
+    const fb = document.getElementById('fb-' + idx);
+    item.classList.remove('correct', 'incorrect');
+    fb.classList.remove('correct', 'incorrect');
+    if (isCorrect) {
+      score++; item.classList.add('correct'); fb.classList.add('correct');
+      fb.innerHTML = '<b>Correct!</b> ' + targetText;
+    } else {
+      item.classList.add('incorrect'); fb.classList.add('incorrect');
+      fb.innerHTML = '<b>Mistake:</b><br>' +
+        (!typeOk ? '&bull; Sentence Type: selected <i>' + (selType || 'none') + '</i>, correct: <b>' + targetType + '</b><br>' : '') +
+        (!textOk ? '&bull; English text: "' + (assembled || '(empty)') + '", correct: <b>' + targetText + '</b>' : '');
+    }
+    results.push({ id: idx, pronoun: item.dataset.pronoun, aux: item.dataset.aux, structure: targetType, prepnoun: item.dataset.prepnoun, translationOk: textOk, typeClassifiedOk: typeOk, correct: isCorrect });
+  });
+  const sb = document.getElementById('score-badge');
+  sb.style.display = 'inline-block';
+  sb.textContent = 'Score: ' + score + ' / ' + items.length;
+  localStorage.setItem('nef_beg_u5_ex4', JSON.stringify({ completed: true, score, total: items.length, timestamp: new Date().toISOString(), results }));
+}
+function resetAll() {
+  document.querySelectorAll('.task-item').forEach((item, idx) => {
+    clearZone(idx); document.getElementById('sel-' + idx).value = '';
+    item.classList.remove('correct', 'incorrect');
+    const fb = document.getElementById('fb-' + idx);
+    fb.classList.remove('correct', 'incorrect'); fb.style.display = 'none';
+  });
+  document.getElementById('score-badge').style.display = 'none';
+}
+</script></body></html>

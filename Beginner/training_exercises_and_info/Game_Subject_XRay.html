@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subject X-Ray: Multilingual Structure & Grammar Reactor</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #131b2e;
+      --card-inner: #0f172a;
+      --border: #23304c;
+      --primary: #38bdf8;
+      --primary-dark: #0284c7;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --accent: #f59e0b;
+      --purple: #a855f7;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .game-wrapper {
+      max-width: 1200px;
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .game-logo {
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stats-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .badge-pill {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Game Mode Switcher Tabs */
+    .game-mode-toggle-bar {
+      display: inline-flex;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+    .btn-gmode {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-gmode:hover {
+      color: #fff;
+      background: #1e293b;
+    }
+    .btn-gmode.active {
+      background: #0284c7 !important;
+      color: #fff !important;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Language Switcher Tabs */
+    .lang-switcher-bar {
+      display: inline-flex;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+    .lang-tab {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .lang-tab:hover {
+      color: #fff;
+      background: #1e293b;
+    }
+    .lang-tab.active {
+      background: #0284c7 !important;
+      color: #fff !important;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    /* 2-Column Split Layout */
+    .arena-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 980px) {
+      .arena-grid { grid-template-columns: 1fr; }
+    }
+
+    /* LEFT COLUMN: Subject Structures */
+    .left-panel {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .panel-heading {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .panel-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    /* Mode Switcher Buttons (Full vs Short) */
+    .mode-toggle-bar {
+      display: flex;
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+    .btn-mode {
+      flex: 1;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+
+    .structures-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 580px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .structures-list::-webkit-scrollbar { width: 5px; }
+    .structures-list::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    .cat-divider {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #64748b;
+      margin: 10px 0 4px;
+      padding-left: 4px;
+    }
+
+    .btn-struct {
+      background: #1e293b;
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .btn-struct:hover:not(:disabled) {
+      background: #27354f;
+      border-color: var(--primary);
+      color: #fff;
+      transform: translateX(3px);
+    }
+    .btn-struct.active-target {
+      background: rgba(34, 197, 94, 0.2) !important;
+      border-color: var(--success) !important;
+      color: #86efac !important;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.25);
+    }
+    .btn-struct.wrong-target {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border-color: var(--danger) !important;
+      color: #fca5a5 !important;
+      animation: shake 0.3s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+    .anchor-badge {
+      font-size: 11px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    /* RIGHT COLUMN: Active Chamber & Steps */
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Target Chamber */
+    .chamber-box {
+      background: radial-gradient(circle at center, #1a2a47 0%, #0c1424 100%);
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: inset 0 0 25px rgba(56, 189, 248, 0.2);
+    }
+    .chamber-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .subject-text {
+      font-size: clamp(22px, 3.2vw, 32px);
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+    .chamber-clue {
+      font-size: 14px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 8px;
+      background: rgba(15, 23, 42, 0.7);
+      padding: 6px 14px;
+      border-radius: 8px;
+      display: inline-block;
+      border: 1px dashed rgba(56, 189, 248, 0.4);
+    }
+    .chamber-status {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .structures-list.waiting-formula {
+      opacity: 0.65;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Translation Mode: Formula Architecture Selector */
+    .formula-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 650px) {
+      .formula-selector-grid { grid-template-columns: 1fr; }
+    }
+    .btn-formula-card {
+      background: #1e293b;
+      border: 2px solid var(--border);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .btn-formula-card:hover:not(:disabled) {
+      border-color: #38bdf8;
+      background: #25334c;
+      transform: translateY(-2px);
+    }
+    .fml-card-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #f59e0b;
+      letter-spacing: 0.5px;
+    }
+    .fml-card-code {
+      font-size: 15px;
+      font-weight: 900;
+      color: #f8fafc;
+      font-family: monospace;
+      letter-spacing: 0.3px;
+    }
+    .fml-card-sub {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .btn-formula-card.active-fml-btn {
+      background: rgba(34, 197, 94, 0.22) !important;
+      border-color: var(--success) !important;
+      box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
+    }
+    .btn-formula-card.active-fml-btn .fml-card-code {
+      color: #86efac !important;
+    }
+    .btn-formula-card.active-fml-btn .fml-card-sub {
+      color: #dcfce7 !important;
+    }
+    .btn-formula-card.wrong-fml-btn {
+      background: rgba(239, 68, 68, 0.22) !important;
+      border-color: var(--danger) !important;
+      animation: shake 0.35s ease;
+    }
+    .btn-formula-card.wrong-fml-btn .fml-card-code {
+      color: #fca5a5 !important;
+    }
+
+    /* Multi-step progress cards */
+    .step-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      transition: all 0.25s;
+    }
+    .step-card.locked {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .step-label {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+    .step-lock {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Pronoun selector grid (8 Buttons) */
+    .pronoun-grid-8 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 600px) {
+      .pronoun-grid-8 { grid-template-columns: repeat(2, 1fr); }
+    }
+    .btn-pro {
+      background: #1e293b;
+      border: 2px solid var(--border);
+      color: #fff;
+      padding: 10px 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+    .btn-pro:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .pro-main {
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .pro-sub {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .btn-pro.correct-pro {
+      background: var(--success) !important;
+      border-color: #86efac !important;
+    }
+    .btn-pro.correct-pro .pro-sub { color: #dcfce7 !important; }
+    .btn-pro.wrong-pro {
+      background: var(--danger) !important;
+      border-color: #fca5a5 !important;
+    }
+    .btn-pro.wrong-pro .pro-sub { color: #fee2e2 !important; }
+
+    /* Step 3: Big Interactive Formula Chamber with Clickable V/Vs Inside */
+    .interactive-formula-chamber {
+      background: radial-gradient(circle at center, #1e293b 0%, #0b1324 100%);
+      border: 2px solid #334155;
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .formula-type-badge {
+      font-size: 13px;
+      font-weight: 800;
+      color: #f59e0b;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 4px 14px;
+      border-radius: 99px;
+    }
+    .big-formula-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-bottom: 12px;
+      user-select: none;
+    }
+    .f-token {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+    .f-static {
+      color: #f8fafc;
+      text-shadow: 0 0 14px rgba(255,255,255,0.25);
+    }
+    .f-op {
+      color: #38bdf8;
+      font-weight: 800;
+      font-size: 28px;
+    }
+    .f-slash {
+      color: #64748b;
+      font-weight: 700;
+      font-size: 28px;
+      margin: 0 2px;
+    }
+    .f-choice-box {
+      display: inline-flex;
+      align-items: center;
+      background: #0f172a;
+      border: 2px dashed #38bdf8;
+      border-radius: 14px;
+      padding: 6px 10px;
+      gap: 4px;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
+    }
+    .f-btn {
+      background: #1e293b;
+      border: 2px solid #475569;
+      color: #ffffff;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 68px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .f-btn:hover:not(:disabled) {
+      background: #0284c7;
+      border-color: #38bdf8;
+      transform: translateY(-2px) scale(1.06);
+      box-shadow: 0 6px 18px rgba(56, 189, 248, 0.5);
+    }
+    .f-btn-main {
+      font-size: 26px;
+      font-weight: 900;
+      color: #facc15;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+    .f-btn-sub {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-top: 2px;
+      white-space: nowrap;
+    }
+    .f-btn.active-f-btn {
+      background: #16a34a !important;
+      border-color: #86efac !important;
+      color: #ffffff !important;
+      transform: scale(1.08);
+      box-shadow: 0 0 22px rgba(34, 197, 94, 0.75) !important;
+    }
+    .f-btn.active-f-btn .f-btn-main { color: #ffffff !important; }
+    .f-btn.active-f-btn .f-btn-sub { color: #dcfce7 !important; }
+
+    .f-btn.wrong-f-btn {
+      background: #dc2626 !important;
+      border-color: #fca5a5 !important;
+      animation: shake 0.35s ease;
+    }
+    .f-btn.wrong-f-btn .f-btn-main { color: #ffffff !important; }
+    .f-btn.wrong-f-btn .f-btn-sub { color: #fee2e2 !important; }
+
+    .formula-sub-hint {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    /* Sentence Reactor Section */
+    .formula-tag-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+      padding: 8px 14px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .formula-name { font-size: 13px; font-weight: 800; color: #facc15; }
+    .formula-code { font-size: 12px; color: #cbd5e1; font-family: monospace; }
+
+    .sentence-lead {
+      font-size: 19px;
+      font-weight: 700;
+      text-align: center;
+      margin: 15px 0 18px;
+      color: #f1f5f9;
+      line-height: 1.5;
+    }
+    .blank-slot {
+      color: var(--primary);
+      border-bottom: 2px dashed var(--primary);
+      padding: 0 8px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .btn-verb-opt {
+      background: #1e293b;
+      border: 2px solid var(--border);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+    }
+    .btn-verb-opt:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #27354f;
+      transform: translateY(-2px);
+    }
+    .btn-verb-opt.pass {
+      background: var(--success) !important;
+      border-color: #86efac !important;
+    }
+    .btn-verb-opt.fail {
+      background: var(--danger) !important;
+      border-color: #fca5a5 !important;
+    }
+
+    /* Feedback Banner */
+    .intel-banner {
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      display: none;
+    }
+    .intel-banner.ok {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid var(--success);
+      color: #86efac;
+    }
+    .intel-banner.bad {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--danger);
+      color: #fca5a5;
+    }
+    .btn-next-round {
+      background: var(--primary);
+      color: #090d16;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      float: right;
+      transition: all 0.15s;
+    }
+    .btn-next-round:hover {
+      background: #7dd3fc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="game-wrapper">
+  <div class="header-bar">
+    <div class="game-logo">
+      <span>🔬</span> Subject X-Ray: Structure & Multilingual Anchor
+    </div>
+    <div class="stats-group">
+      <!-- Game Mode Switcher -->
+      <div class="game-mode-toggle-bar">
+        <button type="button" class="btn-gmode active" id="btn-gmode-xray" onclick="setGamePlayMode('xray')">
+          🔬 Subject X-Ray Mode
+        </button>
+        <button type="button" class="btn-gmode" id="btn-gmode-trans" onclick="setGamePlayMode('translation')">
+          🌍 Translation Mode
+        </button>
+      </div>
+
+      <div class="lang-switcher-bar">
+        <button type="button" class="lang-tab active" data-lang="tm" onclick="setLanguage('tm')">🇹🇲 Türkmençe</button>
+        <button type="button" class="lang-tab" data-lang="ru" onclick="setLanguage('ru')">🇷🇺 Русский</button>
+        <button type="button" class="lang-tab" data-lang="tr" onclick="setLanguage('tr')">🇹🇷 Türkçe</button>
+      </div>
+      <div class="badge-pill">Subject: <span id="round-count" style="color:var(--primary);">1 / 16</span></div>
+      <div class="badge-pill">Score: <span id="score-counter" style="color:var(--success);">0</span></div>
+      <div class="badge-pill">Streak: <span id="streak-counter" style="color:var(--accent);">0 🔥</span></div>
+    </div>
+  </div>
+
+  <div class="arena-grid">
+    <!-- LEFT COLUMN: PARTS OF SPEECH & NOUN COMBINATIONS -->
+    <div class="left-panel">
+      <div class="panel-heading">
+        <span id="txt-panel-title">1. Subject Structures</span>
+        <span style="font-size:11px; color:#38bdf8;" id="txt-patterns-count">16 Patterns</span>
+      </div>
+      <div class="panel-sub" id="txt-panel-sub">
+        Choose which grammatical structure matches the target subject:
+      </div>
+
+      <!-- Mode Selector: Short (Pronouns only) vs Full (All structures) -->
+      <div class="mode-toggle-bar">
+        <button type="button" class="btn-mode" id="btn-mode-full" onclick="setStructureMode('full')">
+          🧩 Full Structures (16)
+        </button>
+        <button type="button" class="btn-mode" id="btn-mode-short" onclick="setStructureMode('short')">
+          👤 Pronouns Only (8)
+        </button>
+      </div>
+
+      <div class="structures-list" id="structs-list">
+        <!-- Rendered dynamically by current active language and mode -->
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: ACTIVE CHAMBER & SENTENCE PIPELINE -->
+    <div class="right-panel">
+      <!-- Top Target Chamber -->
+      <div class="chamber-box">
+        <div class="chamber-tag" id="chamber-tag-label">Active Target Subject</div>
+        <div class="subject-text" id="target-subject">Their father</div>
+        <div class="chamber-clue" id="chamber-trans-clue" style="display:none;"></div>
+        <div class="chamber-status" id="chamber-hint">
+          👈 Step 1: Click the matching grammatical structure on the left
+        </div>
+      </div>
+
+      <!-- Translation Mode: Step 1 Formula Architecture Selector -->
+      <div class="step-card" id="formula-select-card" style="display:none;">
+        <div class="step-header">
+          <span class="step-label" id="txt-fml-step-title">Step 1: Sentence Formula</span>
+          <span class="step-lock" id="fml-step-lock">⚡ Select 1 of 4 Formulas</span>
+        </div>
+        <div style="font-size:13px; color:#cbd5e1; margin-bottom:10px;" id="txt-fml-step-desc">
+          Which Present Simple structure does this sentence follow?
+        </div>
+        <div class="formula-selector-grid" id="formula-selector-grid">
+          <!-- 4 master formula buttons rendered dynamically -->
+        </div>
+        <div id="fml-step-feedback" style="font-size:13px; margin-top:10px; font-weight:700; display:none;"></div>
+      </div>
+
+      <!-- Step 2: Equivalent Pronoun (8 Choices with Multilingual Verb Anchor) -->
+      <div class="step-card locked" id="step2-card">
+        <div class="step-header">
+          <span class="step-label" id="txt-step2-title">Step 2: Equivalent Pronoun & Verb Anchor</span>
+          <span class="step-lock" id="step2-lock">🔒 Complete Step 1 First</span>
+        </div>
+        <div style="font-size:13px; color:#cbd5e1; margin-bottom:12px;" id="txt-step2-desc">
+          Which pronoun & verb form matches this subject?
+        </div>
+        <div class="pronoun-grid-8" id="pronoun-grid-container">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Step 3: Auxiliary & Form Rule (Click V/Vs inside the Structure) -->
+      <div class="step-card locked" id="step3-card">
+        <div class="step-header">
+          <span class="step-label" id="txt-step3-title">Step 3: Auxiliary & Form Rule</span>
+          <span class="step-lock" id="step3-lock">🔒 Complete Step 2 First</span>
+        </div>
+
+        <div class="interactive-formula-chamber">
+          <div class="formula-type-badge" id="formula-name">(+) Affirmative</div>
+
+          <div class="big-formula-display" id="big-formula-display">
+            <!-- Clickable formula tokens rendered dynamically -->
+          </div>
+
+          <div class="formula-sub-hint" id="txt-step3-desc">
+            Click <strong>V</strong> or <strong>Vs</strong> directly inside the structure to choose the rule for this subject!
+          </div>
+        </div>
+
+        <div id="step3-feedback" style="font-size:13px; margin-top:12px; font-weight:700; text-align:center; display:none;"></div>
+      </div>
+
+      <!-- Step 4: Sentence Reactor (Actual Verbs) -->
+      <div class="step-card locked" id="step4-card">
+        <div class="step-header">
+          <span class="step-label" id="txt-step4-title">Step 4: Sentence Reactor</span>
+          <span class="step-lock" id="step4-lock">🔒 Complete Step 3 First</span>
+        </div>
+
+        <div style="font-size:13px; color:#cbd5e1; margin-bottom:8px;" id="txt-step4-desc">
+          Select the actual verb to complete the sentence:
+        </div>
+
+        <div class="sentence-lead" id="sentence-lead">
+          Their father <span class="blank-slot">[ ? ]</span> in an office.
+        </div>
+
+        <div class="options-grid" id="verbs-grid">
+          <!-- Dynamic verb buttons -->
+        </div>
+      </div>
+
+      <!-- Feedback Banner -->
+      <div class="intel-banner" id="intel-banner"></div>
+      <button class="btn-next-round" id="btn-next-round" style="display:none;" onclick="loadNextQuestion()">Next Subject ➔</button>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Web Audio Synth
+const actx = new (window.AudioContext || window.webkitAudioContext)();
+function chirp(f, dur) {
+  try {
+    const o = actx.createOscillator();
+    const g = actx.createGain();
+    o.frequency.value = f;
+    g.gain.setValueAtTime(0.08, actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
+    o.connect(g);
+    g.connect(actx.destination);
+    o.start();
+    o.stop(actx.currentTime + dur);
+  } catch(e){}
+}
+
+/* ================= MULTILINGUAL DICTIONARY ================= */
+let currentLang = 'tm';
+let structureMode = 'full'; // 'full' (16) or 'short' (8 pronouns only)
+
+const I18N = {
+  tm: {
+    gmodeXray: "🔬 Eýe X-Ray Tertibi",
+    gmodeTrans: "🌍 Terjime Tertibi",
+    chamberTagXray: "Göz Öňündäki Eýe (Subject)",
+    chamberTagTrans: "🌍 Terjime Edilmeli Sözlem",
+    fmlStepTitle: "1-nji ädim: Sözlem Formulasyny Saýlaň",
+    fmlStepDesc: "Bu sözlem haýsy Present Simple formulasyna gabat gelýär?",
+    fmlStepLock: "⚡ 4 formuladan birini saýlaň",
+    fmlStepHint: "👈 1-nji ädim: Ýokardan sözlemiň formulasyny saýlaň",
+    fmlStepOk: (fml) => `✅ Dogry formula: <strong>${fml}</strong> saýlandy! Indi eýäniň gurluşyna geçiň.`,
+    fmlCards: [
+      { id: "affirmative", code: "(+) S + V/Vs + O", sub: "Tassyk sözlem" },
+      { id: "negative", code: "(-) S + do/does + not + V + O", sub: "Ýokluk sözlemi (not)" },
+      { id: "question", code: "(? y/n) do/does + S + V + O ?", sub: "Umumy sorag (Hawa/Ýok)" },
+      { id: "wh_question", code: "(w/h) w/h + do/does + S + V + O ?", sub: "Ýörite sorag (Wh- sözi)" }
+    ],
+    panelTitle: "Eýäniň Düzülişi (Structures)",
+    panelSubFull: "Eýäniň gurluşyny we türkmençe 'etmek' (edýän) işligini saýlaň:",
+    panelSubShort: "Bu eýäniň degişli bolan 8 sany çalyşmasyndan birini saýlaň:",
+    btnFull: "🧩 Doly Düzüliş (16)",
+    btnShort: "👤 Diňe Çalyşmalar (8)",
+    catPronouns: "Çalyşmalar (Pronouns)",
+    catSimpleNouns: "Ýönekeý Atlar (Simple Nouns)",
+    catCombinations: "At Birleşmeleri (Combinations)",
+    step1HintFull: "👈 1-nji ädim: Çepdäki paneldan degişli strukturany saýlaň",
+    step1HintShort: "👈 1-nji ädim: Bu eýä gabat gelýän çalyşmany çepden saýlaň",
+    step1Ok: (struct, verb) => `✅ 1-nji ädim tassyklandy: <strong>${struct}</strong> [<em>${verb}</em>]! Indi 2-nji ädimi açyň.`,
+    step1OkShort: (pro, verb) => `✅ Çalyşma saýlandy: <strong>${pro}</strong> [<em>${verb}</em>]! Reaktor derrew açyldy.`,
+    step2Title: "2-nji ädim: Degişli Çalyşma (Pronoun)",
+    step2Desc: "Bu sözlemiň eýesi haýsy çalyşma we işlige gabat gelýär?",
+    step2Locked: "🔒 Ilki 1-nji ädimi ýerine ýetiriň",
+    step2Ready: "🔓 <span style='color:#4ade80;'>Açyldy!</span>",
+    step3Title: "3-nji ädim: Kömekçi Işlik / Düzgün",
+    step3Locked: "🔒 Ilki 2-nji ädimi ýerine ýetiriň",
+    step3Ready: "🔓 <span style='color:#4ade80;'>Kömekçini / Düzgüni Saýlaň!</span>",
+    step3Prompt: {
+      affirmative: "Bu eýe bilen haýsy işlik formasy gelýär: V (baş forma) ýa-da Vs (-s goşulmasy)?",
+      question: "Bu sözlemde sorag haýsy kömekçi işlik bilen başlaýar: Do ýa-da Does?",
+      wh_question: "Sorag sözünden soň haýsy kömekçi işlik gelýär: do ýa-da does?",
+      negative: "Bu eýe üçin haýsy ýokluk kömekçisi ulanylýar: don't ýa-da doesn't?"
+    },
+    step3Ok: (choice) => `✅ Dogry düzgün: <strong>${choice}</strong> saýlandy! Indi 4-nji ädimde hakyky işligi saýlaň.`,
+    ruleLabels: {
+      affirmative: [
+        { label: "V", sub: "Baş forma (-s ýok)" },
+        { label: "Vs", sub: "-s / -es goşulmasy" }
+      ],
+      question: [
+        { label: "Do", sub: "Kömekçi işlik" },
+        { label: "Does", sub: "Kömekçi işlik (-s)" }
+      ],
+      wh_question: [
+        { label: "do", sub: "Kömekçi işlik" },
+        { label: "does", sub: "Kömekçi işlik (-s)" }
+      ],
+      negative: [
+        { label: "don't", sub: "ýokluk (do not)" },
+        { label: "doesn't", sub: "ýokluk (does not)" }
+      ]
+    },
+    step4Title: "4-nji ädim: Sözlem Reaktory",
+    step4Desc: "Sözlemi doldurmak üçin dogry işligi saýlaň:",
+    step4Locked: "🔒 Ilki 3-nji ädimde kömekçini/düzgüni saýlaň",
+    step4Ready: "🔓 <span style='color:#4ade80;'>Reaktor Taýýar!</span>",
+    step4Success: "🎯 DÖWÜN ÇÖZÜLDI! / EXCELLENT CONJUGATION!",
+    step4Fail: "⚠️ ÝALŇYŞ / INCORRECT VERB FORM:",
+    proCards: [
+      { id: "I", en: "I", sub: "men edýärin" },
+      { id: "you (sing)", en: "YOU [sing.]", sub: "sen edýärsiň" },
+      { id: "he", en: "HE", sub: "ol edýär" },
+      { id: "she", en: "SHE", sub: "ol edýär" },
+      { id: "it", en: "IT", sub: "ol edýär" },
+      { id: "we", en: "WE", sub: "biz edýäris" },
+      { id: "you (plur)", en: "YOU [plur.]", sub: "siz edýärsiňiz" },
+      { id: "they", en: "THEY", sub: "olar edýärler" }
+    ],
+    structs: {
+      "I": { sub: "(men)", verb: "edýärin (edýän)" },
+      "you (singular)": { sub: "(sen)", verb: "edýärsiň (edýäň)" },
+      "he": { sub: "(ol - erkek)", verb: "edýär" },
+      "she": { sub: "(ol - aýal)", verb: "edýär" },
+      "it": { sub: "(ol - janly/jansyz)", verb: "edýär" },
+      "we": { sub: "(biz)", verb: "edýäris (edýäs)" },
+      "you (plural)": { sub: "(siz)", verb: "edýärsiňiz" },
+      "they": { sub: "(olar)", verb: "edýärler" },
+      "noun": { sub: "(birlik - dog, car)", verb: "ol edýär" },
+      "nounS": { sub: "(köplük - dogs, cars)", verb: "olar edýärler" },
+      "adjective + noun": { sub: "(big car)", verb: "ol edýär" },
+      "my, his, her, your, its, our, their + noun": { sub: "(their father)", verb: "ol edýär" },
+      "noun + noun": { sub: "(Andy & Mary)", verb: "olar edýärler" },
+      "nounS + nounS": { sub: "(cars & buses)", verb: "olar edýärler" },
+      "noun's + noun": { sub: "(John's coat)", verb: "ol edýär" },
+      "my, his, her, your, its, our, their + noun's + noun": { sub: "(teacher's dog)", verb: "ol edýär" }
+    }
+  },
+  ru: {
+    gmodeXray: "🔬 Режим X-Ray подлежащего",
+    gmodeTrans: "🌍 Режим перевода",
+    chamberTagXray: "Целевое подлежащее (Subject)",
+    chamberTagTrans: "🌍 Предложение для перевода",
+    fmlStepTitle: "Шаг 1: Выберите формулу предложения",
+    fmlStepDesc: "Какой формуле Present Simple соответствует это предложение?",
+    fmlStepLock: "⚡ Выберите 1 из 4 формул",
+    fmlStepHint: "👈 Шаг 1: Выберите правильную формулу предложения выше",
+    fmlStepOk: (fml) => `✅ Верная формула: <strong>${fml}</strong>! Теперь определите структуру подлежащего.`,
+    fmlCards: [
+      { id: "affirmative", code: "(+) S + V/Vs + O", sub: "Утвердительное предложение" },
+      { id: "negative", code: "(-) S + do/does + not + V + O", sub: "Отрицательное предложение (not)" },
+      { id: "question", code: "(? y/n) do/does + S + V + O ?", sub: "Общий вопрос (Да/Нет)" },
+      { id: "wh_question", code: "(w/h) w/h + do/does + S + V + O ?", sub: "Специальный вопрос (Wh-)" }
+    ],
+    panelTitle: "Структура подлежащего",
+    panelSubFull: "Выберите грамматическую структуру и форму глагола 'делать':",
+    panelSubShort: "Выберите соответствующее местоимение из списка слева:",
+    btnFull: "🧩 Полная структура (16)",
+    btnShort: "👤 Только местоимения (8)",
+    catPronouns: "Местоимения (Pronouns)",
+    catSimpleNouns: "Существительные (Simple Nouns)",
+    catCombinations: "Именные сочетания (Combinations)",
+    step1HintFull: "👈 Шаг 1: Выберите грамматическую структуру слева",
+    step1HintShort: "👈 Шаг 1: Выберите местоимение слева для подлежащего",
+    step1Ok: (struct, verb) => `✅ Шаг 1 подтверждён: <strong>${struct}</strong> [<em>${verb}</em>]! Теперь выберите местоимение на Шаге 2.`,
+    step1OkShort: (pro, verb) => `✅ Местоимение выбрано: <strong>${pro}</strong> [<em>${verb}</em>]! Реактор готов.`,
+    step2Title: "Шаг 2: Эквивалентное местоимение",
+    step2Desc: "Какое местоимение и форма глагола соответствуют этому подлежащему?",
+    step2Locked: "🔒 Сначала выполните Шаг 1",
+    step2Ready: "🔓 <span style='color:#4ade80;'>Разблокировано!</span>",
+    step3Title: "Шаг 3: Вспомогательный глагол / Форма",
+    step3Locked: "🔒 Сначала выполните Шаг 2",
+    step3Ready: "🔓 <span style='color:#4ade80;'>Выберите вспомогательный / форму!</span>",
+    step3Prompt: {
+      affirmative: "Какая форма глагола требуется: базовая V или форма Vs (-s/-es)?",
+      question: "С какого вспомогательного глагола начинается вопрос: Do или Does?",
+      wh_question: "Какой вспомогательный глагол следует за вопросительным словом: do или does?",
+      negative: "Какая отрицательная форма используется: don't или doesn't?"
+    },
+    step3Ok: (choice) => `✅ Верно: выбрано <strong>${choice}</strong>! Теперь выберите нужный глагол на Шаге 4.`,
+    ruleLabels: {
+      affirmative: [
+        { label: "V", sub: "Базовая форма (без -s)" },
+        { label: "Vs", sub: "Окончание -s / -es" }
+      ],
+      question: [
+        { label: "Do", sub: "Вспомогательный" },
+        { label: "Does", sub: "Вспомогательный (-s)" }
+      ],
+      wh_question: [
+        { label: "do", sub: "Вспомогательный" },
+        { label: "does", sub: "Вспомогательный (-s)" }
+      ],
+      negative: [
+        { label: "don't", sub: "отрицание (do not)" },
+        { label: "doesn't", sub: "отрицание (does not)" }
+      ]
+    },
+    step4Title: "Шаг 4: Реактор предложения",
+    step4Desc: "Выберите правильную форму глагола для предложения:",
+    step4Locked: "🔒 Сначала выберите вспомогательный/форму на Шаге 3",
+    step4Ready: "🔓 <span style='color:#4ade80;'>Реактор готов!</span>",
+    step4Success: "🎯 ВЕРНО! / EXCELLENT CONJUGATION!",
+    step4Fail: "⚠️ ОШИБКА / INCORRECT VERB FORM:",
+    proCards: [
+      { id: "I", en: "I", sub: "я делаю" },
+      { id: "you (sing)", en: "YOU [sing.]", sub: "ты делаешь" },
+      { id: "he", en: "HE", sub: "он делает" },
+      { id: "she", en: "SHE", sub: "она делает" },
+      { id: "it", en: "IT", sub: "оно делает" },
+      { id: "we", en: "WE", sub: "мы делаем" },
+      { id: "you (plur)", en: "YOU [plur.]", sub: "вы делаете" },
+      { id: "they", en: "THEY", sub: "они делают" }
+    ],
+    structs: {
+      "I": { sub: "(я)", verb: "я делаю" },
+      "you (singular)": { sub: "(ты)", verb: "ты делаешь" },
+      "he": { sub: "(он)", verb: "он делает" },
+      "she": { sub: "(она)", verb: "она делает" },
+      "it": { sub: "(оно)", verb: "оно делает" },
+      "we": { sub: "(мы)", verb: "мы делаем" },
+      "you (plural)": { sub: "(вы)", verb: "вы делаете" },
+      "they": { sub: "(они)", verb: "они делают" },
+      "noun": { sub: "(ед. число - dog, car)", verb: "он/она делает" },
+      "nounS": { sub: "(мн. число - dogs, cars)", verb: "они делают" },
+      "adjective + noun": { sub: "(big car)", verb: "он/она делает" },
+      "my, his, her, your, its, our, their + noun": { sub: "(their father)", verb: "он/она делает" },
+      "noun + noun": { sub: "(Andy & Mary)", verb: "они делают" },
+      "nounS + nounS": { sub: "(cars & buses)", verb: "они делают" },
+      "noun's + noun": { sub: "(John's coat)", verb: "он/она делает" },
+      "my, his, her, your, its, our, their + noun's + noun": { sub: "(teacher's dog)", verb: "он/она делает" }
+    }
+  },
+  tr: {
+    gmodeXray: "🔬 Özne X-Ray Modu",
+    gmodeTrans: "🌍 Çeviri Modu",
+    chamberTagXray: "Hedef Özne (Subject)",
+    chamberTagTrans: "🌍 Çevrilecek Cümle",
+    fmlStepTitle: "1. Adım: Cümle Formülünü Seçin",
+    fmlStepDesc: "Bu cümle 4 Present Simple formülünden hangisine uymaktadır?",
+    fmlStepLock: "⚡ 4 formülden birini seçin",
+    fmlStepHint: "👈 1. Adım: Yukarıdan doğru cümle formülünü seçin",
+    fmlStepOk: (fml) => `✅ Doğru formül: <strong>${fml}</strong>! Şimdi özne yapısına geçin.`,
+    fmlCards: [
+      { id: "affirmative", code: "(+) S + V/Vs + O", sub: "Olumlu Cümle" },
+      { id: "negative", code: "(-) S + do/does + not + V + O", sub: "Olumsuz Cümle (not)" },
+      { id: "question", code: "(? y/n) do/does + S + V + O ?", sub: "Evet/Hayır Sorusu" },
+      { id: "wh_question", code: "(w/h) w/h + do/does + S + V + O ?", sub: "Soru Kelimeli Soru (Wh-)" }
+    ],
+    panelTitle: "Özne Yapısı (Structures)",
+    panelSubFull: "Özne yapısını ve Türkçe 'yapmak' fiil çekimini seçin:",
+    panelSubShort: "Bu özneye karşılık gelen zamiri soldan seçin:",
+    btnFull: "🧩 Tam Yapılar (16)",
+    btnShort: "👤 Sadece Zamirler (8)",
+    catPronouns: "Zamirler (Pronouns)",
+    catSimpleNouns: "Tekil / Çoğul İsimler (Nouns)",
+    catCombinations: "İsim Tamlamaları (Combinations)",
+    step1HintFull: "👈 1. Adım: Sol panelden uygun dilbilgisi yapısını seçin",
+    step1HintShort: "👈 1. Adım: Özneye karşılık gelen şahıs zamirini seçin",
+    step1Ok: (struct, verb) => `✅ 1. Adım doğrulandı: <strong>${struct}</strong> [<em>${verb}</em>]! Şimdi 2. Adıma geçin.`,
+    step1OkShort: (pro, verb) => `✅ Zamir seçildi: <strong>${pro}</strong> [<em>${verb}</em>]! Reaktör hazır.`,
+    step2Title: "2. Adım: Karşılık Gelen Zamir",
+    step2Desc: "Bu özne hangi şahıs zamiri ve fiil çekimi ile eşleşir?",
+    step2Locked: "🔒 Önce 1. Adımı tamamlayın",
+    step2Ready: "🔓 <span style='color:#4ade80;'>Kilit Açıldı!</span>",
+    step3Title: "3. Adım: Yardımcı Fiil / Kural Seçimi",
+    step3Locked: "🔒 Önce 2. Adımı tamamlayın",
+    step3Ready: "🔓 <span style='color:#4ade80;'>Yardımcı Fiili / Kuralı Seçin!</span>",
+    step3Prompt: {
+      affirmative: "Bu özne ile hangi form kullanılır: V (yalın) mi, Vs (-s takısı) mı?",
+      question: "Soru hangi yardımcı fiille başlar: Do mu, Does mı?",
+      wh_question: "Soru kelimesinden sonra hangi yardımcı fiil gelir: do mu, does mı?",
+      negative: "Bu özne için hangi olumsuzluk yardımcı fiili kullanılır: don't mu, doesn't mı?"
+    },
+    step3Ok: (choice) => `✅ Doğru: <strong>${choice}</strong> seçildi! Şimdi 4. Adımdaki asıl fiili seçin.`,
+    ruleLabels: {
+      affirmative: [
+        { label: "V", sub: "Yalın hal (-s yok)" },
+        { label: "Vs", sub: "-s / -es takısı" }
+      ],
+      question: [
+        { label: "Do", sub: "Yardımcı fiil" },
+        { label: "Does", sub: "Yardımcı fiil (-s)" }
+      ],
+      wh_question: [
+        { label: "do", sub: "Yardımcı fiil" },
+        { label: "does", sub: "Yardımcı fiil (-s)" }
+      ],
+      negative: [
+        { label: "don't", sub: "olumsuzluk (do not)" },
+        { label: "doesn't", sub: "olumsuzluk (does not)" }
+      ]
+    },
+    step4Title: "4. Adım: Cümle Reaktörü",
+    step4Desc: "Cümleyi tamamlamak için doğru fiil çekimini seçin:",
+    step4Locked: "🔒 Önce 3. Adımdaki kuralı/yardımcı fiili seçin",
+    step4Ready: "🔓 <span style='color:#4ade80;'>Reaktör Hazır!</span>",
+    step4Success: "🎯 TEBRİKLER! / EXCELLENT CONJUGATION!",
+    step4Fail: "⚠️ HATALI ÇEKİM / INCORRECT VERB FORM:",
+    proCards: [
+      { id: "I", en: "I", sub: "ben yapıyorum" },
+      { id: "you (sing)", en: "YOU [sing.]", sub: "sen yapıyorsun" },
+      { id: "he", en: "HE", sub: "o yapıyor" },
+      { id: "she", en: "SHE", sub: "o yapıyor" },
+      { id: "it", en: "IT", sub: "o yapıyor" },
+      { id: "we", en: "WE", sub: "biz yapıyoruz" },
+      { id: "you (plur)", en: "YOU [plur.]", sub: "siz yapıyorsunuz" },
+      { id: "they", en: "THEY", sub: "onlar yapıyorlar" }
+    ],
+    structs: {
+      "I": { sub: "(ben)", verb: "yapıyorum" },
+      "you (singular)": { sub: "(sen)", verb: "yapıyorsun" },
+      "he": { sub: "(o - erkek)", verb: "yapıyor" },
+      "she": { sub: "(o - kadın)", verb: "yapıyor" },
+      "it": { sub: "(o - nesne)", verb: "yapıyor" },
+      "we": { sub: "(biz)", verb: "yapıyoruz" },
+      "you (plural)": { sub: "(siz)", verb: "yapıyorsunuz" },
+      "they": { sub: "(onlar)", verb: "yapıyorlar" },
+      "noun": { sub: "(tekil - dog, car)", verb: "o yapıyor" },
+      "nounS": { sub: "(çoğul - dogs, cars)", verb: "onlar yapıyorlar" },
+      "adjective + noun": { sub: "(big car)", verb: "o yapıyor" },
+      "my, his, her, your, its, our, their + noun": { sub: "(their father)", verb: "o yapıyor" },
+      "noun + noun": { sub: "(Andy & Mary)", verb: "onlar yapıyorlar" },
+      "nounS + nounS": { sub: "(cars & buses)", verb: "onlar yapıyorlar" },
+      "noun's + noun": { sub: "(John's coat)", verb: "o yapıyor" },
+      "my, his, her, your, its, our, their + noun's + noun": { sub: "(teacher's dog)", verb: "o yapıyor" }
+    }
+  }
+};
+
+/* ================= 16 QUESTIONS DECK ================= */
+const deck = [
+  // 1. my/his/her/etc. + noun (singular)
+  {
+    subject: "Their father",
+    structure: "my, his, her, your, its, our, their + noun",
+    shortTarget: "he",
+    pronoun: ["he"],
+    type: "(+) Affirmative",
+    formula: "S + V/Vs + O",
+    ruleCategory: "affirmative",
+    correctRule: 1, // Vs
+    ruleWhy: "'Their father' = HE (one father). In affirmative (+), HE takes Verb-s ('Vs').",
+    translations: {
+      tm: "Olaryň kakasy şu ýere golaý ofisde işleýär.",
+      ru: "Их отец работает в офисе недалеко отсюда.",
+      tr: "Onların babası buraya yakın bir ofiste çalışıyor."
+    },
+    formulaWhy: "This is a positive statement ('işleýär' / 'работает' / 'çalışıyor') without negation or question mark -> (+) S + V/Vs + O.",
+    sentence: "Their father ___ in an office near here.",
+    verbOptions: ["works", "work", "is work", "working"],
+    correctVerb: 0,
+    explanation: "'Their father' = HE (one father). In English affirmative (+), HE takes Verb-s ('works')."
+  },
+  // 2. noun + noun
+  {
+    subject: "Andy and Mary",
+    structure: "noun + noun",
+    shortTarget: "they",
+    pronoun: ["they"],
+    type: "(? y/n) Question",
+    formula: "Do/Does + S + V + O?",
+    ruleCategory: "question",
+    correctRule: 0, // Do
+    ruleWhy: "'Andy and Mary' = THEY (plural). Questions start with auxiliary 'Do'.",
+    translations: {
+      tm: "Endi bilen Meri köp gatly jaýda (kwartirada) ýaşaýarmy?",
+      ru: "Энди и Мэри живут в квартире?",
+      tr: "Andy ve Mary bir dairede mi yaşıyorlar?"
+    },
+    formulaWhy: "This is a direct Yes/No question asking for confirmation ('...ýaşaýarmy?' / '...живут...?') -> (? y/n) do/does + S + V + O ?",
+    sentence: "___ Andy and Mary ___ in a flat?",
+    verbOptions: ["Do ... live", "Does ... live", "Do ... lives", "Does ... lives"],
+    correctVerb: 0,
+    explanation: "'Andy and Mary' is two people (= THEY). Question requires 'Do' + base verb: 'Do Andy and Mary live...?'"
+  },
+  // 3. my, his, her, etc. + noun's + noun
+  {
+    subject: "Our teacher's dog",
+    structure: "my, his, her, your, its, our, their + noun's + noun",
+    shortTarget: "it",
+    pronoun: ["it"],
+    type: "(-) Negative",
+    formula: "S + don't/doesn't + V + O",
+    ruleCategory: "negative",
+    correctRule: 1, // doesn't
+    ruleWhy: "'Our teacher's dog' = IT (the dog). Negative requires auxiliary 'doesn't'.",
+    translations: {
+      tm: "Mugallymymyzyň iti gök önümleri iýmeýär.",
+      ru: "Собака нашего учителя не ест овощи.",
+      tr: "Öğretmenimizin köpeği sebze yemez."
+    },
+    formulaWhy: "This sentence expresses negation ('iýmeýär' / 'не ест' / 'yemez') -> (-) S + do/does + not + V + O.",
+    sentence: "Our teacher's dog ___ vegetables.",
+    verbOptions: ["doesn't eat", "don't eat", "doesn't eats", "isn't eat"],
+    correctVerb: 0,
+    explanation: "'Our teacher's dog' = IT (the dog). Negative form takes 'doesn't eat' (DOES absorbs the -S, so 'eat' stays bare!)."
+  },
+  // 4. nounS (plural noun)
+  {
+    subject: "Doctors",
+    structure: "nounS",
+    shortTarget: "they",
+    pronoun: ["they"],
+    type: "(-) Negative",
+    formula: "S + don't/doesn't + V + O",
+    ruleCategory: "negative",
+    correctRule: 0, // don't
+    ruleWhy: "'Doctors' has the plural ending -S (= THEY). Negative takes auxiliary 'don't'.",
+    translations: {
+      tm: "Lukmanlar fabrikalarda işlemeýärler.",
+      ru: "Врачи не работают на фабриках.",
+      tr: "Doktorlar fabrikalarda çalışmazlar."
+    },
+    formulaWhy: "This sentence is negative ('işlemeýärler' / 'не работают' / 'çalışmazlar') -> (-) S + do/does + not + V + O.",
+    sentence: "Doctors ___ in factories.",
+    verbOptions: ["don't work", "doesn't work", "don't works", "not work"],
+    correctVerb: 0,
+    explanation: "'Doctors' has the plural ending -S (= THEY). Plural subjects take 'don't work'."
+  },
+  // 5. adjective + noun
+  {
+    subject: "The big yellow taxi",
+    structure: "adjective + noun",
+    shortTarget: "it",
+    pronoun: ["it"],
+    type: "(+) Affirmative",
+    formula: "S + V/Vs + O",
+    ruleCategory: "affirmative",
+    correctRule: 1, // Vs
+    ruleWhy: "'The big yellow taxi' = IT (singular). Affirmative requires 'Vs' ending (-s).",
+    translations: {
+      tm: "Uly sary taksi sagat ýedi-de saklanýar.",
+      ru: "Большое жёлтое такси останавливается в семь часов.",
+      tr: "Büyük sarı taksi saat yedide durur."
+    },
+    formulaWhy: "This is a positive statement ('saklanýar' / 'останавливается' / 'durur') -> (+) S + V/Vs + O.",
+    sentence: "The big yellow taxi ___ at seven o'clock.",
+    verbOptions: ["stops", "stop", "is stop", "stopping"],
+    correctVerb: 0,
+    explanation: "'The big yellow taxi' = IT (taxi). In positive (+), IT takes Verb-s ('stops')."
+  },
+  // 6. noun's + noun
+  {
+    subject: "John's coat",
+    structure: "noun's + noun",
+    shortTarget: "it",
+    pronoun: ["it"],
+    type: "(+) Affirmative",
+    formula: "S + V/Vs + O",
+    ruleCategory: "affirmative",
+    correctRule: 1, // Vs
+    ruleWhy: "'John's coat' = IT (the coat). Positive affirmative requires 'Vs' (feels).",
+    translations: {
+      tm: "Jonuň paltsy ýyly we oňaýly duýulýar.",
+      ru: "Пальто Джона ощущается тёплым и удобным.",
+      tr: "John'un paltosu sıcak ve rahat hissettiriyor."
+    },
+    formulaWhy: "This is an affirmative statement of a state/feeling -> (+) S + V/Vs + O.",
+    sentence: "John's coat ___ warm and comfortable.",
+    verbOptions: ["feels", "feel", "is feel", "feeling"],
+    correctVerb: 0,
+    explanation: "'John's coat' = IT (coat). IT takes Verb-s ('feels')."
+  },
+  // 7. noun (singular person)
+  {
+    subject: "Merjen",
+    structure: "noun",
+    shortTarget: "she",
+    pronoun: ["she"],
+    type: "(w/h) Wh- Question",
+    formula: "Wh + do/does + S + V + O?",
+    ruleCategory: "wh_question",
+    correctRule: 1, // does
+    ruleWhy: "'Merjen' = SHE (singular person). Wh- question requires auxiliary 'does'.",
+    translations: {
+      tm: "Merjen dynç günleri nirä gidýär?",
+      ru: "Куда Мерджен ходит на выходных?",
+      tr: "Merjen hafta sonu nereye gider?"
+    },
+    formulaWhy: "This question starts with a question word ('Where' / 'Nirä' / 'Куда' / 'Nereye') -> (w/h) w/h + do/does + S + V + O ?",
+    sentence: "Where ___ Merjen ___ at the weekend?",
+    verbOptions: ["does ... go", "do ... go", "does ... goes", "is ... go"],
+    correctVerb: 0,
+    explanation: "'Merjen' is a singular proper noun (= SHE). Wh- question requires 'does' + base verb: 'Where does Merjen go?'"
+  },
+  // 8. nounS + nounS (plural compound)
+  {
+    subject: "Cars and buses",
+    structure: "nounS + nounS",
+    shortTarget: "they",
+    pronoun: ["they"],
+    type: "(+) Affirmative",
+    formula: "S + V/Vs + O",
+    ruleCategory: "affirmative",
+    correctRule: 0, // V
+    ruleWhy: "'Cars and buses' = THEY (plural compound). Affirmative takes base verb 'V' (no -S).",
+    translations: {
+      tm: "Ulaglar we awtobuslar irden köp ses edýärler.",
+      ru: "Машины и автобусы шумят по утрам.",
+      tr: "Arabalar ve otobüsler sabahları çok gürültü yapar."
+    },
+    formulaWhy: "This is a positive factual statement with two plural subjects -> (+) S + V/Vs + O.",
+    sentence: "Cars and buses ___ a lot of noise in the morning.",
+    verbOptions: ["make", "makes", "are make", "making"],
+    correctVerb: 0,
+    explanation: "'Cars and buses' has two plural nouns (= THEY). Plural subjects take base verb 'make' (no -S)."
+  },
+  // 9. pronoun 'we'
+  {
+    subject: "We",
+    structure: "we",
+    shortTarget: "we",
+    pronoun: ["we"],
+    type: "(+) Affirmative",
+    formula: "S + V/Vs + O",
+    ruleCategory: "affirmative",
+    correctRule: 0, // V
+    ruleWhy: "'We' takes base verb 'V' (never adds -S).",
+    translations: {
+      tm: "Biz merkezde uly jaýda ýaşaýarys.",
+      ru: "Мы живём в большом доме в центре.",
+      tr: "Biz merkezde büyük bir evde yaşıyoruz."
+    },
+    formulaWhy: "This is a positive statement describing living in a house -> (+) S + V/Vs + O.",
+    sentence: "We ___ in a big house in the centre.",
+    verbOptions: ["live", "lives", "are live", "living"],
+    correctVerb: 0,
+    explanation: "'We' takes the base verb 'live' (never adds -S)."
+  },
+  // 10. pronoun 'he'
+  {
+    subject: "He",
+    structure: "he",
+    shortTarget: "he",
+    pronoun: ["he"],
+    type: "(-) Negative",
+    formula: "S + don't/doesn't + V + O",
+    ruleCategory: "negative",
+    correctRule: 1, // doesn't
+    ruleWhy: "'He' is 3rd person singular. Negative requires auxiliary 'doesn't'.",
+    translations: {
+      tm: "Ol günortanlyk naharyna çalt tagam (fastfud) iýmeýär.",
+      ru: "Он не ест фастфуд на обед.",
+      tr: "O öğle yemeğinde fast food yemez."
+    },
+    formulaWhy: "This sentence contains negation ('iýmeýär' / 'не ест' / 'yemez') -> (-) S + do/does + not + V + O.",
+    sentence: "He ___ fast food for lunch.",
+    verbOptions: ["doesn't eat", "don't eat", "doesn't eats", "not eats"],
+    correctVerb: 0,
+    explanation: "'He' is 3rd person singular. Negative requires 'doesn't' + base verb 'eat'."
+  },
+  // 11. my, his, her, etc. + noun's + noun (plural possessed)
+  {
+    subject: "My brother's friends",
+    structure: "my, his, her, your, its, our, their + noun's + noun",
+    shortTarget: "they",
+    pronoun: ["they"],
+    type: "(? y/n) Question",
+    formula: "Do/Does + S + V + O?",
+    ruleCategory: "question",
+    correctRule: 0, // Do
+    ruleWhy: "'My brother's friends' has plural head 'friends' (= THEY). Question starts with auxiliary 'Do'.",
+    translations: {
+      tm: "Meniň doganymyň dostlary şenbe günleri futbol oýnaýarlarmy?",
+      ru: "Друзья моего брата играют в футбол по субботам?",
+      tr: "Kardeşimin arkadaşları cumartesi günleri futbol oynarlar mı?"
+    },
+    formulaWhy: "This is a direct question requiring a Yes/No answer ('...oýnaýarlarmy?' / '...играют...?') -> (? y/n) do/does + S + V + O ?",
+    sentence: "___ my brother's friends ___ football on Saturdays?",
+    verbOptions: ["Do ... play", "Does ... play", "Do ... plays", "Does ... plays"],
+    correctVerb: 0,
+    explanation: "'My brother's friends' has plural head 'friends' (= THEY). Question uses 'Do ... play?'"
+  },
+  // 12. pronoun 'they'
+  {
+    subject: "They",
+    structure: "they",
+    shortTarget: "they",
+    pronoun: ["they"],
+    type: "(w/h) Wh- Question",
+    formula: "Wh + do/does + S + V + O?",
+    ruleCategory: "wh_question",
+    correctRule: 0, // do
+    ruleWhy: "'They' is plural. Wh- question uses auxiliary 'do'.",
+    translations: {
+      tm: "Olar sagat näçede agşamlyk naharyny iýýärler?",
+      ru: "В какое время они ужинают?",
+      tr: "Onlar saat kaçta akşam yemeği yerler?"
+    },
+    formulaWhy: "This question asks for time ('What time' / 'Sagat näçede' / 'В какое время') -> (w/h) w/h + do/does + S + V + O ?",
+    sentence: "What time ___ they ___ dinner?",
+    verbOptions: ["do ... have", "does ... have", "do ... has", "are ... have"],
+    correctVerb: 0,
+    explanation: "'They' is plural. Wh- question uses 'What time do they have dinner?'"
+  },
+  // 13. pronoun 'I'
+  {
+    subject: "I",
+    structure: "I",
+    shortTarget: "I",
+    pronoun: ["I"],
+    type: "(-) Negative",
+    formula: "S + don't/doesn't + V + O",
+    ruleCategory: "negative",
+    correctRule: 0, // don't
+    ruleWhy: "'I' takes negative auxiliary 'don't'.",
+    translations: {
+      tm: "Menmi? Men ofisde işlemeýärin.",
+      ru: "Я? Я не работаю в офисе.",
+      tr: "Ben mi? Ben ofiste çalışmıyorum."
+    },
+    formulaWhy: "This sentence contains negation ('işlemeýärin' / 'не работаю' / 'çalışmıyorum') -> (-) S + do/does + not + V + O.",
+    sentence: "Me? I ___ in an office.",
+    verbOptions: ["don't work", "doesn't work", "not work", "am not work"],
+    correctVerb: 0,
+    explanation: "'I' takes 'don't work'."
+  },
+  // 14. noun (singular object)
+  {
+    subject: "The computer",
+    structure: "noun",
+    shortTarget: "it",
+    pronoun: ["it"],
+    type: "(+) Affirmative",
+    formula: "S + V/Vs + O",
+    ruleCategory: "affirmative",
+    correctRule: 1, // Vs
+    ruleWhy: "'The computer' = IT (singular). Positive form takes Verb-s ('Vs').",
+    translations: {
+      tm: "Kompýuter gaty çalt işleýär.",
+      ru: "Компьютер работает очень быстро.",
+      tr: "Bilgisayar çok hızlı çalışıyor."
+    },
+    formulaWhy: "This is an affirmative statement of fact ('işleýär' / 'работает' / 'çalışıyor') -> (+) S + V/Vs + O.",
+    sentence: "The computer ___ very fast.",
+    verbOptions: ["works", "work", "is work", "working"],
+    correctVerb: 0,
+    explanation: "'The computer' is singular noun (= IT). Positive form takes Verb-s: 'works'."
+  },
+  // 15. you (singular)
+  {
+    subject: "You (alone, Jack)",
+    structure: "you (singular)",
+    shortTarget: "you (singular)",
+    pronoun: ["you (sing)"],
+    type: "(+) Affirmative",
+    formula: "S + V/Vs + O",
+    ruleCategory: "affirmative",
+    correctRule: 0, // V
+    ruleWhy: "'You (singular)' in English affirmative takes base verb 'V' (no -S).",
+    translations: {
+      tm: "Jek, sen iňlisçe gaty gowy gürleýärsiň!",
+      ru: "Джек, ты очень хорошо говоришь по-английски!",
+      tr: "Jack, sen çok iyi İngilizce konuşuyorsun!"
+    },
+    formulaWhy: "This is a positive statement spoken directly to someone -> (+) S + V/Vs + O.",
+    sentence: "Jack, you ___ English very well!",
+    verbOptions: ["speak", "speaks", "are speak", "speaking"],
+    correctVerb: 0,
+    explanation: "'You (singular)' in English takes base verb 'speak' (no -S)."
+  },
+  // 16. you (plural)
+  {
+    subject: "You all (students)",
+    structure: "you (plural)",
+    shortTarget: "you (plural)",
+    pronoun: ["you (plur)"],
+    type: "(? y/n) Question",
+    formula: "Do/Does + S + V + O?",
+    ruleCategory: "question",
+    correctRule: 0, // Do
+    ruleWhy: "'You (plural)' in questions takes auxiliary 'Do'.",
+    translations: {
+      tm: "Siz öýleden soň çaý içýärsiňizmi?",
+      ru: "Вы пьёте чай днём (после обеда)?",
+      tr: "Siz öğleden sonra çay içer misiniz?"
+    },
+    formulaWhy: "This is a direct question to a group asking for confirmation ('...içýärsiňizmi?' / '...пьёте...?') -> (? y/n) do/does + S + V + O ?",
+    sentence: "___ you (all) ___ tea in the afternoon?",
+    verbOptions: ["Do ... drink", "Does ... drink", "Do ... drinks", "Are ... drink"],
+    correctVerb: 0,
+    explanation: "'You (plural)' in question form uses 'Do you drink...?'"
+  }
+];
+
+let roundIdx = 0;
+let userScore = 0;
+let userStreak = 0;
+
+let gamePlayMode = 'xray'; // 'xray' or 'translation'
+let formulaDone = false;
+
+let step1Done = false;
+let step2Done = false;
+let step3Done = false;
+
+/* ================= RENDER DYNAMIC UI BY LANGUAGE & MODE ================= */
+function renderLanguageUI() {
+  const L = I18N[currentLang];
+  const q = deck[roundIdx];
+
+  // Game Mode Switcher
+  const btnXray = document.getElementById('btn-gmode-xray');
+  const btnTrans = document.getElementById('btn-gmode-trans');
+  if (btnXray) {
+    btnXray.textContent = L.gmodeXray;
+    btnXray.classList.toggle('active', gamePlayMode === 'xray');
+  }
+  if (btnTrans) {
+    btnTrans.textContent = L.gmodeTrans;
+    btnTrans.classList.toggle('active', gamePlayMode === 'translation');
+  }
+
+  // Structure Mode Buttons (Full vs Short)
+  document.getElementById('btn-mode-full').textContent = L.btnFull;
+  document.getElementById('btn-mode-short').textContent = L.btnShort;
+  document.getElementById('btn-mode-full').style.background = structureMode === 'full' ? '#0284c7' : 'transparent';
+  document.getElementById('btn-mode-full').style.color = structureMode === 'full' ? '#fff' : '#94a3b8';
+  document.getElementById('btn-mode-short').style.background = structureMode === 'short' ? '#0284c7' : 'transparent';
+  document.getElementById('btn-mode-short').style.color = structureMode === 'short' ? '#fff' : '#94a3b8';
+
+  // Static texts
+  document.getElementById('txt-panel-title').textContent = L.panelTitle;
+  document.getElementById('txt-patterns-count').textContent = structureMode === 'full' ? '16 Patterns' : '8 Pronouns';
+  document.getElementById('txt-panel-sub').textContent = structureMode === 'full' ? L.panelSubFull : L.panelSubShort;
+  document.getElementById('txt-step2-title').textContent = L.step2Title;
+  document.getElementById('txt-step2-desc').textContent = L.step2Desc;
+  document.getElementById('txt-step3-title').textContent = L.step3Title;
+  document.getElementById('txt-step3-desc').textContent = L.step3Prompt[q.ruleCategory];
+  document.getElementById('txt-step4-title').textContent = L.step4Title;
+  document.getElementById('txt-step4-desc').textContent = L.step4Desc;
+
+  // Chamber and Translation Mode Formula Architecture
+  const fmlCard = document.getElementById('formula-select-card');
+  const clueEl = document.getElementById('chamber-trans-clue');
+  const tagEl = document.getElementById('chamber-tag-label');
+  const targetSub = document.getElementById('target-subject');
+
+  if (gamePlayMode === 'translation') {
+    if (tagEl) tagEl.textContent = L.chamberTagTrans;
+    if (targetSub) targetSub.textContent = q.translations[currentLang];
+    if (clueEl) {
+      clueEl.style.display = 'inline-block';
+      clueEl.innerHTML = `<strong>English clue:</strong> ${q.sentence.replace('___', '<span style="color:#facc15;">[ ? ]</span>')}`;
+    }
+    if (fmlCard) fmlCard.style.display = 'block';
+
+    const fmlTitle = document.getElementById('txt-fml-step-title');
+    const fmlDesc = document.getElementById('txt-fml-step-desc');
+    const fmlLock = document.getElementById('fml-step-lock');
+    if (fmlTitle) fmlTitle.textContent = L.fmlStepTitle;
+    if (fmlDesc) fmlDesc.textContent = L.fmlStepDesc;
+    if (fmlLock) {
+      fmlLock.innerHTML = formulaDone 
+        ? "🔓 <span style='color:#4ade80;'>Formula Verified!</span>" 
+        : L.fmlStepLock;
+    }
+
+    renderFormulaSelector();
+
+    const fmlFb = document.getElementById('fml-step-feedback');
+    if (fmlFb) {
+      if (formulaDone) {
+        fmlFb.style.display = 'block';
+        fmlFb.style.color = '#86efac';
+        const matched = L.fmlCards.find(c => c.id === q.ruleCategory);
+        fmlFb.innerHTML = L.fmlStepOk(matched ? matched.code : q.ruleCategory);
+      } else {
+        fmlFb.style.display = 'none';
+        fmlFb.innerHTML = '';
+      }
+    }
+  } else {
+    // Subject X-Ray Mode
+    if (tagEl) tagEl.textContent = L.chamberTagXray;
+    if (targetSub) targetSub.textContent = q.subject;
+    if (clueEl) clueEl.style.display = 'none';
+    if (fmlCard) fmlCard.style.display = 'none';
+  }
+
+  // Locks and hints
+  if (gamePlayMode === 'translation' && !formulaDone) {
+    document.getElementById('chamber-hint').textContent = L.fmlStepHint;
+    document.getElementById('step2-lock').textContent = L.step2Locked;
+    document.getElementById('step3-lock').textContent = L.step3Locked;
+    document.getElementById('step4-lock').textContent = L.step4Locked;
+  } else if (!step1Done) {
+    document.getElementById('chamber-hint').textContent = structureMode === 'full' ? L.step1HintFull : L.step1HintShort;
+    document.getElementById('step2-lock').textContent = L.step2Locked;
+    document.getElementById('step3-lock').textContent = L.step3Locked;
+    document.getElementById('step4-lock').textContent = L.step4Locked;
+  } else if (!step2Done) {
+    document.getElementById('chamber-hint').innerHTML = L.step1Ok(q.structure, L.structs[q.structure].verb);
+    document.getElementById('step2-lock').innerHTML = L.step2Ready;
+    document.getElementById('step3-lock').textContent = L.step3Locked;
+    document.getElementById('step4-lock').textContent = L.step4Locked;
+  } else if (!step3Done) {
+    document.getElementById('step2-lock').innerHTML = L.step2Ready;
+    document.getElementById('step3-lock').innerHTML = L.step3Ready;
+    document.getElementById('step4-lock').textContent = L.step4Locked;
+  } else {
+    document.getElementById('step2-lock').innerHTML = L.step2Ready;
+    document.getElementById('step3-lock').innerHTML = L.step3Ready;
+    document.getElementById('step4-lock').innerHTML = L.step4Ready;
+  }
+
+  // Render Left Structures (Full vs Short)
+  const list = document.getElementById('structs-list');
+  if (gamePlayMode === 'translation' && !formulaDone) {
+    list.classList.add('waiting-formula');
+  } else {
+    list.classList.remove('waiting-formula');
+  }
+
+  if (structureMode === 'short') {
+    // ONLY the 8 Pronouns!
+    list.innerHTML = `
+      <div class="cat-divider">${L.catPronouns}</div>
+      ${renderStructBtn('I', 'I')}
+      ${renderStructBtn('you (singular)', 'you [sing.]')}
+      ${renderStructBtn('he', 'he')}
+      ${renderStructBtn('she', 'she')}
+      ${renderStructBtn('it', 'it')}
+      ${renderStructBtn('we', 'we')}
+      ${renderStructBtn('you (plural)', 'you [plur.]')}
+      ${renderStructBtn('they', 'they')}
+    `;
+  } else {
+    // FULL 16 STRUCTURES
+    list.innerHTML = `
+      <div class="cat-divider">${L.catPronouns}</div>
+      ${renderStructBtn('I', 'I')}
+      ${renderStructBtn('you (singular)', 'you [sing.]')}
+      ${renderStructBtn('he', 'he')}
+      ${renderStructBtn('she', 'she')}
+      ${renderStructBtn('it', 'it')}
+      ${renderStructBtn('we', 'we')}
+      ${renderStructBtn('you (plural)', 'you [plur.]')}
+      ${renderStructBtn('they', 'they')}
+
+      <div class="cat-divider">${L.catSimpleNouns}</div>
+      ${renderStructBtn('noun', 'noun')}
+      ${renderStructBtn('nounS', 'nounS')}
+
+      <div class="cat-divider">${L.catCombinations}</div>
+      ${renderStructBtn('adjective + noun', 'adjective + noun')}
+      ${renderStructBtn('my, his, her, your, its, our, their + noun', 'my, his, her... + noun')}
+      ${renderStructBtn('noun + noun', 'noun + noun')}
+      ${renderStructBtn('nounS + nounS', 'nounS + nounS')}
+      ${renderStructBtn('noun\'s + noun', 'noun\'s + noun')}
+      ${renderStructBtn('my, his, her, your, its, our, their + noun\'s + noun', 'my... + noun\'s + noun')}
+    `;
+  }
+
+  // Render Step 2 Buttons
+  const pgrid = document.getElementById('pronoun-grid-container');
+  pgrid.innerHTML = '';
+  L.proCards.forEach(p => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn-pro';
+    btn.setAttribute('data-pro', p.id);
+    btn.innerHTML = `
+      <span class="pro-main">${p.en}</span>
+      <span class="pro-sub">${p.sub}</span>
+    `;
+    btn.onclick = () => handlePronounClick(p.id);
+    pgrid.appendChild(btn);
+  });
+
+  // Render Step 3 Big Interactive Formula Chamber
+  renderInteractiveStructure();
+
+  // Re-apply active state if already answered in this round
+  if (step1Done) {
+    const activeKey = structureMode === 'short' ? q.shortTarget : q.structure;
+    const targetBtn = document.querySelector(`.btn-struct[data-type="${activeKey}"]`);
+    if (targetBtn) {
+      targetBtn.classList.add('active-target');
+      document.querySelectorAll('.btn-struct').forEach(b => {
+        if (b !== targetBtn) b.disabled = true;
+      });
+    }
+  }
+
+  if (step2Done) {
+    const proId = (q.shortTarget === 'you (singular)') ? 'you (sing)' : ((q.shortTarget === 'you (plural)') ? 'you (plur)' : q.shortTarget);
+    const clickedPro = document.querySelector(`.btn-pro[data-pro="${proId}"]`);
+    if (clickedPro) {
+      clickedPro.classList.add('correct-pro');
+      document.querySelectorAll('.btn-pro').forEach(b => {
+        if (b !== clickedPro) b.disabled = true;
+      });
+    }
+  }
+
+  if (step3Done) {
+    const chosenBtn = document.querySelector(`.f-btn[data-rule-idx="${q.correctRule}"]`);
+    if (chosenBtn) {
+      chosenBtn.classList.add('active-f-btn');
+      document.querySelectorAll('.f-btn').forEach(b => {
+        if (b !== chosenBtn) {
+          b.disabled = true;
+          b.style.opacity = '0.35';
+        }
+      });
+    }
+    const feedback = document.getElementById('step3-feedback');
+    feedback.style.display = 'block';
+    feedback.style.color = '#86efac';
+    feedback.innerHTML = L.step3Ok(L.ruleLabels[q.ruleCategory][q.correctRule].label);
+  }
+}
+
+function renderStructBtn(typeKey, displayLabel) {
+  const L = I18N[currentLang];
+  const item = L.structs[typeKey];
+  return `
+    <button class="btn-struct" data-type="${typeKey}" onclick="handleStructClick('${typeKey}')">
+      <div><strong>${displayLabel}</strong> <small style="color:#94a3b8;">${item.sub}</small></div>
+      <span class="anchor-badge">${item.verb}</span>
+    </button>
+  `;
+}
+
+function renderFormulaSelector() {
+  const fgrid = document.getElementById('formula-selector-grid');
+  if (!fgrid) return;
+  const L = I18N[currentLang];
+  const q = deck[roundIdx];
+  fgrid.innerHTML = '';
+
+  L.fmlCards.forEach(card => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn-formula-card';
+    btn.setAttribute('data-fml', card.id);
+    btn.innerHTML = `
+      <span class="fml-card-title">${card.sub}</span>
+      <span class="fml-card-code">${card.code}</span>
+    `;
+    if (formulaDone) {
+      if (card.id === q.ruleCategory) {
+        btn.classList.add('active-fml-btn');
+      } else {
+        btn.disabled = true;
+        btn.style.opacity = '0.4';
+      }
+    }
+    btn.onclick = () => handleFormulaCardClick(card.id);
+    fgrid.appendChild(btn);
+  });
+}
+
+function handleFormulaCardClick(cardId) {
+  if (formulaDone) return;
+  const q = deck[roundIdx];
+  const L = I18N[currentLang];
+  const targetCard = document.querySelector(`.btn-formula-card[data-fml="${cardId}"]`);
+  const feedback = document.getElementById('fml-step-feedback');
+
+  if (cardId === q.ruleCategory) {
+    chirp(700, 0.15);
+    formulaDone = true;
+    if (targetCard) targetCard.classList.add('active-fml-btn');
+    document.querySelectorAll('.btn-formula-card').forEach(b => {
+      if (b !== targetCard) {
+        b.disabled = true;
+        b.style.opacity = '0.4';
+      }
+    });
+
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.style.color = '#86efac';
+      const matched = L.fmlCards.find(c => c.id === cardId);
+      feedback.innerHTML = L.fmlStepOk(matched ? matched.code : cardId);
+    }
+
+    const lockLabel = document.getElementById('fml-step-lock');
+    if (lockLabel) lockLabel.innerHTML = "🔓 <span style='color:#4ade80;'>Formula Verified!</span>";
+
+    // Un-dim left structures list
+    const list = document.getElementById('structs-list');
+    if (list) list.classList.remove('waiting-formula');
+
+    document.getElementById('chamber-hint').textContent = structureMode === 'full' ? L.step1HintFull : L.step1HintShort;
+
+    userScore += 10;
+    updateHUD();
+  } else {
+    chirp(180, 0.25);
+    if (targetCard) {
+      targetCard.classList.add('wrong-fml-btn');
+      setTimeout(() => targetCard.classList.remove('wrong-fml-btn'), 450);
+    }
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.style.color = '#fca5a5';
+      feedback.innerHTML = `⚠️ ${q.formulaWhy}`;
+    }
+    userStreak = 0;
+    updateHUD();
+  }
+}
+
+function renderInteractiveStructure() {
+  const q = deck[roundIdx];
+  const L = I18N[currentLang];
+  const chamber = document.getElementById('big-formula-display');
+  if (!chamber) return;
+
+  const labels = L.ruleLabels[q.ruleCategory];
+
+  function makeBtn(idx) {
+    const opt = labels[idx];
+    return `
+      <button type="button" class="f-btn" data-rule-idx="${idx}" onclick="handleRuleClick(${idx})">
+        <span class="f-btn-main">${opt.label}</span>
+        <span class="f-btn-sub">${opt.sub}</span>
+      </button>
+    `;
+  }
+
+  let html = '';
+  if (q.ruleCategory === 'affirmative') {
+    html = `
+      <span class="f-token f-static">S</span>
+      <span class="f-token f-op">+</span>
+      <div class="f-choice-box">
+        ${makeBtn(0)}
+        <span class="f-token f-slash">/</span>
+        ${makeBtn(1)}
+      </div>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">O</span>
+    `;
+  } else if (q.ruleCategory === 'question') {
+    html = `
+      <div class="f-choice-box">
+        ${makeBtn(0)}
+        <span class="f-token f-slash">/</span>
+        ${makeBtn(1)}
+      </div>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">S</span>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">V</span>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">O ?</span>
+    `;
+  } else if (q.ruleCategory === 'negative') {
+    html = `
+      <span class="f-token f-static">S</span>
+      <span class="f-token f-op">+</span>
+      <div class="f-choice-box">
+        ${makeBtn(0)}
+        <span class="f-token f-slash">/</span>
+        ${makeBtn(1)}
+      </div>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">V</span>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">O</span>
+    `;
+  } else if (q.ruleCategory === 'wh_question') {
+    html = `
+      <span class="f-token f-static">Wh</span>
+      <span class="f-token f-op">+</span>
+      <div class="f-choice-box">
+        ${makeBtn(0)}
+        <span class="f-token f-slash">/</span>
+        ${makeBtn(1)}
+      </div>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">S</span>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">V</span>
+      <span class="f-token f-op">+</span>
+      <span class="f-token f-static">O ?</span>
+    `;
+  }
+
+  chamber.innerHTML = html;
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-tab').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  renderLanguageUI();
+}
+
+function setStructureMode(mode) {
+  structureMode = mode;
+  step1Done = false;
+  step2Done = false;
+  step3Done = false;
+  loadRound();
+}
+
+function setGamePlayMode(mode) {
+  gamePlayMode = mode;
+  formulaDone = false;
+  step1Done = false;
+  step2Done = false;
+  step3Done = false;
+  loadRound();
+}
+
+/* ================= GAMEPLAY CONTROLLERS ================= */
+function loadRound() {
+  formulaDone = false;
+  step1Done = false;
+  step2Done = false;
+  step3Done = false;
+
+  const q = deck[roundIdx];
+  const L = I18N[currentLang];
+
+  document.getElementById('round-count').textContent = `${roundIdx + 1} / ${deck.length}`;
+
+  const fmlFb = document.getElementById('fml-step-feedback');
+  if (fmlFb) {
+    fmlFb.style.display = 'none';
+    fmlFb.innerHTML = '';
+  }
+
+  // Reset Step Cards
+  const s2 = document.getElementById('step2-card');
+  s2.className = 'step-card locked';
+  const s3 = document.getElementById('step3-card');
+  s3.className = 'step-card locked';
+  const s4 = document.getElementById('step4-card');
+  s4.className = 'step-card locked';
+
+  document.getElementById('formula-name').textContent = q.type;
+  if (document.getElementById('formula-code')) {
+    document.getElementById('formula-code').textContent = q.formula;
+  }
+  document.getElementById('sentence-lead').innerHTML = q.sentence.replace('___', '<span class="blank-slot">[ ? ]</span>');
+
+  // Fill verb options for Step 4
+  const vgrid = document.getElementById('verbs-grid');
+  vgrid.innerHTML = '';
+  q.verbOptions.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn-verb-opt';
+    btn.textContent = opt;
+    btn.onclick = () => handleVerbClick(idx);
+    vgrid.appendChild(btn);
+  });
+
+  document.getElementById('step3-feedback').style.display = 'none';
+  document.getElementById('intel-banner').style.display = 'none';
+  document.getElementById('btn-next-round').style.display = 'none';
+
+  renderLanguageUI();
+}
+
+function handleStructClick(clickedType) {
+  if (step1Done) return;
+  const q = deck[roundIdx];
+  const L = I18N[currentLang];
+
+  if (gamePlayMode === 'translation' && !formulaDone) {
+    chirp(180, 0.25);
+    const feedback = document.getElementById('fml-step-feedback');
+    if (feedback) {
+      feedback.style.display = 'block';
+      feedback.style.color = '#f59e0b';
+      feedback.innerHTML = `⚠️ ${L.fmlStepHint}`;
+    }
+    const fcard = document.getElementById('formula-select-card');
+    if (fcard) {
+      fcard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    return;
+  }
+
+  const targetBtn = document.querySelector(`.btn-struct[data-type="${clickedType}"]`);
+
+  if (structureMode === 'short') {
+    // SHORT MODE: Must match the equivalent pronoun (e.g. 'he', 'they', 'it', 'I', etc.)
+    const expectedShort = q.shortTarget.toLowerCase();
+    const isOk = clickedType.toLowerCase() === expectedShort ||
+                 (clickedType === 'you (singular)' && expectedShort === 'you (sing)') ||
+                 (clickedType === 'you (plural)' && expectedShort === 'you (plur)');
+
+    if (isOk) {
+      chirp(600, 0.15);
+      step1Done = true;
+      step2Done = true; // Auto-pass step 2 in short mode!
+      targetBtn.classList.add('active-target');
+      document.querySelectorAll('.btn-struct').forEach(b => {
+        if (b !== targetBtn) b.disabled = true;
+      });
+
+      document.getElementById('chamber-hint').innerHTML = L.step1OkShort(clickedType, L.structs[clickedType].verb);
+
+      // Auto-unlock Step 2 and highlight matching pronoun
+      const s2 = document.getElementById('step2-card');
+      s2.classList.remove('locked');
+      document.getElementById('step2-lock').innerHTML = L.step2Ready;
+
+      const proId = (clickedType === 'you (singular)') ? 'you (sing)' : ((clickedType === 'you (plural)') ? 'you (plur)' : clickedType);
+      const clickedPro = document.querySelector(`.btn-pro[data-pro="${proId}"]`);
+      if (clickedPro) clickedPro.classList.add('correct-pro');
+      document.querySelectorAll('.btn-pro').forEach(b => {
+        if (b !== clickedPro) b.disabled = true;
+      });
+
+      // Unlock Step 3: Auxiliary & Form Rule
+      const s3 = document.getElementById('step3-card');
+      s3.classList.remove('locked');
+      document.getElementById('step3-lock').innerHTML = L.step3Ready;
+
+      userScore += 15;
+      updateHUD();
+    } else {
+      chirp(180, 0.25);
+      targetBtn.classList.add('wrong-target');
+      setTimeout(() => targetBtn.classList.remove('wrong-target'), 500);
+      userStreak = 0;
+      updateHUD();
+    }
+
+  } else {
+    // FULL MODE: Must match exact 16-structure pattern
+    if (clickedType.toLowerCase() === q.structure.toLowerCase()) {
+      chirp(600, 0.15);
+      step1Done = true;
+      targetBtn.classList.add('active-target');
+      document.querySelectorAll('.btn-struct').forEach(b => {
+        if (b !== targetBtn) b.disabled = true;
+      });
+
+      document.getElementById('chamber-hint').innerHTML = L.step1Ok(q.structure, L.structs[q.structure].verb);
+
+      // Unlock Step 2
+      const s2 = document.getElementById('step2-card');
+      s2.classList.remove('locked');
+      document.getElementById('step2-lock').innerHTML = L.step2Ready;
+      userScore += 10;
+      updateHUD();
+    } else {
+      chirp(180, 0.25);
+      targetBtn.classList.add('wrong-target');
+      setTimeout(() => targetBtn.classList.remove('wrong-target'), 500);
+      userStreak = 0;
+      updateHUD();
+    }
+  }
+}
+
+function handlePronounClick(proId) {
+  if (!step1Done || step2Done) return;
+  const q = deck[roundIdx];
+  const L = I18N[currentLang];
+  const isMatch = q.pronoun.map(p => p.toLowerCase()).includes(proId.toLowerCase());
+  const clickedBtn = document.querySelector(`.btn-pro[data-pro="${proId}"]`);
+
+  if (isMatch) {
+    chirp(750, 0.15);
+    step2Done = true;
+    if (clickedBtn) clickedBtn.classList.add('correct-pro');
+    document.querySelectorAll('.btn-pro').forEach(b => {
+      if (b !== clickedBtn) b.disabled = true;
+    });
+
+    // Unlock Step 3: Auxiliary & Form Rule
+    const s3 = document.getElementById('step3-card');
+    s3.classList.remove('locked');
+    document.getElementById('step3-lock').innerHTML = L.step3Ready;
+    userScore += 10;
+    updateHUD();
+  } else {
+    chirp(160, 0.25);
+    if (clickedBtn) {
+      clickedBtn.classList.add('wrong-pro');
+      setTimeout(() => clickedBtn.classList.remove('wrong-pro'), 400);
+    }
+    userStreak = 0;
+    updateHUD();
+  }
+}
+
+function handleRuleClick(chosenIdx) {
+  if (!step2Done || step3Done) return;
+  const q = deck[roundIdx];
+  const L = I18N[currentLang];
+  const buttons = document.querySelectorAll('.f-btn');
+  const chosenBtn = document.querySelector(`.f-btn[data-rule-idx="${chosenIdx}"]`);
+  const feedback = document.getElementById('step3-feedback');
+
+  if (chosenIdx === q.correctRule) {
+    chirp(750, 0.15);
+    step3Done = true;
+    if (chosenBtn) chosenBtn.classList.add('active-f-btn');
+    buttons.forEach(b => {
+      if (b !== chosenBtn) {
+        b.disabled = true;
+        b.style.opacity = '0.35';
+      }
+    });
+
+    feedback.style.display = 'block';
+    feedback.style.color = '#86efac';
+    const chosenLabel = L.ruleLabels[q.ruleCategory][chosenIdx].label;
+    feedback.innerHTML = L.step3Ok(chosenLabel);
+
+    // Unlock Step 4: Sentence Reactor (Actual Verbs)
+    const s4 = document.getElementById('step4-card');
+    s4.classList.remove('locked');
+    document.getElementById('step4-lock').innerHTML = L.step4Ready;
+
+    userScore += 10;
+    updateHUD();
+  } else {
+    chirp(160, 0.25);
+    if (chosenBtn) {
+      chosenBtn.classList.add('wrong-f-btn');
+      setTimeout(() => chosenBtn.classList.remove('wrong-f-btn'), 450);
+    }
+    feedback.style.display = 'block';
+    feedback.style.color = '#fca5a5';
+    feedback.innerHTML = `⚠️ ${q.ruleWhy}`;
+    userStreak = 0;
+    updateHUD();
+  }
+}
+
+function handleVerbClick(chosenIdx) {
+  if (!step3Done) return;
+  const q = deck[roundIdx];
+  const L = I18N[currentLang];
+  const buttons = document.querySelectorAll('.btn-verb-opt');
+  buttons.forEach(b => b.disabled = true);
+
+  const banner = document.getElementById('intel-banner');
+  banner.style.display = 'block';
+
+  if (chosenIdx === q.correctVerb) {
+    chirp(880, 0.25);
+    buttons[chosenIdx].classList.add('pass');
+    userScore += 15 + (userStreak * 3);
+    userStreak++;
+    updateHUD();
+
+    banner.className = 'intel-banner ok';
+    banner.innerHTML = `🎯 <strong>${L.step4Success}</strong><br>${q.explanation}`;
+  } else {
+    chirp(130, 0.35);
+    buttons[chosenIdx].classList.add('fail');
+    buttons[q.correctVerb].classList.add('pass');
+    userStreak = 0;
+    updateHUD();
+
+    banner.className = 'intel-banner bad';
+    banner.innerHTML = `⚠️ <strong>${L.step4Fail}</strong><br>${q.explanation}`;
+  }
+
+  document.getElementById('btn-next-round').style.display = 'inline-block';
+}
+
+function updateHUD() {
+  document.getElementById('score-counter').textContent = userScore;
+  document.getElementById('streak-counter').textContent = userStreak > 0 ? `${userStreak} 🔥` : '0';
+}
+
+function loadNextQuestion() {
+  roundIdx++;
+  if (roundIdx >= deck.length) {
+    document.querySelector('.arena-grid').innerHTML = `
+      <div style="grid-column: 1 / -1; text-align:center; padding:50px 20px; background:var(--card-inner); border-radius:16px;">
+        <div style="font-size:64px; margin-bottom:15px;">🔬🎓🏆</div>
+        <h2 style="font-size:28px; color:#38bdf8; margin-bottom:10px;">Subject & Structure Mastery Achieved!</h2>
+        <p style="font-size:18px; color:#cbd5e1; margin-bottom:20px;">Final Score: <strong style="color:#22c55e;">${userScore} points</strong></p>
+        <p style="font-size:14px; color:#94a3b8; max-width:580px; margin:0 auto 30px; line-height:1.6;">
+          You mastered Subject Structures, Pronoun Anchoring, Auxiliary Decision Rules, and Sentence Conjugations across English, Türkmençe, Русский, and Türkçe!
+        </p>
+        <button class="btn-next-round" style="float:none;" onclick="location.reload()">Run Diagnostic Again 🔄</button>
+      </div>
+    `;
+    return;
+  }
+  loadRound();
+}
+
+// Initial start
+loadRound();
+</script>
+</body>
+</html>
