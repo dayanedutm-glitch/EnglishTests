@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New English File Beginner — Grammar Bank Unit 4 Interactive Canvas</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --canvas-grid: rgba(255, 255, 255, 0.05);
+      --card-bg: #131b2e;
+      --card-border: #23304c;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-dark: #0284c7;
+      --accent: #f59e0b;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --purple: #a855f7;
+      --pink: #ec4899;
+    }
+
+    body.light-mode {
+      --bg: #f1f5f9;
+      --canvas-grid: rgba(0, 0, 0, 0.06);
+      --card-bg: #ffffff;
+      --card-border: #cbd5e1;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #d97706;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --purple: #9333ea;
+      --pink: #db2777;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      user-select: none;
+    }
+
+    /* TOP FLOATING NAV BAR */
+    .top-nav {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      gap: 12px;
+    }
+
+    .nav-card {
+      background: rgba(19, 27, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    body.light-mode .nav-card {
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge-unit {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #041226;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 99px;
+      letter-spacing: 0.5px;
+    }
+
+    /* LANGUAGE SWITCHER */
+    .lang-switcher {
+      display: flex;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 3px;
+      gap: 3px;
+    }
+    body.light-mode .lang-switcher {
+      background: #e2e8f0;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .lang-btn:hover {
+      color: var(--text);
+    }
+    .lang-btn.active {
+      background: var(--primary);
+      color: #041226;
+      font-weight: 900;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4);
+    }
+
+    /* VIEW CONTROLS */
+    .btn-ctrl {
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    body.light-mode .btn-ctrl {
+      background: #f1f5f9;
+    }
+    .btn-ctrl:hover {
+      background: var(--primary-dark);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .zoom-indicator {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: monospace;
+      min-width: 44px;
+      text-align: center;
+    }
+
+    /* CANVAS VIEWPORT */
+    #canvas-viewport {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background-image: 
+        linear-gradient(to right, var(--canvas-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--canvas-grid) 1px, transparent 1px);
+      background-size: 32px 32px;
+      cursor: grab;
+    }
+    #canvas-viewport.panning {
+      cursor: grabbing;
+    }
+
+    #canvas-world {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6000px;
+      height: 5000px;
+      transform-origin: 0 0;
+    }
+
+    /* SVG CONNECTION WIRES */
+    svg.connections-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .wire {
+      fill: none;
+      stroke-width: 3;
+      stroke-linecap: round;
+      opacity: 0.75;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+    .wire-blue { stroke: #38bdf8; }
+    .wire-amber { stroke: #f59e0b; }
+    .wire-purple { stroke: #c084fc; }
+    .wire-green { stroke: #34d399; }
+    .wire-pink { stroke: #f472b6; }
+
+    /* NODES */
+    .canvas-node {
+      position: absolute;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+      z-index: 10;
+      cursor: move;
+      touch-action: none;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.1s ease-out;
+    }
+    .canvas-node:hover {
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+      border-color: var(--primary);
+    }
+    .canvas-node.dragging {
+      z-index: 9999 !important;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+      cursor: grabbing;
+    }
+
+    /* Node types */
+    .node-root {
+      width: 440px;
+      background: linear-gradient(135deg, #0f172a, #1e1b4b);
+      border: 2px solid #6366f1;
+    }
+    body.light-mode .node-root {
+      background: linear-gradient(135deg, #e0e7ff, #ffffff);
+      border: 2px solid #4f46e5;
+    }
+
+    .node-4a {
+      width: 460px;
+      border-top: 4px solid var(--primary);
+    }
+    .node-4b {
+      width: 500px;
+      border-top: 4px solid var(--accent);
+    }
+    .node-4c {
+      width: 480px;
+      border-top: 4px solid var(--purple);
+    }
+    .node-trap {
+      width: 360px;
+      border-top: 4px solid var(--danger);
+      background: rgba(239, 68, 68, 0.05);
+    }
+    .node-formula {
+      width: 420px;
+      border-top: 4px solid var(--success);
+      background: rgba(34, 197, 94, 0.05);
+    }
+
+    .node-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .node-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 99px;
+      letter-spacing: 0.5px;
+    }
+    .tag-primary { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .tag-amber { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .tag-purple { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .tag-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .tag-success { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+
+    .node-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .node-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    /* FORMULA CHIPS ROW */
+    .formula-banner {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px dashed var(--card-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: 800;
+      color: #facc15;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    body.light-mode .formula-banner {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #b45309;
+    }
+    .f-chip {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    /* EXAMPLES LIST */
+    .examples-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .example-item {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    body.light-mode .example-item {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+    }
+    .example-item:hover {
+      border-color: var(--primary);
+      transform: translateX(2px);
+    }
+    .ex-eng-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ex-eng {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .ex-trans {
+      font-size: 12px;
+      color: #38bdf8;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    body.light-mode .ex-trans {
+      color: #0284c7;
+    }
+    .btn-speak {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: all 0.15s;
+    }
+    .btn-speak:hover {
+      color: #facc15;
+      background: rgba(250, 204, 21, 0.15);
+    }
+
+    /* FREQUENCY GAUGE PILLS */
+    .freq-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .freq-box {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 8px 6px;
+      text-align: center;
+    }
+    body.light-mode .freq-box { background: #f8fafc; }
+    .freq-pct { font-size: 11px; font-weight: 800; color: var(--accent); }
+    .freq-word { font-size: 13px; font-weight: 900; color: #fff; margin-top: 2px; }
+    body.light-mode .freq-word { color: #0f172a; }
+
+    /* ASI / QUASI TABLE */
+    .asi-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .asi-table th {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent);
+      padding: 6px 8px;
+      text-align: left;
+      font-weight: 800;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .asi-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+    body.light-mode .asi-table td {
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    /* BOTTOM FLOATING CONTROLLER DOCK */
+    .bottom-dock {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(19, 27, 46, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      pointer-events: auto;
+    }
+    body.light-mode .bottom-dock {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .dock-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .dock-tab:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+    .dock-tab.active {
+      background: var(--primary);
+      color: #041226;
+      font-weight: 900;
+    }
+
+    /* INTERACTIVE MODAL OVERLAY */
+    .interactive-drawer {
+      position: fixed;
+      top: 80px;
+      bottom: 80px;
+      right: 20px;
+      width: 480px;
+      max-width: calc(100vw - 40px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.6);
+      z-index: 1500;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .drawer-header {
+      padding: 16px 20px;
+      background: rgba(15, 23, 42, 0.7);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .drawer-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+    .btn-close-drawer {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    /* QUASI BUILDER LAB */
+    .slot-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 15px 0;
+    }
+    .slot-box {
+      background: #0f172a;
+      border: 2px dashed var(--primary);
+      border-radius: 10px;
+      padding: 12px 6px;
+      text-align: center;
+      min-height: 65px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .slot-label { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 4px; }
+    .slot-token { font-size: 15px; font-weight: 900; color: #fff; }
+
+    .token-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+    .btn-token {
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-token:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .btn-token.selected {
+      background: var(--success);
+      border-color: #86efac;
+      opacity: 0.5;
+    }
+
+    /* PRACTICE QUIZ CARDS */
+    .quiz-card {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .quiz-q { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .quiz-input {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .quiz-input:focus { outline: none; border-color: var(--primary); }
+    .quiz-feedback { font-size: 12px; margin-top: 6px; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP FLOATING TOOLBAR -->
+  <div class="top-nav">
+    <div class="nav-card">
+      <span class="badge-unit">NEF Beginner</span>
+      <div class="brand-title">
+        <span>🎨 Grammar Canvas: Unit 4</span>
+      </div>
+    </div>
+
+    <!-- LANGUAGE SWITCHER BAR -->
+    <div class="nav-card">
+      <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Translate:</span>
+      <div class="lang-switcher">
+        <button type="button" class="lang-btn active" data-lang="en" onclick="setLanguage('en')">🇬🇧 EN</button>
+        <button type="button" class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">🇷🇺 РУС</button>
+        <button type="button" class="lang-btn" data-lang="tr" onclick="setLanguage('tr')">🇹🇷 TÜRK</button>
+        <button type="button" class="lang-btn" data-lang="zh" onclick="setLanguage('zh')">🇨🇳 中文</button>
+        <button type="button" class="lang-btn" data-lang="tm" onclick="setLanguage('tm')">🇹🇲 TKM</button>
+      </div>
+    </div>
+
+    <!-- ZOOM & VIEW CONTROLS -->
+    <div class="nav-card">
+      <button type="button" class="btn-ctrl" onclick="zoomIn()" title="Zoom In">+</button>
+      <span class="zoom-indicator" id="zoom-val">100%</span>
+      <button type="button" class="btn-ctrl" onclick="zoomOut()" title="Zoom Out">−</button>
+      <button type="button" class="btn-ctrl" onclick="resetView()" title="Reset Layout">Reset</button>
+      <button type="button" class="btn-ctrl" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌓</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM FLOATING CONTROLLER DOCK -->
+  <div class="bottom-dock">
+    <button type="button" class="dock-tab active" onclick="setDockView('canvas')">
+      🗺️ <span id="txt-dock-canvas">Canvas Mindmap</span>
+    </button>
+    <button type="button" class="dock-tab" onclick="openDrawer('quasi')">
+      ⚡ <span id="txt-dock-quasi">QuASI Question Lab</span>
+    </button>
+    <button type="button" class="dock-tab" onclick="openDrawer('freq')">
+      ⏱️ <span id="txt-dock-freq">Adverb Slider</span>
+    </button>
+    <button type="button" class="dock-tab" onclick="openDrawer('can')">
+      🚦 <span id="txt-dock-can">Can/Can't Simulator</span>
+    </button>
+    <button type="button" class="dock-tab" onclick="openDrawer('quiz')">
+      📝 <span id="txt-dock-quiz">Page 95 Practice</span>
+    </button>
+  </div>
+
+  <!-- CANVAS VIEWPORT -->
+  <div id="canvas-viewport">
+    <div id="canvas-world">
+      <!-- SVG Connecting Wires Layer -->
+      <svg class="connections-layer" id="svg-layer">
+        <path id="wire-root-4a" class="wire wire-blue"></path>
+        <path id="wire-root-4b" class="wire wire-amber"></path>
+        <path id="wire-root-4c" class="wire wire-purple"></path>
+        <path id="wire-4a-pos" class="wire wire-blue"></path>
+        <path id="wire-4a-never" class="wire wire-pink"></path>
+        <path id="wire-4b-be" class="wire wire-amber"></path>
+        <path id="wire-4b-asi" class="wire wire-amber"></path>
+        <path id="wire-4b-quasi" class="wire wire-green"></path>
+        <path id="wire-4c-you" class="wire wire-purple"></path>
+      </svg>
+
+      <!-- ================= 1. ROOT HUB ================= -->
+      <div id="node-root" class="canvas-node node-root" style="left: 1100px; top: 120px;">
+        <div class="node-header">
+          <span class="node-tag tag-primary">STUDENT'S BOOK P. 94</span>
+          <span style="font-size:11px; font-weight:800; color:#818cf8;">GRAMMAR BANK</span>
+        </div>
+        <div class="node-title" id="txt-root-title">Unit 4: Master Grammar Core</div>
+        <div class="node-sub" id="txt-root-sub">
+          Three essential architectural pillars for everyday English communication: frequency habits, question order, and modal ability/permission.
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
+          <span style="color:#38bdf8;">👈 4A: Adverbs of Frequency</span>
+          <span style="color:#f59e0b;">👇 4B: Word Order in Questions</span>
+          <span style="color:#c084fc;">4C: Can / Can't 👉</span>
+        </div>
+      </div>
+
+      <!-- ================= 2. SECTION 4A: ADVERBS OF FREQUENCY ================= -->
+      <div id="node-4a" class="canvas-node node-4a" style="left: 450px; top: 280px;">
+        <div class="node-header">
+          <span class="node-tag tag-primary">SECTION 4A</span>
+          <span style="font-size:11px; font-weight:700; color:#38bdf8;">PRESENT SIMPLE</span>
+        </div>
+        <div class="node-title" id="txt-4a-title">4A. Adverbs of Frequency</div>
+        <div class="node-sub" id="txt-4a-sub">
+          Express how often daily actions happen using <i>always, usually, sometimes, never</i>.
+        </div>
+
+        <div class="freq-grid">
+          <div class="freq-box">
+            <div class="freq-pct">100%</div>
+            <div class="freq-word">always</div>
+          </div>
+          <div class="freq-box">
+            <div class="freq-pct">~80%</div>
+            <div class="freq-word">usually</div>
+          </div>
+          <div class="freq-box">
+            <div class="freq-pct">~50%</div>
+            <div class="freq-word">sometimes</div>
+          </div>
+          <div class="freq-box">
+            <div class="freq-pct">0%</div>
+            <div class="freq-word">never</div>
+          </div>
+        </div>
+
+        <div class="formula-banner">
+          <span>RULE:</span>
+          <span class="f-chip">Subject</span>
+          <span>+</span>
+          <span class="f-chip" style="color:#f59e0b; border-color:#f59e0b;">Adverb</span>
+          <span>+</span>
+          <span class="f-chip" style="color:#4ade80; border-color:#4ade80;">Main Verb</span>
+        </div>
+
+        <div class="examples-list" id="list-4a-examples">
+          <!-- Rendered dynamically by current language -->
+        </div>
+      </div>
+
+      <!-- SUB-NODE 4A: POSITION RULE -->
+      <div id="node-4a-pos" class="canvas-node node-formula" style="left: 80px; top: 480px;">
+        <div class="node-header">
+          <span class="node-tag tag-success">POSITION RULES</span>
+        </div>
+        <div class="node-title" style="font-size:15px;" id="txt-4a-pos-title">Where does the adverb go?</div>
+        <div class="node-sub" id="txt-4a-pos-sub">
+          • <strong>BEFORE main verbs:</strong> <i>I <u>always</u> have breakfast.</i><br>
+          (❌ NOT: <i>Always I have breakfast</i> / <i>I have always breakfast</i>)<br><br>
+          • <strong>AFTER the verb 'to be':</strong> <i>He is <u>always</u> late.</i>
+        </div>
+      </div>
+
+      <!-- SUB-NODE 4A: THE NEVER TRAP -->
+      <div id="node-4a-never" class="canvas-node node-trap" style="left: 80px; top: 730px;">
+        <div class="node-header">
+          <span class="node-tag tag-danger">GOLDEN RULE</span>
+        </div>
+        <div class="node-title" style="font-size:15px; color:#f87171;" id="txt-4a-never-title">The "Never" Rule (No Double Negatives)</div>
+        <div class="node-sub" id="txt-4a-never-sub">
+          With <strong>never</strong>, ALWAYS use a <strong>positive [+] verb</strong>!<br><br>
+          ✅ <i>He <strong>never eats</strong> meat.</i><br>
+          ❌ <i>He doesn't never eat meat.</i> (Forbidden in English!)
+        </div>
+      </div>
+
+      <!-- ================= 3. SECTION 4B: WORD ORDER IN QUESTIONS ================= -->
+      <div id="node-4b" class="canvas-node node-4b" style="left: 1080px; top: 460px;">
+        <div class="node-header">
+          <span class="node-tag tag-amber">SECTION 4B</span>
+          <span style="font-size:11px; font-weight:700; color:#f59e0b;">QUESTION ARCHITECTURE</span>
+        </div>
+        <div class="node-title" id="txt-4b-title">4B. Word Order in Questions</div>
+        <div class="node-sub" id="txt-4b-sub">
+          Master the two distinct question systems in English: questions with <strong>be</strong> (inversion) vs questions with <strong>other verbs</strong> (ASI & QuASI).
+        </div>
+
+        <div class="formula-banner">
+          <span style="color:#f59e0b;">ASI:</span>
+          <span class="f-chip">Auxiliary (Do/Does)</span>
+          <span>+</span>
+          <span class="f-chip">Subject</span>
+          <span>+</span>
+          <span class="f-chip">Infinitive</span>
+        </div>
+
+        <div class="formula-banner">
+          <span style="color:#34d399;">QuASI:</span>
+          <span class="f-chip">Question Word</span>
+          <span>+</span>
+          <span class="f-chip">Aux (Do/Does)</span>
+          <span>+</span>
+          <span class="f-chip">Subject</span>
+          <span>+</span>
+          <span class="f-chip">Infinitive</span>
+        </div>
+
+        <div class="examples-list" id="list-4b-examples">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- SUB-NODE 4B: QUESTIONS WITH 'BE' -->
+      <div id="node-4b-be" class="canvas-node" style="left: 950px; top: 920px; width:400px; border-top:4px solid #38bdf8;">
+        <div class="node-header">
+          <span class="node-tag tag-primary">QUESTIONS WITH BE</span>
+        </div>
+        <div class="node-title" style="font-size:15px;">Inversion with Am / Is / Are</div>
+        <div class="node-sub" id="txt-4b-be-sub">
+          In positive statements: <strong>Subject + Verb</strong> (<i>They're American.</i>)<br>
+          In questions, invert them: <strong>Verb + Subject</strong> (<i>Are they American?</i>)
+        </div>
+        <table class="asi-table">
+          <tr><th>Question</th><th>Verb</th><th>Subject</th><th>Other</th></tr>
+          <tr><td>—</td><td>Are</td><td>they</td><td>American?</td></tr>
+          <tr><td>—</td><td>Is</td><td>this</td><td>your coat?</td></tr>
+          <tr><td>Where</td><td>are</td><td>you</td><td>from?</td></tr>
+          <tr><td>What time</td><td>is</td><td>it</td><td>— ?</td></tr>
+        </table>
+      </div>
+
+      <!-- SUB-NODE 4B: ASI & QUASI TABLE -->
+      <div id="node-4b-asi" class="canvas-node" style="left: 1400px; top: 920px; width:480px; border-top:4px solid #f59e0b;">
+        <div class="node-header">
+          <span class="node-tag tag-amber">ASI & QuASI TABLE</span>
+        </div>
+        <div class="node-title" style="font-size:15px;">Questions with speak, live, work, etc.</div>
+        <table class="asi-table">
+          <tr><th>Q-Word</th><th>Auxiliary</th><th>Subject</th><th>Infinitive Verb</th></tr>
+          <tr><td>—</td><td>Do</td><td>you</td><td>speak English?</td></tr>
+          <tr><td>Where</td><td>do</td><td>you</td><td>live?</td></tr>
+          <tr><td>What</td><td>does</td><td>your sister</td><td>do?</td></tr>
+          <tr><td>What music</td><td>do</td><td>you</td><td>like?</td></tr>
+          <tr><td>When</td><td>does</td><td>Jane</td><td>go to the gym?</td></tr>
+          <tr><td>How</td><td>do</td><td>you</td><td>spell it?</td></tr>
+        </table>
+      </div>
+
+      <!-- ================= 4. SECTION 4C: CAN / CAN'T ================= -->
+      <div id="node-4c" class="canvas-node node-4c" style="left: 1780px; top: 280px;">
+        <div class="node-header">
+          <span class="node-tag tag-purple">SECTION 4C</span>
+          <span style="font-size:11px; font-weight:700; color:#c084fc;">MODAL AUXILIARY</span>
+        </div>
+        <div class="node-title" id="txt-4c-title">4C. can / can't (+, —, ?)</div>
+        <div class="node-sub" id="txt-4c-sub">
+          Use <strong>can / can't</strong> for <strong>permission</strong> (allowed) and <strong>possibility</strong> (able/possible).
+        </div>
+
+        <div class="formula-banner">
+          <span style="color:#4ade80;">[+] S + can + V</span>
+          <span style="color:#f87171;">[—] S + can't + V</span>
+          <span style="color:#c084fc;">[?] Can + S + V?</span>
+        </div>
+
+        <div class="examples-list" id="list-4c-examples">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- SUB-NODE 4C: THE 3 FACES OF YOU -->
+      <div id="node-4c-you" class="canvas-node" style="left: 2320px; top: 480px; width:380px; border-top:4px solid #a855f7;">
+        <div class="node-header">
+          <span class="node-tag tag-purple">SPECIAL NOTE</span>
+        </div>
+        <div class="node-title" style="font-size:15px;" id="txt-4c-you-title">The Three Uses of "You"</div>
+        <div class="node-sub" id="txt-4c-you-sub">
+          <strong>1. Singular (One person):</strong><br>
+          <i>What do you do? $\rightarrow$ I'm a doctor.</i><br><br>
+          <strong>2. Plural (Group of people):</strong><br>
+          <i>Where do you live? $\rightarrow$ We live in Boston.</i><br><br>
+          <strong>3. General / Impersonal (People in general):</strong><br>
+          <i>You can't smoke here. $\rightarrow$ (= Nobody is allowed to smoke here).</i>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INTERACTIVE DRAWER / LAB -->
+  <div class="interactive-drawer" id="interactive-drawer">
+    <div class="drawer-header">
+      <div style="font-weight:800; font-size:16px; color:var(--text);" id="drawer-title">QuASI Lab</div>
+      <button type="button" class="btn-close-drawer" onclick="closeDrawer()">&times;</button>
+    </div>
+    <div class="drawer-body" id="drawer-content">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+
+<script>
+/* ================= MULTILINGUAL DICTIONARY ================= */
+let currentLang = 'en';
+
+const I18N = {
+  en: {
+    rootTitle: "Unit 4: Master Grammar Core",
+    rootSub: "Three essential architectural pillars for everyday English communication: frequency habits, question order, and modal ability/permission.",
+    t4aTitle: "4A. Adverbs of Frequency",
+    t4aSub: "Express how often daily actions happen using always, usually, sometimes, never.",
+    t4bTitle: "4B. Word Order in Questions",
+    t4bSub: "Master the two distinct question systems in English: questions with be (inversion) vs questions with other verbs (ASI & QuASI).",
+    t4cTitle: "4C. can / can't (+, —, ?)",
+    t4cSub: "Use can / can't for permission (allowed) and possibility (able/possible).",
+    t4aPosTitle: "Where does the adverb go?",
+    t4aPosSub: "• <strong>BEFORE main verbs:</strong> <i>I <u>always</u> have breakfast.</i><br>(❌ NOT: <i>Always I have breakfast</i> / <i>I have always breakfast</i>)<br><br>• <strong>AFTER the verb 'to be':</strong> <i>He is <u>always</u> late.</i>",
+    t4aNeverTitle: "The 'Never' Rule (No Double Negatives)",
+    t4aNeverSub: "With <strong>never</strong>, ALWAYS use a <strong>positive [+] verb</strong>!<br><br>✅ <i>He <strong>never eats</strong> meat.</i><br>❌ <i>He doesn't never eat meat.</i> (Forbidden in English!)",
+    t4bBeSub: "In positive statements: <strong>Subject + Verb</strong> (<i>They're American.</i>)<br>In questions, invert them: <strong>Verb + Subject</strong> (<i>Are they American?</i>)",
+    t4cYouTitle: "The Three Uses of 'You'",
+    t4cYouSub: "<strong>1. Singular (One person):</strong><br><i>What do you do? → I'm a doctor.</i><br><br><strong>2. Plural (Group of people):</strong><br><i>Where do you live? → We live in Boston.</i><br><br><strong>3. General / Impersonal (People in general):</strong><br><i>You can't smoke here. → (= Nobody is allowed to smoke here).</i>",
+    examples4a: [
+      { eng: "I always have breakfast.", trans: "I eat breakfast every single morning (100%)." },
+      { eng: "They usually finish work at 5.00.", trans: "They finish at 5.00 most days (~80%)." },
+      { eng: "She sometimes watches TV in the evening.", trans: "She watches TV on some evenings (~50%)." },
+      { eng: "He never eats meat.", trans: "He is a vegetarian; zero meat (0%)." }
+    ],
+    examples4b: [
+      { eng: "Do you speak English?", trans: "ASI question: Do (Aux) + you (Subj) + speak (Inf)?" },
+      { eng: "Where do you live?", trans: "QuASI: Where (Q) + do (Aux) + you (Subj) + live (Inf)?" },
+      { eng: "What does your sister do?", trans: "QuASI with 3rd-person singular 'does'." },
+      { eng: "When does Jane go to the gym?", trans: "QuASI with time question 'When'." }
+    ],
+    examples4c: [
+      { eng: "You can park here.", trans: "Permission: Parking is allowed (🅿️)." },
+      { eng: "You can't park here.", trans: "Prohibition: No parking allowed (🚫 can't = cannot)." },
+      { eng: "He can come to dinner tonight.", trans: "Possibility: He is free and able to come." },
+      { eng: "Can I park here? — Yes, you can.", trans: "Question & short answer form." }
+    ]
+  },
+
+  ru: {
+    rootTitle: "Раздел 4: Грамматическое ядро",
+    rootSub: "Три ключевых грамматических столпа для общения на английском: частота действий, порядок слов в вопросах и модальный глагол can/can't.",
+    t4aTitle: "4A. Наречия частоты (Adverbs of Frequency)",
+    t4aSub: "Показывают, как часто происходят действия: always (всегда), usually (обычно), sometimes (иногда), never (никогда).",
+    t4bTitle: "4B. Порядок слов в вопросах",
+    t4bSub: "Две вопросительные системы: вопросы с глаголом 'to be' (инверсия) и вопросы с другими глаголами (схемы ASI и QuASI).",
+    t4cTitle: "4C. can / can't (+, —, ?)",
+    t4cSub: "Выражает разрешение (можно/нельзя) и физическую возможность (могу/не могу).",
+    t4aPosTitle: "Куда ставится наречие в предложении?",
+    t4aPosSub: "• <strong>ПЕРЕД смысловым глаголом:</strong> <i>I <u>always</u> have breakfast.</i><br>(❌ НЕЛЬЗЯ: <i>Always I have breakfast</i> / <i>I have always breakfast</i>)<br><br>• <strong>ПОСЛЕ глагола 'to be':</strong> <i>He is <u>always</u> late.</i>",
+    t4aNeverTitle: "Правило слова 'Never' (Без двойного отрицания)",
+    t4aNeverSub: "Со словом <strong>never</strong> ВСЕГДА используется <strong>утвердительный [+] глагол</strong>!<br><br>✅ <i>He <strong>never eats</strong> meat.</i> (Он никогда не ест мясо)<br>❌ <i>He doesn't never eat meat.</i> (В английском двойное отрицание запрещено!)",
+    t4bBeSub: "В утверждении: <strong>Подлежащее + Глагол</strong> (<i>They're American.</i>)<br>В вопросе меняются местами: <strong>Глагол + Подлежащее</strong> (<i>Are they American?</i>)",
+    t4cYouTitle: "Три значения местоимения 'You'",
+    t4cYouSub: "<strong>1. Единственное число (Ты):</strong><br><i>What do you do? → I'm a doctor. (Кем ты работаешь?)</i><br><br><strong>2. Множественное число (Вы):</strong><br><i>Where do you live? → We live in Boston. (Где вы живёте?)</i><br><br><strong>3. Обобщённое (Люди вообще / безлично):</strong><br><i>You can't smoke here. → (= Здесь нельзя курить никому).</i>",
+    examples4a: [
+      { eng: "I always have breakfast.", trans: "Я всегда завтракаю (каждое утро 100%)." },
+      { eng: "They usually finish work at 5.00.", trans: "Они обычно заканчивают работу в 5:00 (~80%)." },
+      { eng: "She sometimes watches TV in the evening.", trans: "Она иногда смотрит телевизор по вечерам (~50%)." },
+      { eng: "He never eats meat.", trans: "Он никогда не ест мясо (вегетарианец, 0%)." }
+    ],
+    examples4b: [
+      { eng: "Do you speak English?", trans: "Вопрос ASI: Do (Вспомог.) + you (Подлеж.) + speak (Глагол)?" },
+      { eng: "Where do you live?", trans: "QuASI: Where (Вопрос) + do (Вспомог.) + you (Подлеж.) + live (Глагол)?" },
+      { eng: "What does your sister do?", trans: "QuASI для 3-го лица ед. ч. со вспомогательным глаголом 'does'." },
+      { eng: "When does Jane go to the gym?", trans: "QuASI с вопросом времени 'When' (Когда)." }
+    ],
+    examples4c: [
+      { eng: "You can park here.", trans: "Разрешение: Здесь можно парковаться (🅿️)." },
+      { eng: "You can't park here.", trans: "Запрет: Здесь нельзя парковаться (🚫 can't = cannot)." },
+      { eng: "He can come to dinner tonight.", trans: "Возможность: Он свободен и может прийти на ужин." },
+      { eng: "Can I park here? — Yes, you can.", trans: "Вопрос и краткий утвердительный ответ." }
+    ]
+  },
+
+  tr: {
+    rootTitle: "4. Ünite: Ana Dilbilgisi Çekirdeği",
+    rootSub: "Günlük İngilizce iletişimin 3 temel yapı taşı: sıklık zarfları, soru kelime dizilişi ve can/can't modal fiili.",
+    t4aTitle: "4A. Sıklık Zarfları (Adverbs of Frequency)",
+    t4aSub: "Eylemlerin ne sıklıkla yapıldığını ifade eder: always (her zaman), usually (genellikle), sometimes (bazen), never (asla).",
+    t4bTitle: "4B. Sorularda Kelime Dizilişi",
+    t4bSub: "İki farklı soru mimarisi: 'be' fiilli sorular (yer değiştirme) ve diğer fiillerle sorular (ASI ve QuASI kuralları).",
+    t4cTitle: "4C. can / can't (+, —, ?)",
+    t4cSub: "İzin (yapabilirsin / yapamazsın) ve olasılık/yetenek (mümkündür / mümkün değildir) için kullanılır.",
+    t4aPosTitle: "Sıklık zarfı nereye konur?",
+    t4aPosSub: "• <strong>ASIL FİİLDEN ÖNCE:</strong> <i>I <u>always</u> have breakfast.</i><br>(❌ YANLIŞ: <i>Always I have breakfast</i> / <i>I have always breakfast</i>)<br><br>• <strong>'to be' FİİLİNDEN SONRA:</strong> <i>He is <u>always</u> late.</i>",
+    t4aNeverTitle: "'Never' Kuralı (Çift Olumsuzluk Yasağı)",
+    t4aNeverSub: "<strong>never</strong> kelimesiyle HER ZAMAN <strong>olumlu [+] fiil</strong> kullanılır!<br><br>✅ <i>He <strong>never eats</strong> meat.</i> (O asla et yemez)<br>❌ <i>He doesn't never eat meat.</i> (İngilizcede çift olumsuzluk yasaktır!)",
+    t4bBeSub: "Olumlu cümlede: <strong>Özne + Fiil</strong> (<i>They're American.</i>)<br>Soruda yer değiştirir: <strong>Fiil + Özne</strong> (<i>Are they American?</i>)",
+    t4cYouTitle: "'You' Kelimesinin Üç Kullanımı",
+    t4cYouSub: "<strong>1. Tekil (Sen):</strong><br><i>What do you do? → I'm a doctor. (Ne iş yapıyorsun?)</i><br><br><strong>2. Çoğul (Siz):</strong><br><i>Where do you live? → We live in Boston. (Nerede yaşıyorsunuz?)</i><br><br><strong>3. Genel / Kişisiz (İnsanlar geneli):</strong><br><i>You can't smoke here. → (= Burada sigara içmek yasaktır).</i>",
+    examples4a: [
+      { eng: "I always have breakfast.", trans: "Her sabah mutlaka kahvaltı yaparım (%100)." },
+      { eng: "They usually finish work at 5.00.", trans: "İşi genellikle saat 5:00'te bitirirler (~%80)." },
+      { eng: "She sometimes watches TV in the evening.", trans: "Akşamları bazen televizyon izler (~%50)." },
+      { eng: "He never eats meat.", trans: "O asla et yemez (vejetaryendir, %0)." }
+    ],
+    examples4b: [
+      { eng: "Do you speak English?", trans: "ASI sorusu: Do (Yardımcı) + you (Özne) + speak (Asıl fiil)?" },
+      { eng: "Where do you live?", trans: "QuASI: Where (Soru) + do (Yardımcı) + you (Özne) + live (Fiil)?" },
+      { eng: "What does your sister do?", trans: "3. tekil şahıs için 'does' yardımcı fiilli QuASI." },
+      { eng: "When does Jane go to the gym?", trans: "Zaman sorusu 'When' (Ne zaman) ile QuASI." }
+    ],
+    examples4c: [
+      { eng: "You can park here.", trans: "İzin: Buraya park edebilirsiniz (🅿️)." },
+      { eng: "You can't park here.", trans: "Yasak: Buraya park edemezsiniz (🚫 can't = cannot)." },
+      { eng: "He can come to dinner tonight.", trans: "Olasılık: Bu akşam yemeğe gelebilir, müsaittir." },
+      { eng: "Can I park here? — Yes, you can.", trans: "Soru ve kısa olumlu cevap biçimi." }
+    ]
+  },
+
+  zh: {
+    rootTitle: "第4单元：语法核心图解",
+    rootSub: "日常英语交流的三大核心架构：频度副词用法、疑问句词序、以及情态动词 can / can't。",
+    t4aTitle: "4A. 频度副词 (Adverbs of Frequency)",
+    t4aSub: "用 always（总是）、usually（通常）、sometimes（有时）、never（从不）表达事情发生的频率。",
+    t4bTitle: "4B. 疑问句的词序 (Word Order in Questions)",
+    t4bSub: "掌握英语两大疑问句系统：be 动词倒装疑问句，以及其他行为动词的 ASI 与 QuASI 结构。",
+    t4cTitle: "4C. can / can't (肯定、否定、疑问)",
+    t4cSub: "用于表达“许可”（可以/不准）和“可能性”（能够/不可能）。",
+    t4aPosTitle: "频度副词放在哪里？",
+    t4aPosSub: "• <strong>放在实义行为动词之前：</strong> <i>I <u>always</u> have breakfast.</i><br>(❌ 错误：<i>Always I have breakfast</i> / <i>I have always breakfast</i>)<br><br>• <strong>放在 be 动词之后：</strong> <i>He is <u>always</u> late.</i>",
+    t4aNeverTitle: "'Never' 规则（禁止双重否定）",
+    t4aNeverSub: "使用 <strong>never</strong> 时，动词必须是<strong>肯定形式 [+]</strong>！<br><br>✅ <i>He <strong>never eats</strong> meat.</i>（他从不吃肉）<br>❌ <i>He doesn't never eat meat.</i>（英语中绝对不允许双重否定！）",
+    t4bBeSub: "陈述句中：<strong>主语 + 动词</strong>（<i>They're American.</i>）<br>疑问句中颠倒位置：<strong>动词 + 主语</strong>（<i>Are they American?</i>）",
+    t4cYouTitle: "'You' 的三种用法",
+    t4cYouSub: "<strong>1. 单数（你）：</strong><br><i>What do you do? → I'm a doctor.（你是做什么工作的？）</i><br><br><strong>2. 复数（你们）：</strong><br><i>Where do you live? → We live in Boston.（你们住在哪里？）</i><br><br><strong>3. 泛指大众（任何人）：</strong><br><i>You can't smoke here. →（= 此处禁止任何人吸烟）。</i>",
+    examples4a: [
+      { eng: "I always have breakfast.", trans: "我总是吃早餐（每天早上 100%）。" },
+      { eng: "They usually finish work at 5.00.", trans: "他们通常五点下班（约 80% 的日子）。" },
+      { eng: "She sometimes watches TV in the evening.", trans: "她有时晚上看电视（约 50%）。" },
+      { eng: "He never eats meat.", trans: "他从不吃肉（素食者，0%）。" }
+    ],
+    examples4b: [
+      { eng: "Do you speak English?", trans: "ASI 疑问句：Do (助动词) + you (主语) + speak (原形动词)？" },
+      { eng: "Where do you live?", trans: "QuASI：Where (疑问词) + do (助) + you (主) + live (原形)？" },
+      { eng: "What does your sister do?", trans: "针对第三人称单数使用 does 的 QuASI 句型。" },
+      { eng: "When does Jane go to the gym?", trans: "带有时间疑问词 When 的 QuASI 问句。" }
+    ],
+    examples4c: [
+      { eng: "You can park here.", trans: "许可：你可以在这里停车（🅿️ 允许）。" },
+      { eng: "You can't park here.", trans: "禁止：此处不能停车（🚫 can't = cannot）。" },
+      { eng: "He can come to dinner tonight.", trans: "可能性：他今晚有空，可以来吃晚饭。" },
+      { eng: "Can I park here? — Yes, you can.", trans: "疑问句及简短肯定回答。" }
+    ]
+  },
+
+  tm: {
+    rootTitle: "4-nji Bölüm: Esasy Grammatika Özegi",
+    rootSub: "Gündelik iňlis gepleşiginiň 3 sany esasy sütüni: gaýtalanma ýygylygy, soraglaryň söz tertibi we can/can't kömekçi işligi.",
+    t4aTitle: "4A. Gaýtalanma Ýygylygy (Adverbs of Frequency)",
+    t4aSub: "Hereketleriň näçe wagtda bir gaýtalanýandygyny aňladýar: always (hemişe), usually (adatça), sometimes (käwagt), never (hiç haçan).",
+    t4bTitle: "4B. Soraglarda Söz Tertibi",
+    t4bSub: "Iňlis dilinde 2 sany aýratyn sorag gurluşy: 'be' işligi bilen soraglar (orun çalyşma) we beýleki işlikler bilen soraglar (ASI we QuASI).",
+    t4cTitle: "4C. can / can't (+, —, ?)",
+    t4cSub: "Rugsat (edip bilersiň / gadagan) we mümkinçilik (edip bilýärin / mümkin däl) üçin ulanylýar.",
+    t4aPosTitle: "Ýygylyk zarpy nirede goýulýar?",
+    t4aPosSub: "• <strong>ESASY IŞLIKDEN ÖŇ:</strong> <i>I <u>always</u> have breakfast.</i><br>(❌ ÝALŇYŞ: <i>Always I have breakfast</i> / <i>I have always breakfast</i>)<br><br>• <strong>'to be' IŞLIGINDEN SOŇ:</strong> <i>He is <u>always</u> late.</i>",
+    t4aNeverTitle: "'Never' Düzgüni (Iki Gezek Ýokluk Gadagan)",
+    t4aNeverSub: "<strong>never</strong> sözi bilen HEMIŞE <strong>tassyk [+] işlik</strong> gelmelidir!<br><br>✅ <i>He <strong>never eats</strong> meat.</i> (Ol hiç haçan et iýmeýär)<br>❌ <i>He doesn't never eat meat.</i> (Iňlis dilinde iki sany ýokluk bile ulanylmaýar!)",
+    t4bBeSub: "Tassyk sözlemde: <strong>Eýe + Işlik</strong> (<i>They're American.</i>)<br>Soragda orun çalyşýar: <strong>Işlik + Eýe</strong> (<i>Are they American?</i>)",
+    t4cYouTitle: "'You' Sözüniň Üç Hili Manysy",
+    t4cYouSub: "<strong>1. Birlik (Sen):</strong><br><i>What do you do? → I'm a doctor. (Sen näme iş edýärsiň?)</i><br><br><strong>2. Köplük (Siz):</strong><br><i>Where do you live? → We live in Boston. (Siz nirede ýaşaýarsyňyz?)</i><br><br><strong>3. Umumy Halk (Umuman adamlar):</strong><br><i>You can't smoke here. → (= Bu ýerde hiç kime çilim çekmek rugsat berilmeýär).</i>",
+    examples4a: [
+      { eng: "I always have breakfast.", trans: "Men hemişe ertirlik edinýärin (her gün 100%)." },
+      { eng: "They usually finish work at 5.00.", trans: "Olar adatça işi sagat 5:00-da gutarýarlar (~80%)." },
+      { eng: "She sometimes watches TV in the evening.", trans: "Ol käwagt agşamlaryna telewizor görýär (~50%)." },
+      { eng: "He never eats meat.", trans: "Ol hiç haçan et iýmeýär (wegetarian, 0%)." }
+    ],
+    examples4b: [
+      { eng: "Do you speak English?", trans: "ASI soragy: Do (Kömekçi) + you (Eýe) + speak (Işlik)?" },
+      { eng: "Where do you live?", trans: "QuASI: Where (Sorag sözi) + do (Kömekçi) + you (Eýe) + live (Işlik)?" },
+      { eng: "What does your sister do?", trans: "3-nji ýöňkeme birlik üçin 'does' kömekçili QuASI." },
+      { eng: "When does Jane go to the gym?", trans: "Wagt soragy 'When' (Haçan) bilen QuASI." }
+    ],
+    examples4c: [
+      { eng: "You can park here.", trans: "Rugsat: Bu ýerde maşyn goýup bilersiňiz (🅿️)." },
+      { eng: "You can't park here.", trans: "Gadagan: Bu ýerde goýmak bolmaýar (🚫 can't = cannot)." },
+      { eng: "He can come to dinner tonight.", trans: "Mümkinçilik: Ol şu gije agşamlyga gelip bilýär." },
+      { eng: "Can I park here? — Yes, you can.", trans: "Sorag we gysga jogap nusgasy." }
+    ]
+  }
+};
+
+/* ================= RENDER DYNAMIC UI ================= */
+function setLanguage(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+
+  const L = I18N[currentLang];
+
+  document.getElementById('txt-root-title').textContent = L.rootTitle;
+  document.getElementById('txt-root-sub').textContent = L.rootSub;
+  document.getElementById('txt-4a-title').textContent = L.t4aTitle;
+  document.getElementById('txt-4a-sub').textContent = L.t4aSub;
+  document.getElementById('txt-4b-title').textContent = L.t4bTitle;
+  document.getElementById('txt-4b-sub').textContent = L.t4bSub;
+  document.getElementById('txt-4c-title').textContent = L.t4cTitle;
+  document.getElementById('txt-4c-sub').textContent = L.t4cSub;
+
+  document.getElementById('txt-4a-pos-title').textContent = L.t4aPosTitle;
+  document.getElementById('txt-4a-pos-sub').innerHTML = L.t4aPosSub;
+  document.getElementById('txt-4a-never-title').textContent = L.t4aNeverTitle;
+  document.getElementById('txt-4a-never-sub').innerHTML = L.t4aNeverSub;
+  document.getElementById('txt-4b-be-sub').innerHTML = L.t4bBeSub;
+  document.getElementById('txt-4c-you-title').textContent = L.t4cYouTitle;
+  document.getElementById('txt-4c-you-sub').innerHTML = L.t4cYouSub;
+
+  renderExamples('list-4a-examples', L.examples4a);
+  renderExamples('list-4b-examples', L.examples4b);
+  renderExamples('list-4c-examples', L.examples4c);
+
+  updateWires();
+}
+
+function renderExamples(containerId, list) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  list.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'example-item';
+    div.innerHTML = `
+      <div class="ex-eng-row">
+        <span class="ex-eng">${item.eng}</span>
+        <button type="button" class="btn-speak" title="Listen to pronunciation" onclick="speakText('${item.eng.replace(/'/g, "\\'")}')">🔊</button>
+      </div>
+      <div class="ex-trans">${item.trans}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function speakText(txt) {
+  try {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(txt);
+      u.lang = 'en-GB';
+      u.rate = 0.9;
+      window.speechSynthesis.speak(u);
+    }
+  } catch(e) {}
+}
+
+/* ================= CANVAS PAN & ZOOM ENGINE ================= */
+let scale = 0.85;
+let panX = -200;
+let panY = -30;
+let isPanning = false;
+let startX = 0;
+let startY = 0;
+
+const viewport = document.getElementById('canvas-viewport');
+const world = document.getElementById('canvas-world');
+
+function updateTransform() {
+  world.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+  document.getElementById('zoom-val').textContent = `${Math.round(scale * 100)}%`;
+  updateWires();
+}
+
+function zoomIn() {
+  scale = Math.min(2.0, scale + 0.15);
+  updateTransform();
+}
+
+function zoomOut() {
+  scale = Math.max(0.35, scale - 0.15);
+  updateTransform();
+}
+
+function resetView() {
+  scale = 0.85;
+  panX = (window.innerWidth / 2) - 1300 * scale;
+  panY = 50;
+  updateTransform();
+}
+
+// Mouse wheel zoom toward pointer
+viewport.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const zoomFactor = e.deltaY < 0 ? 1.08 : 0.92;
+  const newScale = Math.min(2.0, Math.max(0.35, scale * zoomFactor));
+
+  const rect = viewport.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+
+  panX = mouseX - (mouseX - panX) * (newScale / scale);
+  panY = mouseY - (mouseY - panY) * (newScale / scale);
+  scale = newScale;
+
+  updateTransform();
+}, { passive: false });
+
+// Pan viewport drag
+viewport.addEventListener('mousedown', (e) => {
+  if (e.target.closest('.canvas-node') || e.target.closest('.interactive-drawer') || e.target.closest('.top-nav') || e.target.closest('.bottom-dock')) return;
+  isPanning = true;
+  viewport.classList.add('panning');
+  startX = e.clientX - panX;
+  startY = e.clientY - panY;
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isPanning) return;
+  panX = e.clientX - startX;
+  panY = e.clientY - startY;
+  updateTransform();
+});
+
+window.addEventListener('mouseup', () => {
+  if (isPanning) {
+    isPanning = false;
+    viewport.classList.remove('panning');
+  }
+});
+
+/* ================= NODE DRAGGING & DYNAMIC WIRES ================= */
+let activeNode = null;
+let nodeStartX = 0;
+let nodeStartY = 0;
+let mouseStartX = 0;
+let mouseStartY = 0;
+
+document.querySelectorAll('.canvas-node').forEach(node => {
+  node.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+    activeNode = node;
+    node.classList.add('dragging');
+    nodeStartX = parseInt(node.style.left, 10) || 0;
+    nodeStartY = parseInt(node.style.top, 10) || 0;
+    mouseStartX = e.clientX;
+    mouseStartY = e.clientY;
+    e.stopPropagation();
+  });
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!activeNode) return;
+  const dx = (e.clientX - mouseStartX) / scale;
+  const dy = (e.clientY - mouseStartY) / scale;
+  activeNode.style.left = `${nodeStartX + dx}px`;
+  activeNode.style.top = `${nodeStartY + dy}px`;
+  updateWires();
+});
+
+window.addEventListener('mouseup', () => {
+  if (activeNode) {
+    activeNode.classList.remove('dragging');
+    activeNode = null;
+    updateWires();
+  }
+});
+
+function getCenter(elId) {
+  const el = document.getElementById(elId);
+  if (!el) return { x: 0, y: 0 };
+  const left = parseInt(el.style.left, 10) || 0;
+  const top = parseInt(el.style.top, 10) || 0;
+  return {
+    x: left + el.offsetWidth / 2,
+    y: top + el.offsetHeight / 2,
+    left: left,
+    right: left + el.offsetWidth,
+    top: top,
+    bottom: top + el.offsetHeight
+  };
+}
+
+function setWire(pathId, fromId, toId) {
+  const path = document.getElementById(pathId);
+  if (!path) return;
+  const f = getCenter(fromId);
+  const t = getCenter(toId);
+
+  // Bezier curve
+  const startX = f.x;
+  const startY = f.bottom;
+  const endX = t.x;
+  const endY = t.top;
+  const midY = (startY + endY) / 2;
+
+  path.setAttribute('d', `M ${startX} ${startY} C ${startX} ${midY}, ${endX} ${midY}, ${endX} ${endY}`);
+}
+
+function updateWires() {
+  setWire('wire-root-4a', 'node-root', 'node-4a');
+  setWire('wire-root-4b', 'node-root', 'node-4b');
+  setWire('wire-root-4c', 'node-root', 'node-4c');
+  setWire('wire-4a-pos', 'node-4a', 'node-4a-pos');
+  setWire('wire-4a-never', 'node-4a-pos', 'node-4a-never');
+  setWire('wire-4b-be', 'node-4b', 'node-4b-be');
+  setWire('wire-4b-asi', 'node-4b', 'node-4b-asi');
+  setWire('wire-4c-you', 'node-4c', 'node-4c-you');
+}
+
+/* ================= INTERACTIVE LABS & DRAWERS ================= */
+function openDrawer(mode) {
+  const drawer = document.getElementById('interactive-drawer');
+  const title = document.getElementById('drawer-title');
+  const body = document.getElementById('drawer-content');
+  drawer.style.display = 'flex';
+
+  if (mode === 'quasi') {
+    title.innerHTML = "⚡ QuASI Question Architecture Lab";
+    renderQuasiLab(body);
+  } else if (mode === 'freq') {
+    title.innerHTML = "⏱️ Adverb of Frequency Simulator";
+    renderFreqLab(body);
+  } else if (mode === 'can') {
+    title.innerHTML = "🚦 Can / Can't Traffic Light Simulator";
+    renderCanLab(body);
+  } else if (mode === 'quiz') {
+    title.innerHTML = "📝 Page 95 Practice Arena";
+    renderQuizLab(body);
+  }
+}
+
+function closeDrawer() {
+  document.getElementById('interactive-drawer').style.display = 'none';
+}
+
+function setDockView(view) {
+  closeDrawer();
+  if (view === 'canvas') {
+    resetView();
+  }
+}
+
+/* --- LAB 1: QUASI BUILDER --- */
+let quasiSlots = { q: '', aux: '', sub: '', inf: '' };
+
+function renderQuasiLab(container) {
+  container.innerHTML = `
+    <p style="font-size:13px; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">
+      Build questions by selecting tokens for each slot of the <strong>QuASI</strong> formula. See if the order creates a grammatically perfect English question!
+    </p>
+
+    <div class="slot-row">
+      <div class="slot-box">
+        <span class="slot-label">Qu (Q-Word)</span>
+        <span class="slot-token" id="slot-q">${quasiSlots.q || '...'}</span>
+      </div>
+      <div class="slot-box">
+        <span class="slot-label">A (Auxiliary)</span>
+        <span class="slot-token" id="slot-aux">${quasiSlots.aux || '...'}</span>
+      </div>
+      <div class="slot-box">
+        <span class="slot-label">S (Subject)</span>
+        <span class="slot-token" id="slot-sub">${quasiSlots.sub || '...'}</span>
+      </div>
+      <div class="slot-box">
+        <span class="slot-label">I (Infinitive)</span>
+        <span class="slot-token" id="slot-inf">${quasiSlots.inf || '...'}</span>
+      </div>
+    </div>
+
+    <div id="quasi-preview" style="text-align:center; padding:12px; background:#0f172a; border-radius:10px; font-size:16px; font-weight:800; color:#38bdf8; margin-bottom:15px;">
+      Where do you live?
+    </div>
+
+    <div style="font-size:12px; font-weight:800; color:var(--accent); text-transform:uppercase;">Click tokens to swap:</div>
+    
+    <div style="margin-top:8px;">
+      <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">1. Question Word:</div>
+      <div class="token-pool">
+        <button class="btn-token" onclick="pickToken('q', 'Where')">Where</button>
+        <button class="btn-token" onclick="pickToken('q', 'What')">What</button>
+        <button class="btn-token" onclick="pickToken('q', 'When')">When</button>
+        <button class="btn-token" onclick="pickToken('q', 'What time')">What time</button>
+        <button class="btn-token" onclick="pickToken('q', 'How')">How</button>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">2. Auxiliary:</div>
+      <div class="token-pool">
+        <button class="btn-token" onclick="pickToken('aux', 'do')">do</button>
+        <button class="btn-token" onclick="pickToken('aux', 'does')">does</button>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">3. Subject:</div>
+      <div class="token-pool">
+        <button class="btn-token" onclick="pickToken('sub', 'you')">you</button>
+        <button class="btn-token" onclick="pickToken('sub', 'your sister')">your sister</button>
+        <button class="btn-token" onclick="pickToken('sub', 'they')">they</button>
+        <button class="btn-token" onclick="pickToken('sub', 'Jane')">Jane</button>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">4. Infinitive Verb:</div>
+      <div class="token-pool">
+        <button class="btn-token" onclick="pickToken('inf', 'live')">live</button>
+        <button class="btn-token" onclick="pickToken('inf', 'do')">do</button>
+        <button class="btn-token" onclick="pickToken('inf', 'like')">like</button>
+        <button class="btn-token" onclick="pickToken('inf', 'go to the gym')">go to the gym</button>
+        <button class="btn-token" onclick="pickToken('inf', 'spell it')">spell it</button>
+      </div>
+    </div>
+  `;
+  updateQuasiPreview();
+}
+
+function pickToken(slot, val) {
+  quasiSlots[slot] = val;
+  document.getElementById(`slot-${slot}`).textContent = val;
+  updateQuasiPreview();
+}
+
+function updateQuasiPreview() {
+  const p = document.getElementById('quasi-preview');
+  if (!p) return;
+  const sentence = `${quasiSlots.q || 'Where'} ${quasiSlots.aux || 'do'} ${quasiSlots.sub || 'you'} ${quasiSlots.inf || 'live'}?`;
+  
+  // Validation: Check if does/do matches subject
+  const sub = quasiSlots.sub || 'you';
+  const aux = quasiSlots.aux || 'do';
+  const is3rd = (sub === 'your sister' || sub === 'Jane');
+  const valid = is3rd ? (aux === 'does') : (aux === 'do');
+
+  if (valid) {
+    p.style.color = '#4ade80';
+    p.innerHTML = `✅ ${sentence}<br><small style="font-size:12px; font-weight:600; color:#cbd5e1;">Correct agreement!</small>`;
+  } else {
+    p.style.color = '#f87171';
+    p.innerHTML = `⚠️ ${sentence}<br><small style="font-size:12px; font-weight:600; color:#fca5a5;">Mismatch: '${sub}' takes '${is3rd ? 'does' : 'do'}', not '${aux}'!</small>`;
+  }
+}
+
+/* --- LAB 2: ADVERB SLIDER --- */
+function renderFreqLab(container) {
+  container.innerHTML = `
+    <p style="font-size:13px; color:var(--text-muted); line-height:1.5; margin-bottom:15px;">
+      Drag the slider to adjust the frequency of the action. Watch how the adverb shifts and observe the <strong>NEVER</strong> rule in action!
+    </p>
+
+    <div style="background:#0f172a; padding:18px; border-radius:14px; text-align:center; margin-bottom:20px;">
+      <div id="freq-slider-label" style="font-size:24px; font-weight:900; color:#38bdf8; margin-bottom:6px;">always</div>
+      <div id="freq-slider-pct" style="font-size:13px; font-weight:800; color:var(--accent); margin-bottom:12px;">100% of the time</div>
+      
+      <input type="range" id="freq-range" min="0" max="3" value="3" step="1" style="width:100%; cursor:pointer;" oninput="updateFreqSlider(this.value)">
+
+      <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--text-muted); margin-top:6px;">
+        <span>never (0%)</span>
+        <span>sometimes (~50%)</span>
+        <span>usually (~80%)</span>
+        <span>always (100%)</span>
+      </div>
+    </div>
+
+    <div style="background:rgba(30,41,59,0.5); padding:16px; border-radius:12px; border:1px solid var(--card-border);">
+      <div style="font-size:11px; font-weight:800; color:var(--accent); text-transform:uppercase; margin-bottom:6px;">Live Sentence:</div>
+      <div id="freq-live-sentence" style="font-size:18px; font-weight:800; color:#fff; margin-bottom:8px;">
+        I <span style="color:#38bdf8;">always</span> have breakfast.
+      </div>
+      <div id="freq-live-trans" style="font-size:13px; color:#94a3b8;">
+        Я всегда завтракаю / Her zaman kahvaltı yaparım / 我总是吃早餐.
+      </div>
+    </div>
+  `;
+}
+
+function updateFreqSlider(val) {
+  const words = ['never', 'sometimes', 'usually', 'always'];
+  const pcts = ['0% (Never happens)', '~50% (On some days)', '~80% (On most days)', '100% (Every single day)'];
+  const examples = [
+    { eng: "He <span style='color:#f87171;'>never</span> eats meat.", trans: "Он никогда не ест мясо / O asla et yemez / 他从不吃肉。" },
+    { eng: "She <span style='color:#f59e0b;'>sometimes</span> watches TV.", trans: "Она иногда смотрит телевизор / O bazen televizyon izler / 她有时看电视。" },
+    { eng: "They <span style='color:#38bdf8;'>usually</span> finish work at 5.00.", trans: "Они обычно заканчивают в 5:00 / Genellikle 5:00'te bitirirler / 他们通常五点下班。" },
+    { eng: "I <span style='color:#4ade80;'>always</span> have breakfast.", trans: "Я всегда завтракаю / Her zaman kahvaltı yaparım / 我总是吃早餐。" }
+  ];
+
+  const w = words[val];
+  document.getElementById('freq-slider-label').textContent = w;
+  document.getElementById('freq-slider-pct').textContent = pcts[val];
+  document.getElementById('freq-live-sentence').innerHTML = examples[val].eng;
+  document.getElementById('freq-live-trans').textContent = examples[val].trans;
+}
+
+/* --- LAB 3: CAN / CAN'T SIMULATOR --- */
+function renderCanLab(container) {
+  container.innerHTML = `
+    <p style="font-size:13px; color:var(--text-muted); line-height:1.5; margin-bottom:15px;">
+      Toggle the permission status to see how <strong>can</strong> (allowed/possible) and <strong>can't</strong> (prohibited/impossible) transform the message.
+    </p>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div style="background:#0f172a; padding:14px; border-radius:12px; border:1px solid var(--card-border);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:14px; font-weight:800; color:#fff;">🅿️ Parking Scenario</span>
+          <button type="button" class="btn-token" id="btn-toggle-park" onclick="toggleScenario('park')">Switch: Allowed</button>
+        </div>
+        <div id="scen-park-text" style="font-size:16px; font-weight:800; color:#4ade80;">You can park here.</div>
+        <div id="scen-park-sub" style="font-size:12px; color:#94a3b8; margin-top:4px;">Permission granted (🅿️). You have permission.</div>
+      </div>
+
+      <div style="background:#0f172a; padding:14px; border-radius:12px; border:1px solid var(--card-border);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:14px; font-weight:800; color:#fff;">🚭 Smoking Scenario</span>
+          <button type="button" class="btn-token" id="btn-toggle-smoke" onclick="toggleScenario('smoke')">Switch: Forbidden</button>
+        </div>
+        <div id="scen-smoke-text" style="font-size:16px; font-weight:800; color:#f87171;">You can't smoke here.</div>
+        <div id="scen-smoke-sub" style="font-size:12px; color:#94a3b8; margin-top:4px;">Impersonal 'You' = Nobody is allowed to smoke here.</div>
+      </div>
+
+      <div style="background:#0f172a; padding:14px; border-radius:12px; border:1px solid var(--card-border);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:14px; font-weight:800; color:#fff;">🍽️ Dinner Invitation Scenario</span>
+          <button type="button" class="btn-token" id="btn-toggle-dinner" onclick="toggleScenario('dinner')">Switch: Possible</button>
+        </div>
+        <div id="scen-dinner-text" style="font-size:16px; font-weight:800; color:#4ade80;">He can come to dinner tonight.</div>
+        <div id="scen-dinner-sub" style="font-size:12px; color:#94a3b8; margin-top:4px;">Possibility: He is free, it is possible.</div>
+      </div>
+    </div>
+  `;
+}
+
+let scenarioStates = { park: true, smoke: false, dinner: true };
+
+function toggleScenario(id) {
+  scenarioStates[id] = !scenarioStates[id];
+  const state = scenarioStates[id];
+
+  if (id === 'park') {
+    document.getElementById('scen-park-text').textContent = state ? "You can park here." : "You can't park here.";
+    document.getElementById('scen-park-text').style.color = state ? '#4ade80' : '#f87171';
+    document.getElementById('scen-park-sub').textContent = state ? "Permission granted (🅿️). You have permission." : "Prohibition (🚫). No parking allowed.";
+    document.getElementById('btn-toggle-park').textContent = state ? "Switch: Allowed" : "Switch: Forbidden";
+  } else if (id === 'smoke') {
+    document.getElementById('scen-smoke-text').textContent = state ? "You can smoke here." : "You can't smoke here.";
+    document.getElementById('scen-smoke-text').style.color = state ? '#4ade80' : '#f87171';
+    document.getElementById('scen-smoke-sub').textContent = state ? "Designated smoking area." : "Impersonal 'You' = Nobody is allowed to smoke here.";
+    document.getElementById('btn-toggle-smoke').textContent = state ? "Switch: Allowed" : "Switch: Forbidden";
+  } else if (id === 'dinner') {
+    document.getElementById('scen-dinner-text').textContent = state ? "He can come to dinner tonight." : "He can't come to dinner tonight.";
+    document.getElementById('scen-dinner-text').style.color = state ? '#4ade80' : '#f87171';
+    document.getElementById('scen-dinner-sub').textContent = state ? "Possibility: He is free, it is possible." : "Impossibility: He is busy, it is not possible.";
+    document.getElementById('btn-toggle-dinner').textContent = state ? "Switch: Possible" : "Switch: Impossible";
+  }
+}
+
+/* --- LAB 4: PAGE 95 QUIZ --- */
+function renderQuizLab(container) {
+  container.innerHTML = `
+    <p style="font-size:13px; color:var(--text-muted); line-height:1.5; margin-bottom:15px;">
+      Direct interactive exercises from <strong>Student's Book Page 95</strong>. Type your answer and press Enter or click Check!
+    </p>
+
+    <!-- 4A Exercise -->
+    <div class="quiz-card">
+      <div class="quiz-q">1. (4A) Order the words: <i>bed / I / never / before / to / 12 / go.</i></div>
+      <input type="text" class="quiz-input" id="q1" placeholder="Type sentence here..." onkeydown="if(event.key==='Enter')checkQuiz(1)">
+      <div class="quiz-feedback" id="q1-fb"></div>
+    </div>
+
+    <!-- 4B Exercise -->
+    <div class="quiz-card">
+      <div class="quiz-q">2. (4B) Order into a question: <i>centre / the / where / city / is?</i></div>
+      <input type="text" class="quiz-input" id="q2" placeholder="Type question here..." onkeydown="if(event.key==='Enter')checkQuiz(2)">
+      <div class="quiz-feedback" id="q2-fb"></div>
+    </div>
+
+    <!-- 4C Exercise -->
+    <div class="quiz-card">
+      <div class="quiz-q">3. (4C) Make question with can: <i>we / watch / TV / after / dinner [?]</i></div>
+      <input type="text" class="quiz-input" id="q3" placeholder="Type question here..." onkeydown="if(event.key==='Enter')checkQuiz(3)">
+      <div class="quiz-feedback" id="q3-fb"></div>
+    </div>
+
+    <!-- 4A Verb & Adverb -->
+    <div class="quiz-card">
+      <div class="quiz-q">4. (4A) Fill blank: <i>He __________ meat for lunch. (eat / never)</i></div>
+      <input type="text" class="quiz-input" id="q4" placeholder="Type words here..." onkeydown="if(event.key==='Enter')checkQuiz(4)">
+      <div class="quiz-feedback" id="q4-fb"></div>
+    </div>
+  `;
+}
+
+function checkQuiz(qNum) {
+  const clean = (s) => s.trim().toLowerCase().replace(/[.?!]/g, '').replace(/\s+/g, ' ');
+  const val = clean(document.getElementById(`q${qNum}`).value);
+  const fb = document.getElementById(`q${qNum}-fb`);
+
+  let correct = false;
+  let target = '';
+
+  if (qNum === 1) {
+    target = "i never go to bed before 12";
+    correct = (val === target);
+  } else if (qNum === 2) {
+    target = "where is the city centre";
+    correct = (val === target);
+  } else if (qNum === 3) {
+    target = "can we watch tv after dinner";
+    correct = (val === target);
+  } else if (qNum === 4) {
+    target = "never eats";
+    correct = (val === target);
+  }
+
+  if (correct) {
+    fb.style.color = '#4ade80';
+    fb.textContent = "🎯 Correct! Excellent grammar application.";
+  } else {
+    fb.style.color = '#f87171';
+    fb.textContent = `⚠️ Try again! Correct answer: "${target}"`;
+  }
+}
+
+/* ================= THEME TOGGLE ================= */
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  updateWires();
+}
+
+// Initial setup
+setLanguage('en');
+resetView();
+window.addEventListener('resize', () => {
+  resetView();
+});
+</script>
+</body>
+</html>
